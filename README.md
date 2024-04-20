@@ -4,7 +4,7 @@
 
 Items marked with only a number will be done only if I have time.
 
--   [ ] 1. **NAME**: See the authors of the game (name and UD email) visibly on the screen.
+1. [ ] **NAME**: See the authors of the game (name and UD email) visibly on the screen.
 
 2. **LOGIN**: A screen allowing the user to log in (just email; there's no way I'm doing actual security).
 
