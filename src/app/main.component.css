@@ -26,7 +26,7 @@ div {
     background-color: #f865;
     min-width: 100vw;
     min-height: auto;
-    max-height: 40px;
+    max-height: fit-content;
     position: fixed;
     bottom: 0;
     left: 0;
