@@ -5,8 +5,8 @@ import { MainComponent } from "../main.component";
 import { SubComponent } from "../../subcomponent";
 
 export class FooterComponent extends SubComponent {
-    constructor(parent: SubComponent | MainComponent, main: MainComponent) {
-        super(parent, main, html, css);
+    constructor(main: MainComponent) {
+        super(main, main, html, css);
     }
 
     @Click("exit")

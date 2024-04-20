@@ -10,8 +10,8 @@ import { MainMenuComponent } from "./main-menu/main-menu.component";
  *
  */
 export class MainComponent extends EzComponent {
-    private footer: FooterComponent = new FooterComponent(this, this);
-    private mainMenu: MainMenuComponent = new MainMenuComponent();
+    private footer: FooterComponent = new FooterComponent(this);
+    private mainMenu: MainMenuComponent = new MainMenuComponent(this);
 
     constructor() {
         super(html, css);
