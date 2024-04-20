@@ -16,9 +16,10 @@ export class MainComponent extends EzComponent {
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");
+        this.exit();
     }
 
     exit() {
-        this.addComponent(this.mainMenu, "main-menu");
+        this.addComponent(this.mainMenu, "page");
     }
 }
