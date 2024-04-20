@@ -7,3 +7,7 @@
 * or put a new css file in the assets directory and add it to the head element
 * of the index.html file if you need them to be global.
 */
+div {
+    min-width: 100%;
+    min-height: 100%;
+}
