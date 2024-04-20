@@ -1,5 +1,14 @@
-.title{
-	font-size: 20px;
-	color: #000;
-	margin-bottom: 20px;
+div {
+    max-width: fit-content;
+    margin: auto;
+}
+#header {
+    color: #000;
+    margin-bottom: 20px;
+}
+#title {
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bold;
+    color: #0b0;
 }

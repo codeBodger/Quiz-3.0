@@ -4,7 +4,7 @@
 
 Items marked with only a number will be done only if I have time.
 
--   [ ] 1. **NAME**: See the authors of the game (name and UD email) visibly on the screen.
+-   [x] 1. **NAME**: See the authors of the game (name and UD email) visibly on the screen.
 
 2. **LOGIN**: A screen allowing the user to log in (just email; there's no way I'm doing actual security).
 
@@ -43,7 +43,7 @@ Items marked with only a number will be done only if I have time.
 
 ## Milestone 0 (2024-04-21)
 
--   [ ] Item 1 completed
+-   [x] Item 1 completed
 -   [ ] Item 3 started
 -   [ ] Item 19 started
 
