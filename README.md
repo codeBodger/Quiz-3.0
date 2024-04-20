@@ -43,36 +43,36 @@ Items marked with only a number will be done only if I have time.
 
 ## Milestone 0 (2024-04-21)
 
--   Item 1 completed
--   Item 3 started
--   Item 19 started
+-   [ ] Item 1 completed
+-   [ ] Item 3 started
+-   [ ] Item 19 started
 
 ## Milestone 1 (2024-04-28)
 
--   Item 3 completed
--   Item 8 completed
--   Item 12 completed
--   Item 13 started
-    -   Types 2, 3, and 6 completed
--   Item 15 completed
--   Item 19 started
+-   [ ] Item 3 completed
+-   [ ] Item 8 completed
+-   [ ] Item 12 completed
+-   [ ] Item 13 started
+    -   [ ] Types 2, 3, and 6 completed
+-   [ ] Item 15 completed
+-   [ ] Item 19 started
 
 ## Milestone 2 (2024-05-05)
 
--   Item 9 completed
--   Item 10 completed
--   Item 13 completed
-    -   Types 1, 4, and 5 completed
--   Item 14 completed
--   Item 19 started
+-   [ ] Item 9 completed
+-   [ ] Item 10 completed
+-   [ ] Item 13 completed
+    -   [ ] Types 1, 4, and 5 completed
+-   [ ] Item 14 completed
+-   [ ] Item 19 started
 
 ## Milestone 3 (2024-05-12)
 
--   Item 18 completed
--   Item 4 completed
--   Item 11 completed
--   Item 17 completed
--   Item 19 completed
+-   [ ] Item 18 completed
+-   [ ] Item 4 completed
+-   [ ] Item 11 completed
+-   [ ] Item 17 completed
+-   [ ] Item 19 completed
 
 ## Final Submission (2024-05-19)
 
