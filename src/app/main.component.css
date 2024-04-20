@@ -12,3 +12,19 @@ div {
     font-weight: bold;
     color: #0b0;
 }
+#page {
+    min-width: min(100vw, 100vh);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: calc((100vw - min(100vw, 100vh)) / 2);
+    background-color: #8f55;
+}
+#footer {
+    background-color: #f865;
+    min-width: 100vw;
+    height: 40px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
