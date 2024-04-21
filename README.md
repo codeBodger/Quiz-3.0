@@ -8,7 +8,7 @@ Items marked with only a number will be done only if I have time.
 
 2. **LOGIN**: A screen allowing the user to log in (just email; there's no way I'm doing actual security).
 
--   [ ] 3. **MAIN MENU**: A main menu for doing the other things.
+-   [x] 3. **MAIN MENU**: A main menu for doing the other things.
 -   [ ] 4. **NEW GROUP**: A way to create new groups of sets.
 
 5. **NEW SET**: A way to create new sets.
@@ -44,12 +44,12 @@ Items marked with only a number will be done only if I have time.
 ## Milestone 0 (2024-04-21)
 
 -   [x] Item 1 completed
--   [ ] Item 3 started
+-   [x] Item 3 started
 -   [ ] Item 19 started
 
 ## Milestone 1 (2024-04-28)
 
--   [ ] Item 3 completed
+-   [x] Item 3 completed
 -   [ ] Item 8 completed
 -   [ ] Item 12 completed
 -   [ ] Item 13 started
