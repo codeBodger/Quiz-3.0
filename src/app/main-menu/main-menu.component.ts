@@ -1,10 +1,10 @@
 import html from "./main-menu.component.html";
 import css from "./main-menu.component.css";
-import { SubComponent } from "../../subcomponent";
+import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 
-export class MainMenuComponent extends SubComponent {
+export class MainMenuComponent extends PageComponet {
     constructor(main: MainComponent) {
-        super(main, main, html, css);
+        super(main, html, css);
     }
 }
