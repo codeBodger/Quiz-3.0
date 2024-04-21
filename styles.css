@@ -44,10 +44,10 @@ td {
 button {
     cursor: pointer;
     min-height: 100%;
-    min-width: calc(100% - 0.3vw * 2);
+    min-width: calc(100% - 0.3vmin * 2);
     font-size: 3vh;
-    padding: 0.3vh;
-    margin: 0.3vw;
+    padding: 0.3vh 0.3vmin;
+    margin: 0.3vh 0.3vmin;
     border: 0;
     border-radius: 0.6vh;
 }
