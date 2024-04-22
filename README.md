@@ -45,7 +45,7 @@ Items marked with only a number will be done only if I have time.
 
 -   [x] Item 1 completed
 -   [x] Item 3 started
--   [ ] Item 19 started
+-   [x] Item 19 started
 
 ## Milestone 1 (2024-04-28)
 
