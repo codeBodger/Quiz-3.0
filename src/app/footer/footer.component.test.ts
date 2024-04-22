@@ -15,20 +15,6 @@ describe("FooterComponent", () => {
             expect(component).toBeInstanceOf(FooterComponent);
         });
     });
-
-    test("exit button", () => {
-        const button = component["shadow"].getElementById(
-            "exit",
-        ) as HTMLButtonElement;
-        const pageElement = component["main"]["shadow"].getElementById(
-            "page",
-        ) as HTMLElement;
-        let childElement = () => pageElement.firstChild as HTMLElement;
-        button.click();
-        expect(
-            childElement().shadowRoot?.getElementById("main-menu"),
-        ).not.toBeNull();
-    });
 });
 
 describe("Main Component", () => {
@@ -48,5 +34,26 @@ describe("Main Component", () => {
             "page",
         ) as HTMLElement;
         expect(element).not.toBeNull();
+    });
+
+    test("exit button", () => {
+        const button = component["footer"]["shadow"].getElementById(
+            "exit",
+        ) as HTMLButtonElement;
+        let pageElement = component["shadow"].getElementById(
+            "page",
+        ) as HTMLElement;
+        let childElement = () => pageElement.firstChild as HTMLElement;
+        button.click();
+        expect(
+            childElement().shadowRoot?.getElementById("main-menu"),
+        ).not.toBeNull();
+        component["freeElement"]("page");
+        pageElement = component["shadow"].getElementById("page") as HTMLElement;
+        expect(pageElement.innerHTML).toBe("");
+        button.click();
+        expect(
+            childElement().shadowRoot?.getElementById("main-menu"),
+        ).not.toBeNull();
     });
 });
