@@ -39,7 +39,7 @@ Items marked with only a number will be done only if I have time.
 20. **DELETE GROUP**
 21. **DELETE SET**
 22. **LOGOUT**
-23. **BACKEND**
+23. **BACKEND** //Firebase? Mongo atlas?
 
 ## Milestone 0 (2024-04-21)
 
