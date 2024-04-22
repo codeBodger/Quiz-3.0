@@ -48,7 +48,7 @@ describe("Main Component", () => {
         expect(
             childElement().shadowRoot?.getElementById("main-menu"),
         ).not.toBeNull();
-        component["freeElement"]("page");
+        component["freePage"]();
         pageElement = component["shadow"].getElementById("page") as HTMLElement;
         expect(pageElement.innerHTML).toBe("");
         button.click();

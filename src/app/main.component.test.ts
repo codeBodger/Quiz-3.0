@@ -14,7 +14,7 @@ describe("MainComponent", () => {
     beforeEach(() => {
         const html: string = `<div>Testing Environment</div><div id='main-target'></div>`;
         component = bootstrap<MainComponent>(MainComponent, html);
-        component["freeElement"]("page");
+        component["freePage"]();
         pageElement = component["shadow"].getElementById("page") as HTMLElement;
         page1 = new PageComponet(component, html1, "");
         page2 = new PageComponet(component, html2, "");
@@ -55,12 +55,12 @@ describe("MainComponent", () => {
         });
     });
 
-    describe("freeElement", () => {
+    describe("freePage", () => {
         test("exists", () => {
-            expect(component["freeElement"]).toBeDefined();
-            expect(typeof component["freeElement"]).toBe("function");
+            expect(component["freePage"]).toBeDefined();
+            expect(typeof component["freePage"]).toBe("function");
         });
-        test("clears element", () => {
+        test("clears page", () => {
             expect(pageElement.innerHTML).toBe("");
             expect(childElement()).toBe(null);
             component.addComponent(page1, "page");
@@ -69,7 +69,7 @@ describe("MainComponent", () => {
                 childElement().shadowRoot?.getElementById("rootTemplate")
                     ?.innerHTML,
             ).toBe(html1);
-            component["freeElement"]("page");
+            component["freePage"]();
 
             expect(pageElement.innerHTML).toBe("");
             expect(childElement()).toBe(null);
@@ -79,7 +79,7 @@ describe("MainComponent", () => {
                 childElement().shadowRoot?.getElementById("rootTemplate")
                     ?.innerHTML,
             ).toBe(html2);
-            component["freeElement"]("page");
+            component["freePage"]();
             expect(pageElement.innerHTML).toBe("");
             expect(childElement()).toBe(null);
         });

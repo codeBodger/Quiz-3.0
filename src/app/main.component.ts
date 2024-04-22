@@ -1,6 +1,6 @@
 import html from "./main.component.html";
 import css from "./main.component.css";
-import { EzComponent } from "@gsilber/webez";
+import { BindValue, EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
@@ -14,6 +14,9 @@ export class MainComponent extends EzComponent {
     private footer: FooterComponent = new FooterComponent(this);
     private mainMenu: MainMenuComponent = new MainMenuComponent(this);
 
+    @BindValue("page")
+    private blank: string = "";
+
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");
@@ -25,11 +28,11 @@ export class MainComponent extends EzComponent {
     }
 
     private activate(page: PageComponet) {
-        this.freeElement("page");
+        this.freePage();
         this.addComponent(page, "page");
     }
 
-    protected freeElement(id: string): void {
-        this["shadow"].getElementById(id).innerHTML = "";
+    protected freePage(): void {
+        this.blank = "";
     }
 }
