@@ -34,13 +34,6 @@ div {
 .back-burner:active {
     background-color: #733;
 }
-table {
-    min-width: 100%;
-    min-height: 100%;
-}
-td {
-    min-width: 50%;
-}
 button {
     cursor: pointer;
     min-height: 100%;
@@ -50,4 +43,12 @@ button {
     margin: 0.3vh 0.3vmin;
     border: 0;
     border-radius: 0.6vh;
+}
+
+.td {
+    min-width: 50%;
+    float: left;
+}
+.colspan2 {
+    min-width: 100%;
 }
