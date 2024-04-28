@@ -15,7 +15,7 @@ Items marked with only a number will be done only if I have time.
 6. **EDIT GROUP**: A way to add or remove sets from an existing group.
 7. **EDIT SET**: A way to add, remove, and edit terms within a set.
 
--   [ ] 8. **IMPORT SET**: A way to import a set from a spreadsheet (adds terms if set already exists, new duplicate terms are resolved by the user).
+-   [x] 8. **IMPORT SET**: A way to import a set from a spreadsheet (adds terms if set already exists, new duplicate terms are resolved by the user).
 -   [ ] 9. **IMPORT ALL**: A way to import (overwriting groups and sets with the same name) an exported text file of your progress.
 -   [ ] 10. **EXPORT ALL**: A way to export all of your progress as a text file.
 -   [ ] 11. **PRACTICE GROUP**: A way to practice the sets in a group.
@@ -50,7 +50,7 @@ Items marked with only a number will be done only if I have time.
 ## Milestone 1 (2024-04-28)
 
 -   [x] Item 3 completed
--   [ ] Item 8 completed
+-   [x] Item 8 completed
 -   [ ] Item 12 completed
 -   [ ] Item 13 started
     -   [ ] Types 2, 3, and 6 completed
