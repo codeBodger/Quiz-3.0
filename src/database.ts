@@ -11,14 +11,13 @@ export class Term {
         this.mastery = isNaN(mastery ?? NaN) ? 5_000_000 : mastery;
     }
 
-    static fromTSV(main: MainComponent): (data: string) => Term {
-        return (data: string) => {
-            const dataArr = data.split("\t");
-            if (dataArr.length < 2) {
-                EzDialog.popup(main, `Bad term data: ${data}`);
-            }
-            return new Term(dataArr[0], dataArr[1], parseFloat(dataArr[2]));
-        };
+    static fromTSV(data: string, main: MainComponent): Term | undefined {
+        const dataArr = data.split("\t");
+        if (dataArr.length < 2) {
+            EzDialog.popup(main, `Bad term data: ${data}`);
+            return undefined;
+        }
+        return new Term(dataArr[0], dataArr[1], parseFloat(dataArr[2]));
     }
 
     matches(term: Term): "exactly" | "prompt" | "none" {
@@ -39,8 +38,13 @@ export class Set {
     static fromTSV(data: string, main: MainComponent): Set {
         const dataArr = data.split("\n");
         const name = dataArr[0];
-        console.log(dataArr);
-        const termArr = dataArr.slice(1).map(Term.fromTSV(main));
+        let termArr: Term[] = [];
+        for (let termData of dataArr.slice(1)) {
+            if (!termData) continue;
+            const term = Term.fromTSV(termData, main);
+            if (term === undefined) continue;
+            termArr.push(term);
+        }
         return new Set(name, termArr);
     }
 
