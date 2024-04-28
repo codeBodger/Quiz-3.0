@@ -1,5 +1,6 @@
 import { EzDialog } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
+import { QuestionTypes } from "./EzComponent_subclasses";
 
 export class Term {
     public index: number = -1;
@@ -26,6 +27,18 @@ export class Term {
             return "prompt";
         }
         return "none";
+    }
+
+    chooseQuestionType(): QuestionTypes {
+        switch (Math.floor(Math.random() * 3)) {
+            case 0:
+                return "MCQ";
+            case 1:
+                return "TFQ";
+            case 2:
+            default:
+                return "TextQ";
+        }
     }
 }
 
