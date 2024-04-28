@@ -39,6 +39,7 @@ export class Set {
     static fromTSV(data: string, main: MainComponent): Set {
         const dataArr = data.split("\n");
         const name = dataArr[0];
+        console.log(dataArr);
         const termArr = dataArr.slice(1).map(Term.fromTSV(main));
         return new Set(name, termArr);
     }
