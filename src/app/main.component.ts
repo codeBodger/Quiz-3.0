@@ -4,6 +4,8 @@ import { BindValue, EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
+import { Database } from "../database";
+import { SetImporterComponent } from "./set-importer/set-importer.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -11,8 +13,11 @@ import { PageComponet } from "../EzComponent_subclasses";
  *
  */
 export class MainComponent extends EzComponent {
+    private database: Database = new Database("", this);
+
     private footer: FooterComponent = new FooterComponent(this);
     private mainMenu: MainMenuComponent = new MainMenuComponent(this);
+    private setImporter: SetImporterComponent = new SetImporterComponent(this);
 
     @BindValue("page")
     private blank: string = "";
@@ -21,10 +26,15 @@ export class MainComponent extends EzComponent {
         super(html, css);
         this.addComponent(this.footer, "footer");
         this.activate(this.mainMenu);
+        // this.database = Database.loadDatabase(this);
     }
 
     exit() {
         this.activate(this.mainMenu);
+    }
+
+    importSet(): void {
+        this.activate(this.setImporter);
     }
 
     private activate(page: PageComponet) {
