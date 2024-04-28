@@ -7,6 +7,10 @@
 * or put a new css file in the assets directory and add it to the head element
 * of the index.html file if you need them to be global.
 */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
 }

@@ -11,6 +11,6 @@ export class MainMenuComponent extends PageComponet {
 
     @Click("import-set")
     importSet(): void {
-        this.main.importSet();
+        this.main.toSetImporter();
     }
 }

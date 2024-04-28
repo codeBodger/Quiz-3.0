@@ -33,7 +33,7 @@ export class MainComponent extends EzComponent {
         this.activate(this.mainMenu);
     }
 
-    importSet(): void {
+    toSetImporter(): void {
         this.activate(this.setImporter);
     }
 
@@ -44,5 +44,9 @@ export class MainComponent extends EzComponent {
 
     protected freePage(): void {
         this.blank = "";
+    }
+
+    importSet(setData: string): void {
+        this.database.addOrUpdateSet(setData, this);
     }
 }
