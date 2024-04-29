@@ -70,6 +70,7 @@ export class MainComponent extends EzComponent {
     }
 
     saveDatabase(): void {
+        return;
         // this.database.save();
     }
 }
