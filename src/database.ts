@@ -75,10 +75,11 @@ export class Set {
         public terms: Term[] = [],
     ) {}
 
-    static fromTSV(data: string, main: MainComponent): Set {
+    static fromTSV(data: string, main: MainComponent): Set | undefined {
         data = data.replace(/^\s*/g, "");
         const dataArr = data.split("\n");
         const name = dataArr[0];
+        if (!name) return undefined;
         let termArr: Term[] = [];
         for (let termData of dataArr.slice(1)) {
             if (!termData) continue;
@@ -144,6 +145,7 @@ export class Database {
 
     constructor(data: string, main: MainComponent) {
         data = data.replace(/^\s*/g, "");
+        if (!data) return;
         for (let setStr of data.split("\n\n"))
             this.addOrUpdateSet(setStr, main);
         this.save();
@@ -151,6 +153,7 @@ export class Database {
 
     addOrUpdateSet(setData: string, main: MainComponent): void {
         const newSet = Set.fromTSV(setData, main);
+        if (!newSet) return;
         for (let set of this.sets) {
             if (set.name === newSet.name) {
                 set.merge(newSet, main);
