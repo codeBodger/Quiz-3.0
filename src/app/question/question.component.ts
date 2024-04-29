@@ -4,8 +4,8 @@ import { PageComponet, QuestionBody } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Set, Term } from "../../database";
 import { MCQComponent } from "../MCQ/MCQ.component";
-import { TextQComponent } from "../TextQ/TextQ.component";
-import { TFQComponent } from "../TFQ/TFQ.component";
+// import { TextQComponent } from "../TextQ/TextQ.component";
+// import { TFQComponent } from "../TFQ/TFQ.component";
 
 export class QuestionComponent extends PageComponet {
     private questionBody: QuestionBody;
