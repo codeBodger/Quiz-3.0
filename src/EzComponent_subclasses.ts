@@ -1,7 +1,7 @@
 import { BindValue, EzComponent } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
-import { Set, Term } from "./database";
 import { QuestionComponent } from "./app/question/question.component";
+import { Term, Set } from "./database";
 
 export class SubComponent extends EzComponent {
     constructor(
@@ -26,13 +26,14 @@ export abstract class PageComponet extends EzComponent {
     abstract onActivate(): void;
 }
 
-export type QuestionTypes = "MCQ" | "TFQ" | "TextQ";
+export type QuestionTypes = "Multiple Choice" | "True/False" | "Text Entry";
 export class QuestionBody extends SubComponent {
     @BindValue("name")
-    protected name: string = "";
+    protected name: QuestionTypes | "" = "";
 
     constructor(
         protected term: Term,
+        protected set: Set,
         protected sets: Set[],
         protected parent: QuestionComponent,
         main: MainComponent,

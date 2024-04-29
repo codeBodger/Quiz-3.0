@@ -4,12 +4,14 @@ import { QuestionTypes } from "./EzComponent_subclasses";
 
 export class Term {
     public index: number = -1;
+    private mastery: number;
     constructor(
         readonly answer: string,
         readonly prompt: string,
-        private mastery: number | undefined,
+        mastery: number | undefined,
     ) {
-        this.mastery = isNaN(mastery ?? NaN) ? 5_000_000 : mastery;
+        mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
+        this.mastery = mastery ?? 5_000_000;
     }
 
     static fromTSV(data: string, main: MainComponent): Term | undefined {
@@ -32,13 +34,29 @@ export class Term {
     chooseQuestionType(): QuestionTypes {
         switch (Math.floor(Math.random() * 3)) {
             case 0:
-                return "MCQ";
+                return "Multiple Choice";
             case 1:
-                return "TFQ";
+                return "True/False";
             case 2:
             default:
-                return "TextQ";
+                return "Text Entry";
         }
+    }
+
+    update(success: boolean, type: QuestionTypes) {
+        let changeFactor = [1, 1];
+        switch (type) {
+            case "Multiple Choice":
+                changeFactor = [0.8, 1.2];
+                break;
+            case "True/False":
+                changeFactor = [0.9, 1.1];
+                break;
+            case "Text Entry":
+                changeFactor = [0.6, 1.2];
+                break;
+        }
+        this.mastery *= changeFactor[success ? 1 : 0];
     }
 }
 
@@ -46,7 +64,7 @@ export type SetActivities = "Practice";
 export class Set {
     constructor(
         readonly name: string,
-        private terms: Term[] = [],
+        public terms: Term[] = [],
     ) {}
 
     static fromTSV(data: string, main: MainComponent): Set {

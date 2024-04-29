@@ -9,24 +9,26 @@ import { TFQComponent } from "../TFQ/TFQ.component";
 
 export class QuestionComponent extends PageComponet {
     private questionBody: QuestionBody;
-    constructor(
-        private term: Term,
-        private set: Set,
-        sets: Set[],
-        main: MainComponent,
-    ) {
+    constructor(term: Term, set: Set, sets: Set[], main: MainComponent) {
         super(main, html, css);
-        switch (term.chooseQuestionType()) {
-            case "MCQ":
-                this.questionBody = new MCQComponent(term, sets, this, main);
-                break;
-            case "TFQ":
-                this.questionBody = new TFQComponent(term, sets, this, main);
-                break;
-            case "TextQ":
-                this.questionBody = new TextQComponent(term, sets, this, main);
-                break;
-        }
+        const args: [Term, Set, Set[], QuestionComponent, MainComponent] = [
+            term,
+            set,
+            sets,
+            this,
+            main,
+        ];
+        // switch (term.chooseQuestionType()) {
+        //     case "MCQ":
+        this.questionBody = new MCQComponent(...args);
+        //         break;
+        //     case "TFQ":
+        //         this.questionBody = new TFQComponent(...args);
+        //         break;
+        //     case "TextQ":
+        //         this.questionBody = new TextQComponent(...args);
+        //         break;
+        // }
         this.addComponent(this.questionBody, "question");
     }
 

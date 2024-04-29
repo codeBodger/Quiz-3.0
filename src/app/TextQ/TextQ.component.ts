@@ -8,10 +8,11 @@ import { QuestionComponent } from "../question/question.component";
 export class TextQComponent extends QuestionBody {
     constructor(
         term: Term,
+        set: Set,
         sets: Set[],
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super(term, sets, parent, main, html, css);
+        super(term, set, sets, parent, main, html, css);
     }
 }

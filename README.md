@@ -19,7 +19,7 @@ Items marked with only a number will be done only if I have time.
 -   [ ] 9. **IMPORT ALL**: A way to import (overwriting groups and sets with the same name) an exported text file of your progress.
 -   [ ] 10. **EXPORT ALL**: A way to export all of your progress as a text file.
 -   [ ] 11. **PRACTICE GROUP**: A way to practice the sets in a group.
--   [ ] 12. **PRACTICE SET**: A way to practice only a single set.
+-   [x] 12. **PRACTICE SET**: A way to practice only a single set.
 -   [ ] 13. **QUESTION TYPES**: The following question types will be included:
     -   [ ] 1. New Term
     -   [ ] 2. Multiple Choice
@@ -51,14 +51,15 @@ Items marked with only a number will be done only if I have time.
 
 -   [x] Item 3 completed
 -   [x] Item 8 completed
--   [ ] Item 12 completed
--   [ ] Item 13 started
+-   [x] Item 12 completed
+-   [x] Item 13 started
     -   [ ] Types 2, 3, and 6 completed
--   [ ] Item 15 completed
+-   [x] Item 15 started
 -   [ ] Item 19 started
 
 ## Milestone 2 (2024-05-05)
 
+-   [ ] Item 15 completed
 -   [ ] Item 9 completed
 -   [ ] Item 10 completed
 -   [ ] Item 13 completed
