@@ -16,8 +16,8 @@ describe("MainComponent", () => {
         component = bootstrap<MainComponent>(MainComponent, html);
         component["freePage"]();
         pageElement = component["shadow"].getElementById("page") as HTMLElement;
-        page1 = new PageComponet(component, html1, "");
-        page2 = new PageComponet(component, html2, "");
+        // page1 = new PageComponet(component, html1, "");
+        // page2 = new PageComponet(component, html2, "");
     });
 
     describe("Constructor", () => {

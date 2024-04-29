@@ -18,4 +18,8 @@ export class MainMenuComponent extends PageComponet {
     practiceSet(): void {
         this.main.toSetList("Practice");
     }
+
+    onActivate(): void {
+        return;
+    }
 }

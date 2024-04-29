@@ -14,7 +14,7 @@ export class SubComponent extends EzComponent {
     }
 }
 
-export class PageComponet extends EzComponent {
+export abstract class PageComponet extends EzComponent {
     constructor(
         protected main: MainComponent,
         html: string,
@@ -22,6 +22,8 @@ export class PageComponet extends EzComponent {
     ) {
         super(html, css);
     }
+
+    abstract onActivate(): void;
 }
 
 export type QuestionTypes = "MCQ" | "TFQ" | "TextQ";

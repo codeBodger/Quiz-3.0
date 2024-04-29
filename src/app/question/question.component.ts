@@ -11,6 +11,7 @@ export class QuestionComponent extends PageComponet {
     private questionBody: QuestionBody;
     constructor(
         private term: Term,
+        private set: Set,
         sets: Set[],
         main: MainComponent,
     ) {
@@ -27,5 +28,9 @@ export class QuestionComponent extends PageComponet {
                 break;
         }
         this.addComponent(this.questionBody, "question");
+    }
+
+    onActivate(): void {
+        return;
     }
 }

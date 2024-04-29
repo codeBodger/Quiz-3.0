@@ -96,6 +96,10 @@ New: "${term.answer}"`,
             return term.prompt === prompt ? term : acc;
         }, undefined);
     }
+
+    chooseTerm(): Term {
+        return this.terms[Math.floor(Math.random() * this.terms.length)];
+    }
 }
 
 export class Database {
@@ -122,5 +126,9 @@ export class Database {
             main["htmlElement"].localStorage.getItem("database"),
             main,
         );
+    }
+
+    getSets(): Set[] {
+        return this.sets;
     }
 }

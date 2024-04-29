@@ -4,9 +4,10 @@ import { BindValue, EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
-import { Database, SetActivities } from "../database";
+import { Database, Set, SetActivities } from "../database";
 import { SetImporterComponent } from "./set-importer/set-importer.component";
 import { SetListComponent } from "./set-list/set-list.component";
+import { QuestionComponent } from "./question/question.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -45,8 +46,14 @@ export class MainComponent extends EzComponent {
         this.activate(this.setList);
     }
 
+    askFrom(sets: Set[]): void {
+        const set = sets[Math.floor(Math.random() * sets.length)];
+        this.activate(new QuestionComponent(set.chooseTerm(), set, sets, this));
+    }
+
     private activate(page: PageComponet) {
         this.freePage();
+        page.onActivate();
         this.addComponent(page, "page");
     }
 
@@ -56,5 +63,9 @@ export class MainComponent extends EzComponent {
 
     importSet(setData: string): void {
         this.database.addOrUpdateSet(setData, this);
+    }
+
+    getSets(): Set[] {
+        return this.database.getSets();
     }
 }
