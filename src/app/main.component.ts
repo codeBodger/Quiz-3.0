@@ -4,8 +4,9 @@ import { BindValue, EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
-import { Database } from "../database";
+import { Database, SetActivities } from "../database";
 import { SetImporterComponent } from "./set-importer/set-importer.component";
+import { SetListComponent } from "./set-list/set-list.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -18,6 +19,7 @@ export class MainComponent extends EzComponent {
     private footer: FooterComponent = new FooterComponent(this);
     private mainMenu: MainMenuComponent = new MainMenuComponent(this);
     private setImporter: SetImporterComponent = new SetImporterComponent(this);
+    private setList: SetListComponent = new SetListComponent(this);
 
     @BindValue("page")
     private blank: string = "";
@@ -36,6 +38,11 @@ export class MainComponent extends EzComponent {
 
     toSetImporter(): void {
         this.activate(this.setImporter);
+    }
+
+    toSetList(activity: SetActivities): void {
+        this.setList.for(activity);
+        this.activate(this.setList);
     }
 
     private activate(page: PageComponet) {

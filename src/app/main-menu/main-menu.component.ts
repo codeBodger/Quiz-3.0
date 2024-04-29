@@ -13,4 +13,9 @@ export class MainMenuComponent extends PageComponet {
     importSet(): void {
         this.main.toSetImporter();
     }
+
+    @Click("practice-set")
+    practiceSet(): void {
+        this.main.toSetList("Practice");
+    }
 }

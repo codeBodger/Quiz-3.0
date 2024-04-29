@@ -15,9 +15,20 @@ body {
     margin: 0;
 }
 
+.page {
+    margin-top: 10vh;
+}
+
 div {
     min-width: 100%;
     min-height: 100%;
+}
+
+h2 {
+    margin: 0 auto 1vh;
+    width: fit-content;
+    font-size: 3vh;
+    color: #55f;
 }
 
 .unimplemented {

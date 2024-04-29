@@ -42,6 +42,7 @@ export class Term {
     }
 }
 
+export type SetActivities = "Practice";
 export class Set {
     constructor(
         readonly name: string,
