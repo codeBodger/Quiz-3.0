@@ -15,7 +15,7 @@ import { QuestionComponent } from "./question/question.component";
  *
  */
 export class MainComponent extends EzComponent {
-    private database: Database = new Database("", this);
+    private database: Database;
 
     private footer: FooterComponent = new FooterComponent(this);
     private mainMenu: MainMenuComponent = new MainMenuComponent(this);
@@ -30,6 +30,7 @@ export class MainComponent extends EzComponent {
         this.addComponent(this.footer, "footer");
         this.activate(this.mainMenu);
         this.database = Database.loadDatabase(this);
+        this.saveDatabase();
     }
 
     exit() {
@@ -69,8 +70,11 @@ export class MainComponent extends EzComponent {
         return this.database.getSets();
     }
 
-    // saveDatabase(): void {
-    //     return;
-    //     // this.database.save();
-    // }
+    saveDatabase(): void {
+        try {
+            this.database.save();
+        } catch {
+            //nothing to do here
+        }
+    }
 }

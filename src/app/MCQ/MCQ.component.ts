@@ -112,7 +112,7 @@ export class MCQComponent extends QuestionBody {
         this.term.update(
             this.term.matches(answer) === "exactly",
             this.name,
-            //this.main,
+            this.main,
         );
     }
 }

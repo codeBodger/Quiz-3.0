@@ -22,7 +22,7 @@ export class Term {
             EzDialog.popup(main, `Bad term data: ${data}`);
             return undefined;
         }
-        // main.saveDatabase();
+        main.saveDatabase();
         return new Term(dataArr[0], dataArr[1], parseFloat(dataArr[2]));
     }
 
@@ -46,7 +46,7 @@ export class Term {
         }
     }
 
-    update(success: boolean, type: QuestionTypes /*, main: MainComponent*/) {
+    update(success: boolean, type: QuestionTypes, main: MainComponent) {
         let changeFactor = [1, 1];
         switch (type) {
             case "Multiple Choice":
@@ -60,7 +60,7 @@ export class Term {
                 break;
         }
         this.mastery *= changeFactor[success ? 1 : 0];
-        // main.saveDatabase();
+        main.saveDatabase();
     }
 
     toString(): string {
@@ -76,6 +76,7 @@ export class Set {
     ) {}
 
     static fromTSV(data: string, main: MainComponent): Set {
+        data = data.replace(/^\s*/g, "");
         const dataArr = data.split("\n");
         const name = dataArr[0];
         let termArr: Term[] = [];
@@ -85,7 +86,7 @@ export class Set {
             if (term === undefined) continue;
             termArr.push(term);
         }
-        // main.saveDatabase();
+        main.saveDatabase();
         return new Set(name, termArr);
     }
 
@@ -115,7 +116,7 @@ New: "${term.answer}"`,
                     this.terms.push(term);
             }
         }
-        // main.saveDatabase();
+        main.saveDatabase();
     }
 
     getTerm(prompt: string): Term | undefined {
@@ -142,8 +143,10 @@ export class Database {
     private sets: Set[] = [];
 
     constructor(data: string, main: MainComponent) {
+        data = data.replace(/^\s*/g, "");
         for (let setStr of data.split("\n\n"))
             this.addOrUpdateSet(setStr, main);
+        this.save();
     }
 
     addOrUpdateSet(setData: string, main: MainComponent): void {
@@ -155,10 +158,13 @@ export class Database {
             }
         }
         this.sets.push(newSet);
-        // main.saveDatabase();
+        main.saveDatabase();
     }
 
     static loadDatabase(main: MainComponent): Database {
+        console.log("aaaa");
+        console.log(window.localStorage.getItem("database"));
+        console.log("aaaaaaaaaaaaaaaaaaaaaa");
         return new Database(
             window.localStorage.getItem("database") ?? "",
             main,
