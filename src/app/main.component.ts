@@ -29,7 +29,7 @@ export class MainComponent extends EzComponent {
         super(html, css);
         this.addComponent(this.footer, "footer");
         this.activate(this.mainMenu);
-        // this.database = Database.loadDatabase(this);
+        this.database = Database.loadDatabase(this);
     }
 
     exit() {
@@ -67,5 +67,9 @@ export class MainComponent extends EzComponent {
 
     getSets(): Set[] {
         return this.database.getSets();
+    }
+
+    saveDatabase(): void {
+        this.database.save();
     }
 }

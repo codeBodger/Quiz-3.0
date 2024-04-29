@@ -2,6 +2,8 @@ import { EzDialog } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
 import { QuestionTypes } from "./EzComponent_subclasses";
 
+declare const window: Window;
+
 export class Term {
     public index: number = -1;
     private mastery: number;
@@ -20,6 +22,7 @@ export class Term {
             EzDialog.popup(main, `Bad term data: ${data}`);
             return undefined;
         }
+        main.saveDatabase();
         return new Term(dataArr[0], dataArr[1], parseFloat(dataArr[2]));
     }
 
@@ -43,7 +46,7 @@ export class Term {
         }
     }
 
-    update(success: boolean, type: QuestionTypes) {
+    update(success: boolean, type: QuestionTypes, main: MainComponent) {
         let changeFactor = [1, 1];
         switch (type) {
             case "Multiple Choice":
@@ -57,6 +60,11 @@ export class Term {
                 break;
         }
         this.mastery *= changeFactor[success ? 1 : 0];
+        main.saveDatabase();
+    }
+
+    toString(): string {
+        return `${this.answer}\t${this.prompt}\t${this.mastery}`;
     }
 }
 
@@ -77,6 +85,7 @@ export class Set {
             if (term === undefined) continue;
             termArr.push(term);
         }
+        main.saveDatabase();
         return new Set(name, termArr);
     }
 
@@ -106,6 +115,7 @@ New: "${term.answer}"`,
                     this.terms.push(term);
             }
         }
+        main.saveDatabase();
     }
 
     getTerm(prompt: string): Term | undefined {
@@ -117,6 +127,14 @@ New: "${term.answer}"`,
 
     chooseTerm(): Term {
         return this.terms[Math.floor(Math.random() * this.terms.length)];
+    }
+
+    toString(): string {
+        return (
+            this.name +
+            "\n" +
+            this.terms.map((term: Term) => term.toString()).join("\n")
+        );
     }
 }
 
@@ -137,16 +155,24 @@ export class Database {
             }
         }
         this.sets.push(newSet);
+        main.saveDatabase();
     }
 
     static loadDatabase(main: MainComponent): Database {
         return new Database(
-            main["htmlElement"].localStorage.getItem("database"),
+            window.localStorage.getItem("database") ?? "",
             main,
         );
     }
 
     getSets(): Set[] {
         return this.sets;
+    }
+
+    save(): void {
+        window.localStorage.setItem(
+            "database",
+            this.sets.map((set: Set) => set.toString()).join("\n\n"),
+        );
     }
 }

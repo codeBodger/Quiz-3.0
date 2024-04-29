@@ -109,6 +109,10 @@ export class MCQComponent extends QuestionBody {
 
     answer(answer: Term) {
         console.log("hi");
-        this.term.update(this.term.matches(answer) === "exactly", this.name);
+        this.term.update(
+            this.term.matches(answer) === "exactly",
+            this.name,
+            this.main,
+        );
     }
 }
