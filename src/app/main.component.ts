@@ -69,8 +69,8 @@ export class MainComponent extends EzComponent {
         return this.database.getSets();
     }
 
-    saveDatabase(): void {
-        return;
-        // this.database.save();
-    }
+    // saveDatabase(): void {
+    //     return;
+    //     // this.database.save();
+    // }
 }
