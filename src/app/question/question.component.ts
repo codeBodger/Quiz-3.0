@@ -1,14 +1,26 @@
 import html from "./question.component.html";
 import css from "./question.component.css";
-import { PageComponet, QuestionBody } from "../../EzComponent_subclasses";
+import {
+    PageComponet,
+    QuestionBody,
+    QuestionTypes,
+} from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Set, Term } from "../../database";
 import { MCQComponent } from "../MCQ/MCQ.component";
 import { AnswerComponent } from "../answer/answer.component";
+import { BindValue } from "@gsilber/webez";
 // import { TextQComponent } from "../TextQ/TextQ.component";
 // import { TFQComponent } from "../TFQ/TFQ.component";
 
 export class QuestionComponent extends PageComponet {
+    @BindValue("name")
+    public name: QuestionTypes | "" = "";
+    @BindValue("prompt")
+    public prompt: string = "";
+    @BindValue("set")
+    public setName: string = "";
+
     private questionBody: QuestionBody;
     private answerBody: AnswerComponent;
     constructor(term: Term, set: Set, sets: Set[], main: MainComponent) {

@@ -13,6 +13,6 @@ export class TextQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super(term, set, sets, parent, main, html, css);
+        super("Text Entry", term, set, sets, parent, main, html, css);
     }
 }

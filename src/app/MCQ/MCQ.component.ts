@@ -7,13 +7,6 @@ import { MainComponent } from "../main.component";
 import { BindValue, Click } from "@gsilber/webez";
 
 export class MCQComponent extends QuestionBody {
-    protected name: "Multiple Choice" = "Multiple Choice";
-
-    @BindValue("prompt")
-    private prompt: string;
-    @BindValue("set")
-    private setName: string;
-
     @BindValue("ans0")
     private name0: string = "";
     @BindValue("ans1")
@@ -32,9 +25,7 @@ export class MCQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super(term, set, sets, parent, main, html, css);
-        this.prompt = term.prompt;
-        this.setName = `In set: ${set.name}`;
+        super("Multiple Choice", term, set, sets, parent, main, html, css);
         this.choices = this.getOptions();
         // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
         let i: number = this.choices.length;

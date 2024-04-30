@@ -1,4 +1,4 @@
-import { BindValue, EzComponent } from "@gsilber/webez";
+import { EzComponent } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
 import { QuestionComponent } from "./app/question/question.component";
 import { Term, Set } from "./database";
@@ -27,11 +27,9 @@ export abstract class PageComponet extends EzComponent {
 }
 
 export type QuestionTypes = "Multiple Choice" | "True/False" | "Text Entry";
-export class QuestionBody extends SubComponent {
-    @BindValue("name")
-    protected name: QuestionTypes | "" = "";
-
+export abstract class QuestionBody extends SubComponent {
     constructor(
+        protected name: QuestionTypes,
         protected term: Term,
         protected set: Set,
         protected sets: Set[],
@@ -41,5 +39,8 @@ export class QuestionBody extends SubComponent {
         css: string,
     ) {
         super(parent, main, html, css);
+        this.parent.name = this.name;
+        this.parent.prompt = term.prompt;
+        this.parent.setName = `In set: ${set.name}`;
     }
 }
