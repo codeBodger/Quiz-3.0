@@ -90,10 +90,8 @@ export class MCQComponent extends QuestionBody {
     }
 
     answer(answer: Term) {
-        this.term.update(
-            this.term.matches(answer) === "exactly",
-            this.name,
-            this.main,
-        );
+        const correct = this.term.matches(answer) === "exactly";
+        this.term.update(correct, this.name, this.main);
+        this.parent.answer(correct, answer.answer);
     }
 }
