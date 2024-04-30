@@ -47,6 +47,8 @@ export class Term {
     }
 
     update(success: boolean, type: QuestionTypes, main: MainComponent) {
+        // console.log(success);
+        // console.log(success ? 0 : 1);
         let changeFactor = [1, 1];
         switch (type) {
             case "Multiple Choice":

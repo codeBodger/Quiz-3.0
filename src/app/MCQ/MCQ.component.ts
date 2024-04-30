@@ -14,14 +14,16 @@ export class MCQComponent extends QuestionBody {
     @BindValue("set")
     private setName: string;
 
+    @BindValue("ans0")
+    private name0: string = "";
     @BindValue("ans1")
     private name1: string = "";
     @BindValue("ans2")
     private name2: string = "";
     @BindValue("ans3")
     private name3: string = "";
-    @BindValue("ans4")
-    private name4: string = "";
+
+    private choices: [Term, Term, Term, Term];
 
     constructor(
         term: Term,
@@ -33,39 +35,19 @@ export class MCQComponent extends QuestionBody {
         super(term, set, sets, parent, main, html, css);
         this.prompt = term.prompt;
         this.setName = `In set: ${set.name}`;
-        const options = this.getOptions();
-        let nums = [1, 2, 3, 4];
-        for (let i = 0; i < 4; i++) {
-            let ind = Math.floor(Math.random() * nums.length);
-            switch (nums[ind]) {
-                case 1:
-                    this.name1 = options[i].answer;
-                    this.act1 = () => {
-                        this.answer(options[i]);
-                    };
-                    break;
-                case 2:
-                    this.name2 = options[i].answer;
-                    this.act2 = () => {
-                        this.answer(options[i]);
-                    };
-                    break;
-                case 3:
-                    this.name3 = options[i].answer;
-                    this.act3 = () => {
-                        this.answer(options[i]);
-                    };
-                    break;
-                case 4:
-                    this.name4 = options[i].answer;
-                    this.act4 = () => {
-                        this.answer(options[i]);
-                    };
-                    break;
-            }
-            nums[ind] = nums[nums.length - 1];
-            nums.pop();
+        this.choices = this.getOptions();
+        // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
+        let i: number = this.choices.length;
+        while (i) {
+            let ind = Math.floor(Math.random() * i--);
+            let t = this.choices[i];
+            this.choices[i] = this.choices[ind];
+            this.choices[ind] = t;
         }
+        this.name0 = this.choices[0].answer;
+        this.name1 = this.choices[1].answer;
+        this.name2 = this.choices[2].answer;
+        this.name3 = this.choices[3].answer;
     }
 
     getOptions(): [Term, Term, Term, Term] {
@@ -90,25 +72,24 @@ export class MCQComponent extends QuestionBody {
         return out;
     }
 
-    @Click("ans1")
+    @Click("ans0")
     act1(): void {
-        console.log("1");
+        this.answer(this.choices[0]);
+    }
+    @Click("ans1")
+    act2(): void {
+        this.answer(this.choices[1]);
     }
     @Click("ans2")
-    act2(): void {
-        console.log("2");
+    act3(): void {
+        this.answer(this.choices[2]);
     }
     @Click("ans3")
-    act3(): void {
-        console.log("3");
-    }
-    @Click("ans4")
     act4(): void {
-        console.log("4");
+        this.answer(this.choices[3]);
     }
 
     answer(answer: Term) {
-        console.log("hi");
         this.term.update(
             this.term.matches(answer) === "exactly",
             this.name,
