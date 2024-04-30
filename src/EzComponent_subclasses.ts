@@ -40,7 +40,5 @@ export abstract class QuestionBody extends SubComponent {
     ) {
         super(parent, main, html, css);
         this.parent.name = this.name;
-        this.parent.prompt = term.prompt;
-        this.parent.setName = `In set: ${set.name}`;
     }
 }

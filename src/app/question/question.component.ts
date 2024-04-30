@@ -25,6 +25,8 @@ export class QuestionComponent extends PageComponet {
     private answerBody: AnswerComponent;
     constructor(term: Term, set: Set, sets: Set[], main: MainComponent) {
         super(main, html, css);
+        this.prompt = term.prompt;
+        this.setName = set.name;
         const args: [Term, Set, Set[], QuestionComponent, MainComponent] = [
             term,
             set,

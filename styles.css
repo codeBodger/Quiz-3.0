@@ -24,11 +24,21 @@ div {
     min-height: 100%;
 }
 
-h2 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0 auto 1vh;
     width: fit-content;
+}
+h2 {
     font-size: 3vh;
     color: #55f;
+}
+h4 {
+    color: gray;
 }
 
 .unimplemented {
