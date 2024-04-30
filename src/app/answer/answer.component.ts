@@ -4,7 +4,7 @@ import { SubComponent } from "../../EzComponent_subclasses";
 import { QuestionComponent } from "../question/question.component";
 import { MainComponent } from "../main.component";
 import { Term } from "../../database";
-import { BindStyle, BindValue } from "@gsilber/webez";
+import { BindStyle, BindValue, Click } from "@gsilber/webez";
 
 export class AnswerComponent extends SubComponent {
     @BindStyle("correct", "color", (val: boolean) => (val ? "green" : "red"))
@@ -22,7 +22,7 @@ export class AnswerComponent extends SubComponent {
 
     constructor(
         private term: Term,
-        parent: QuestionComponent,
+        protected parent: QuestionComponent,
         main: MainComponent,
     ) {
         super(parent, main, html, css);
@@ -32,5 +32,10 @@ export class AnswerComponent extends SubComponent {
         this.correct = correct;
         this.answer = answer;
         this.corrected = this.term.answer;
+    }
+
+    @Click("continue")
+    continue(): void {
+        this.parent.continue();
     }
 }

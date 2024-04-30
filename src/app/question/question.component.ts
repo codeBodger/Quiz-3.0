@@ -23,7 +23,13 @@ export class QuestionComponent extends PageComponet {
 
     private questionBody: QuestionBody;
     private answerBody: AnswerComponent;
-    constructor(term: Term, set: Set, sets: Set[], main: MainComponent) {
+
+    constructor(
+        term: Term,
+        set: Set,
+        private sets: Set[],
+        main: MainComponent,
+    ) {
         super(main, html, css);
         this.prompt = term.prompt;
         this.setName = set.name;
@@ -57,5 +63,9 @@ export class QuestionComponent extends PageComponet {
         this.removeComponent(this.questionBody);
         this.answerBody.init(correct, answer);
         this.addComponent(this.answerBody, "question-answer");
+    }
+
+    continue(): void {
+        this.main.askFrom(this.sets);
     }
 }
