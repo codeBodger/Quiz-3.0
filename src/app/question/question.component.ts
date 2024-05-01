@@ -11,7 +11,7 @@ import { MCQComponent } from "../MCQ/MCQ.component";
 import { AnswerComponent } from "../answer/answer.component";
 import { BindValue } from "@gsilber/webez";
 // import { TextQComponent } from "../TextQ/TextQ.component";
-// import { TFQComponent } from "../TFQ/TFQ.component";
+import { TFQComponent } from "../TFQ/TFQ.component";
 
 export class QuestionComponent extends PageComponet {
     @BindValue("name")
@@ -40,17 +40,18 @@ export class QuestionComponent extends PageComponet {
             this,
             main,
         ];
-        // switch (term.chooseQuestionType()) {
-        //     case "MCQ":
-        this.questionBody = new MCQComponent(...args);
-        //         break;
-        //     case "TFQ":
-        //         this.questionBody = new TFQComponent(...args);
-        //         break;
-        //     case "TextQ":
-        //         this.questionBody = new TextQComponent(...args);
-        //         break;
-        // }
+        switch (term.chooseQuestionType()) {
+            case "Multiple Choice":
+                this.questionBody = new MCQComponent(...args);
+                break;
+            case "True/False":
+            default:
+                this.questionBody = new TFQComponent(...args);
+                break;
+            // case "Text Entry":
+            //     this.questionBody = new TextQComponent(...args);
+            //     break;
+        }
         this.addComponent(this.questionBody, "question-answer");
         this.answerBody = new AnswerComponent(term, this, this.main);
     }
