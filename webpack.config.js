@@ -36,11 +36,11 @@ module.exports = {
             },
             // CSS
             {
-                test: /src\/.+\.css$/i,
+                test: /src[\/|\\].+\.css$/i,
                 use: ["raw-loader"],
             },
             {
-                test: /^((?!src\/).)*.css$/i,
+                test: /^((?!src[\/|\\]).)*.css$/i,
                 use: ["style-loader", "css-loader"],
             },
         ],
