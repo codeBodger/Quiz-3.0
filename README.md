@@ -53,7 +53,7 @@ Items marked with only a number will be done only if I have time.
 -   [x] Item 8 completed
 -   [x] Item 12 completed
 -   [x] Item 13 started
-    -   [ ] Types 2, 3, and 6 completed
+    -   [x] Types 2, 3, and 6 completed
 -   [x] Item 15 started
 -   [ ] Item 19 started
 
