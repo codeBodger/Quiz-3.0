@@ -10,7 +10,7 @@ import { Set, Term } from "../../database";
 import { MCQComponent } from "../MCQ/MCQ.component";
 import { AnswerComponent } from "../answer/answer.component";
 import { BindValue } from "@gsilber/webez";
-// import { TextQComponent } from "../TextQ/TextQ.component";
+import { TextQComponent } from "../TextQ/TextQ.component";
 import { TFQComponent } from "../TFQ/TFQ.component";
 
 export class QuestionComponent extends PageComponet {
@@ -45,12 +45,12 @@ export class QuestionComponent extends PageComponet {
                 this.questionBody = new MCQComponent(...args);
                 break;
             case "True/False":
-            default:
                 this.questionBody = new TFQComponent(...args);
                 break;
-            // case "Text Entry":
-            //     this.questionBody = new TextQComponent(...args);
-            //     break;
+            case "Text Entry":
+            default:
+                this.questionBody = new TextQComponent(...args);
+                break;
         }
         this.addComponent(this.questionBody, "question-answer");
         this.answerBody = new AnswerComponent(term, this, this.main);
