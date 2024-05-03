@@ -6,12 +6,15 @@
     <body>
         <div id="main-target"></div>
         <script>
-            const page = () =>
+            const main = () =>
                 document
                     .getElementById("main-target")
-                    .getElementsByTagName("div")[0]
-                    .shadowRoot.getElementById("page")
                     .getElementsByTagName("div")[0].shadowRoot;
+            const page = () =>
+                main().getElementById("page").getElementsByTagName("div")[0]
+                    .shadowRoot;
+
+            // Method adapted from https://www.geeksforgeeks.org/how-to-load-the-contents-of-a-text-file-into-a-javascript-variable/
             function upload() {
                 const file = page().getElementById("file").files[0];
                 const reader = new FileReader();
@@ -24,6 +27,25 @@
                 };
                 reader.onerror = (e) => alert(e.target.error.name);
                 reader.readAsText(file);
+            }
+
+            // Method adapted from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+            function download() {
+                main()
+                    .getElementById("footer")
+                    .getElementsByTagName("div")[0]
+                    .shadowRoot.getElementById("exit")
+                    .click();
+
+                const data = localStorage.getItem("database");
+
+                const elem = document.createElement("a");
+                elem.href = window.URL.createObjectURL(
+                    new Blob([data], { type: "text/csv" }),
+                );
+                elem.download = "database.tsv";
+
+                elem.click();
             }
         </script>
     </body>

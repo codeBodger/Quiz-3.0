@@ -17,7 +17,7 @@ Items marked with only a number will be done only if I have time.
 
 -   [x] 8. **IMPORT SET**: A way to import a set from a spreadsheet (adds terms if set already exists, new duplicate terms are resolved by the user).
 -   [x] 9. **IMPORT ALL**: A way to import (overwriting groups and sets with the same name) an exported text file of your progress.
--   [ ] 10. **EXPORT ALL**: A way to export all of your progress as a text file.
+-   [x] 10. **EXPORT ALL**: A way to export all of your progress as a text file.
 -   [ ] 11. **PRACTICE GROUP**: A way to practice the sets in a group.
 -   [x] 12. **PRACTICE SET**: A way to practice only a single set.
 -   [ ] 13. **QUESTION TYPES**: The following question types will be included:
@@ -61,7 +61,7 @@ Items marked with only a number will be done only if I have time.
 
 -   [ ] Item 15 completed
 -   [x] Item 9 completed
--   [ ] Item 10 completed
+-   [x] Item 10 completed
 -   [ ] Item 13 completed
     -   [ ] Types 1, 4, and 5 completed
 -   [ ] Item 14 completed
