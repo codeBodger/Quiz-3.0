@@ -22,11 +22,11 @@ Items marked with only a number will be done only if I have time.
 -   [x] 12. **PRACTICE SET**: A way to practice only a single set.
 -   [ ] 13. **QUESTION TYPES**: The following question types will be included:
     -   [ ] 1. New Term
-    -   [ ] 2. Multiple Choice
-    -   [ ] 3. True/False
+    -   [x] 2. Multiple Choice
+    -   [x] 3. True/False
     -   [ ] 4. Matching
     -   [ ] 5. MC character entry
-    -   [ ] 6. Text entry
+    -   [x] 6. Text entry
 -   [ ] 14. **PROBABILITIES**: More mastered terms will be less frequent and tend to result in different question types.
 -   [ ] 15. **MASTERY**: Keep track of how well someone is doing. Tell them when they've mastered the set they're working on.
 
