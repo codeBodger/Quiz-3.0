@@ -86,3 +86,10 @@ As such, I will be able to work on some of the additional items.
 -   Item 16
 -   Items 20 - 23
 -   Item 19 continued for whatever I do here.
+
+## Known Bugs
+
+-   Importing and loading sets/databases does not behave as expected
+    -   When terms should be added, they are not
+    -   Terms are not overwritten properly
+        -   Remove user confirmation and replace with warning
