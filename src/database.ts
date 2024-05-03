@@ -150,11 +150,11 @@ export class Database {
         if (!data) return;
         for (let setStr of data.split("\n\n"))
             this.addOrUpdateSet(setStr, main);
-        this.save();
     }
 
-    addOrUpdateSet(setData: string, main: MainComponent): void {
-        const newSet = Set.fromTSV(setData, main);
+    addOrUpdateSet(setData: string | Set, main: MainComponent): void {
+        const newSet =
+            setData instanceof Set ? setData : Set.fromTSV(setData, main);
         if (!newSet) return;
         for (let set of this.sets) {
             if (set.name === newSet.name) {
@@ -174,6 +174,13 @@ export class Database {
             window.localStorage.getItem("database") ?? "",
             main,
         );
+    }
+
+    merge(database: Database, main: MainComponent): void {
+        for (let set of database.sets) {
+            this.addOrUpdateSet(set, main);
+        }
+        main.saveDatabase();
     }
 
     getSets(): Set[] {

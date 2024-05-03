@@ -19,6 +19,11 @@ export class MainMenuComponent extends PageComponet {
         this.main.toSetList("Practice");
     }
 
+    @Click("import-all")
+    importAll(): void {
+        this.main.importAll();
+    }
+
     onActivate(): void {
         return;
     }

@@ -8,6 +8,7 @@ import { Database, Set, SetActivities } from "../database";
 import { SetImporterComponent } from "./set-importer/set-importer.component";
 import { SetListComponent } from "./set-list/set-list.component";
 import { QuestionComponent } from "./question/question.component";
+import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -21,6 +22,8 @@ export class MainComponent extends EzComponent {
     private mainMenu: MainMenuComponent = new MainMenuComponent(this);
     private setImporter: SetImporterComponent = new SetImporterComponent(this);
     private setList: SetListComponent = new SetListComponent(this);
+    private allImporter: DatabaseImporterComponent =
+        new DatabaseImporterComponent(this);
 
     @BindValue("page")
     private blank: string = "";
@@ -45,6 +48,10 @@ export class MainComponent extends EzComponent {
     toSetList(activity: SetActivities): void {
         this.setList.for(activity);
         this.activate(this.setList);
+    }
+
+    importAll(): void {
+        this.activate(this.allImporter);
     }
 
     askFrom(sets: Set[]): void {
@@ -76,5 +83,9 @@ export class MainComponent extends EzComponent {
         } catch {
             //nothing to do here
         }
+    }
+
+    mergeDatabase(database: Database): void {
+        this.database.merge(database, this);
     }
 }

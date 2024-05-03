@@ -5,5 +5,26 @@
     </head>
     <body>
         <div id="main-target"></div>
+        <script>
+            const page = () =>
+                document
+                    .getElementById("main-target")
+                    .getElementsByTagName("div")[0]
+                    .shadowRoot.getElementById("page")
+                    .getElementsByTagName("div")[0].shadowRoot;
+            function upload() {
+                const file = page().getElementById("file").files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const text = e.target.result.replace(/\r\n/g, "\n");
+                    console.log(text);
+                    // page().getElementById("file-text").value = text;
+                    // page().getElementById("file-text").click();
+                    localStorage.setItem("file-text", text);
+                };
+                reader.onerror = (e) => alert(e.target.error.name);
+                reader.readAsText(file);
+            }
+        </script>
     </body>
 </html>
