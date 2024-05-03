@@ -7,16 +7,16 @@ import { MainComponent } from "../main.component";
 import { BindValue, Click } from "@gsilber/webez";
 
 export class MCQComponent extends QuestionBody {
-    @BindValue("ans0")
-    private name0: string = "";
-    @BindValue("ans1")
-    private name1: string = "";
-    @BindValue("ans2")
-    private name2: string = "";
-    @BindValue("ans3")
-    private name3: string = "";
-
-    private choices: [Term, Term, Term, Term];
+    @BindValue("ans0", (v: Term[]) => v[0].answer)
+    @BindValue("ans1", (v: Term[]) => v[1].answer)
+    @BindValue("ans2", (v: Term[]) => v[2].answer)
+    @BindValue("ans3", (v: Term[]) => v[3].answer)
+    private choices: [Term, Term, Term, Term] = [
+        new Term(),
+        new Term(),
+        new Term(),
+        new Term(),
+    ];
 
     constructor(
         term: Term,
@@ -26,19 +26,16 @@ export class MCQComponent extends QuestionBody {
         main: MainComponent,
     ) {
         super("Multiple Choice", term, set, sets, parent, main, html, css);
-        this.choices = this.getOptions();
+        let choices = this.getOptions();
         // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
-        let i: number = this.choices.length;
+        let i: number = choices.length;
         while (i) {
             let ind = Math.floor(Math.random() * i--);
-            let t = this.choices[i];
-            this.choices[i] = this.choices[ind];
-            this.choices[ind] = t;
+            let t = choices[i];
+            choices[i] = choices[ind];
+            choices[ind] = t;
         }
-        this.name0 = this.choices[0].answer;
-        this.name1 = this.choices[1].answer;
-        this.name2 = this.choices[2].answer;
-        this.name3 = this.choices[3].answer;
+        this.choices = choices;
     }
 
     getOptions(): [Term, Term, Term, Term] {

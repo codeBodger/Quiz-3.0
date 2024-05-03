@@ -8,9 +8,9 @@ export class Term {
     public index: number = -1;
     private mastery: number;
     constructor(
-        readonly answer: string,
-        readonly prompt: string,
-        mastery: number | undefined,
+        readonly answer: string = "",
+        readonly prompt: string = "",
+        mastery?: number,
     ) {
         mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
         this.mastery = mastery ?? 5_000_000;
