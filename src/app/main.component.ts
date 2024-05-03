@@ -71,7 +71,9 @@ export class MainComponent extends EzComponent {
     }
 
     importSet(setData: string): void {
-        this.database.addOrUpdateSet(setData, this);
+        this.database.addOrUpdateSet(setData);
+        this.database.showAndResetErrors(this);
+        this.saveDatabase();
     }
 
     getSets(): Set[] {

@@ -16,13 +16,11 @@ export class Term {
         this.mastery = mastery ?? 5_000_000;
     }
 
-    static fromTSV(data: string, main: MainComponent): Term | undefined {
+    static fromTSV(data: string): Term | undefined {
         const dataArr = data.split("\t");
         if (dataArr.length < 2) {
-            EzDialog.popup(main, `Bad term data: ${data}`);
             return undefined;
         }
-        main.saveDatabase();
         return new Term(dataArr[0], dataArr[1], parseFloat(dataArr[2]));
     }
 
@@ -70,6 +68,11 @@ export class Term {
     }
 }
 
+type SetError = {
+    setName: string;
+    issue: "have/has bad data" | "already exist(s)";
+    errs: string[];
+};
 export type SetActivities = "Practice";
 export class Set {
     constructor(
@@ -77,49 +80,76 @@ export class Set {
         public terms: Term[] = [],
     ) {}
 
-    static fromTSV(data: string, main: MainComponent): Set | undefined {
+    static fromTSV(data: string, caller: Database): Set | undefined {
         data = data.replace(/^\s*/g, "");
         const dataArr = data.split("\n");
         const name = dataArr[0];
         if (!name) return undefined;
-        let termArr: Term[] = [];
+
+        let set = new Set(name);
+
+        // let termArr: Term[] = [];
+        let dataError: string[] = [];
+        let extantError: string[] = [];
         for (let termData of dataArr.slice(1)) {
             if (!termData) continue;
-            const term = Term.fromTSV(termData, main);
-            if (term === undefined) continue;
-            termArr.push(term);
-        }
-        main.saveDatabase();
-        return new Set(name, termArr);
-    }
-
-    merge(set: Set, main: MainComponent): void {
-        for (let term of set.terms) {
-            let existantTerm = this.getTerm(term.prompt);
-            switch (existantTerm?.matches(term)) {
-                case "exactly":
-                    continue;
-                case "prompt":
-                    var temp = existantTerm.index;
-                    EzDialog.popup(
-                        main,
-                        `The term with the prompt "${term.prompt}" already exists in this set.
-Please choose one answer to keep.
-Original: "${existantTerm.answer}"
-New: "${term.answer}"`,
-                        "Huh?",
-                        ["Original", "New"],
-                    ).subscribe((value: string) => {
-                        if (value === "New") {
-                            this.terms[temp] = term;
-                        }
-                    });
-                    continue;
-                case "none":
-                    this.terms.push(term);
+            const term = Term.fromTSV(termData);
+            if (term === undefined) dataError.push(termData);
+            else {
+                const err = set.addTerm(term);
+                if (err !== undefined) extantError.push(err);
             }
         }
-        main.saveDatabase();
+        if (dataError.length)
+            caller.addSetError({
+                setName: name,
+                issue: "have/has bad data",
+                errs: dataError,
+            });
+        if (extantError.length)
+            caller.addSetError({
+                setName: name,
+                issue: "already exist(s)",
+                errs: extantError,
+            });
+        return set;
+    }
+
+    merge(set: Set, caller: Database): void {
+        let extantError: string[] = [];
+        for (let term of set.terms) {
+            // let existantTerm = this.getTerm(term.prompt);
+            // switch (existantTerm?.matches(term)) {
+            //     // case "exactly":
+            //     //     continue;
+            //     case "prompt":
+            //         error.push(term.prompt);
+            //         continue;
+            //     case "none":
+            //         this.terms.push(term);
+            // }
+            const err = this.addTerm(term);
+            if (err !== undefined) extantError.push(err);
+        }
+        if (extantError.length)
+            caller.addSetError({
+                setName: set.name,
+                issue: "already exist(s)",
+                errs: extantError,
+            });
+    }
+
+    addTerm(term: Term): string | undefined {
+        let extantTerm = this.getTerm(term.prompt);
+        switch (extantTerm?.matches(term) ?? "none") {
+            case "prompt":
+                return term.prompt;
+            case "none":
+                this.terms.push(term);
+                break;
+            case "exactly":
+        }
+        return undefined;
     }
 
     getTerm(prompt: string): Term | undefined {
@@ -144,26 +174,41 @@ New: "${term.answer}"`,
 
 export class Database {
     private sets: Set[] = [];
+    private errors: SetError[] = [];
 
     constructor(data: string, main: MainComponent) {
         data = data.replace(/^\s*/g, "");
         if (!data) return;
-        for (let setStr of data.split("\n\n"))
-            this.addOrUpdateSet(setStr, main);
+        for (let setStr of data.split("\n\n")) this.addOrUpdateSet(setStr);
+
+        this.showAndResetErrors(main);
     }
 
-    addOrUpdateSet(setData: string | Set, main: MainComponent): void {
+    addOrUpdateSet(setData: string | Set): void {
         const newSet =
-            setData instanceof Set ? setData : Set.fromTSV(setData, main);
+            setData instanceof Set ? setData : Set.fromTSV(setData, this);
         if (!newSet) return;
         for (let set of this.sets) {
             if (set.name === newSet.name) {
-                set.merge(newSet, main);
+                set.merge(newSet, this);
                 return;
             }
         }
         this.sets.push(newSet);
-        main.saveDatabase();
+    }
+
+    addSetError(error: SetError): void {
+        this.errors.push(error);
+    }
+
+    showAndResetErrors(main: MainComponent): void {
+        for (let error of this.errors)
+            EzDialog.popup(
+                main,
+                error.errs.join("\n"),
+                `In set "${error.setName}", the following term(s) ${error.issue}`,
+            );
+        this.errors = [];
     }
 
     static loadDatabase(main: MainComponent): Database {
@@ -178,7 +223,7 @@ export class Database {
 
     merge(database: Database, main: MainComponent): void {
         for (let set of database.sets) {
-            this.addOrUpdateSet(set, main);
+            this.addOrUpdateSet(set);
         }
         main.saveDatabase();
     }

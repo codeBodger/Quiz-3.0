@@ -90,6 +90,6 @@ As such, I will be able to work on some of the additional items.
 ## Known Bugs
 
 -   Importing and loading sets/databases does not behave as expected
-    -   When terms should be added, they are not
-    -   Terms are not overwritten properly
-        -   Remove user confirmation and replace with warning
+    -   [x] When terms should be added, they are not
+    -   [x] Terms are not overwritten properly
+        -   [x] Remove user confirmation and replace with warning
