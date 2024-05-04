@@ -1,6 +1,11 @@
 import { EzDialog } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
-import { QuestionType, getQuestionType } from "./question_types";
+import {
+    BEGUN,
+    MASTERED,
+    QuestionType,
+    getQuestionType,
+} from "./question_types";
 
 declare const window: Window;
 
@@ -66,6 +71,12 @@ export class Term {
         // this.mastery *= changeFactor[success ? 1 : 0];
         this.mastery = type.masteryUpdater(this.mastery, success);
         main.saveDatabase();
+    }
+
+    getMastery(): number {
+        if (isNaN(this.mastery)) return BEGUN;
+        if (this.mastery < MASTERED) this.mastery = MASTERED;
+        return this.mastery;
     }
 
     toString(): string {
@@ -166,6 +177,15 @@ export class Set {
 
     chooseTerm(): Term {
         return this.terms[Math.floor(Math.random() * this.terms.length)];
+    }
+
+    getMastery(): number {
+        return (
+            this.terms.reduce(
+                (sum: number, term: Term) => sum + term.getMastery(),
+                0,
+            ) / this.terms.length
+        );
     }
 
     toString(): string {

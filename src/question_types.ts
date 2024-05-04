@@ -4,6 +4,8 @@ const types = [
     "New Term",
     "Multiple Choice",
     "True/False",
+    // "Matching",
+    // "Letter Entry",
     "Text Entry",
 ] as const;
 
@@ -14,6 +16,8 @@ const types = [
 //     | "Text Entry";
 export type QuestionTypes = (typeof types)[number];
 
+export const BEGUN = 5_000_000;
+export const MASTERED = 100_000;
 export class QuestionType {
     constructor(
         public readonly name: QuestionTypes,
@@ -23,33 +27,46 @@ export class QuestionType {
     ) {}
 
     masteryUpdater(mastery: number, success: boolean): number {
-        return success ? this.onSuccess(mastery) : this.onFailure(mastery);
+        const out = success ? this.onSuccess(mastery) : this.onFailure(mastery);
+        return out < MASTERED ? MASTERED : out;
     }
 }
 
 export const questionTypes: QuestionType[] = [
     new QuestionType(
         "New Term",
-        () => 5_000,
-        () => 5_000_000,
+        () => MASTERED,
+        () => BEGUN,
         () => 1,
     ),
     new QuestionType(
         "Multiple Choice",
-        (mastery) => mastery * 0.8,
+        (mastery) => mastery / 1.2,
         (mastery) => mastery * 1.2,
         () => 1,
     ),
     new QuestionType(
         "True/False",
-        (mastery) => mastery * 0.9,
+        (mastery) => mastery / 1.1,
         (mastery) => mastery * 1.1,
         () => 1,
     ),
+    // new QuestionType(
+    //     "Matching",
+    //     (mastery) => mastery / 1.15,
+    //     (mastery) => mastery * 1.15,
+    //     () => 1,
+    // ),
+    // new QuestionType(
+    //     "Letter Entry",
+    //     (mastery) => mastery / 1.7,
+    //     (mastery) => mastery * 1.7,
+    //     () => 1,
+    // ),
     new QuestionType(
         "Text Entry",
-        (mastery) => mastery * 0.6,
-        (mastery) => mastery * 1.2,
+        (mastery) => mastery / 2,
+        (mastery) => mastery * 2,
         () => 1,
     ),
 ] as const;
