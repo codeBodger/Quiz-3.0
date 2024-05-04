@@ -21,7 +21,7 @@ Items marked with only a number will be done only if I have time.
 -   [ ] 11. **PRACTICE GROUP**: A way to practice the sets in a group.
 -   [x] 12. **PRACTICE SET**: A way to practice only a single set.
 -   [ ] 13. **QUESTION TYPES**: The following question types will be included:
-    -   [ ] 1. New Term
+    -   [x] 1. New Term
     -   [x] 2. Multiple Choice
     -   [x] 3. True/False
     -   [ ] 4. Matching
