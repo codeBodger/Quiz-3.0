@@ -12,7 +12,7 @@ const types = [
 //     | "Multiple Choice"
 //     | "True/False"
 //     | "Text Entry";
-type QuestionTypes = (typeof types)[number];
+export type QuestionTypes = (typeof types)[number];
 
 export class QuestionType {
     constructor(

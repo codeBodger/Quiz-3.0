@@ -2,7 +2,7 @@ import { EzComponent } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
 import { QuestionComponent } from "./app/question/question.component";
 import { Term, Set } from "./database";
-import { QuestionType } from "./question_types";
+import { QuestionType, QuestionTypes, getQuestionType } from "./question_types";
 
 export class SubComponent extends EzComponent {
     constructor(
@@ -28,8 +28,9 @@ export abstract class PageComponet extends EzComponent {
 }
 
 export abstract class QuestionBody extends SubComponent {
+    protected type: QuestionType;
     constructor(
-        protected type: QuestionType,
+        type: QuestionTypes,
         protected term: Term,
         protected set: Set,
         protected sets: Set[],
@@ -39,6 +40,7 @@ export abstract class QuestionBody extends SubComponent {
         css: string,
     ) {
         super(parent, main, html, css);
+        this.type = getQuestionType(type);
     }
 
     abstract answer(expect: any): void;

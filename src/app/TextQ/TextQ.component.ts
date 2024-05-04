@@ -5,7 +5,6 @@ import { Set, Term } from "../../database";
 import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
 import { Click, GenericEvent, Input, ValueEvent } from "@gsilber/webez";
-import { getQuestionType } from "../../question_types";
 
 export class TextQComponent extends QuestionBody {
     private input: string = "";
@@ -17,16 +16,7 @@ export class TextQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super(
-            getQuestionType("Text Entry"),
-            term,
-            set,
-            sets,
-            parent,
-            main,
-            html,
-            css,
-        );
+        super("Text Entry", term, set, sets, parent, main, html, css);
     }
 
     @Input("answer")

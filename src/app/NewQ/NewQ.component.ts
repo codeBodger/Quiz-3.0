@@ -5,7 +5,6 @@ import { Term, Set } from "../../database";
 import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
 import { Click } from "@gsilber/webez";
-import { getQuestionType } from "../../question_types";
 
 export class NewQComponent extends QuestionBody {
     constructor(
@@ -15,16 +14,7 @@ export class NewQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super(
-            getQuestionType("New Term"),
-            term,
-            set,
-            sets,
-            parent,
-            main,
-            html,
-            css,
-        );
+        super("New Term", term, set, sets, parent, main, html, css);
         this.parent.prompt = `${this.term.prompt} ⇒ ${this.term.answer}`;
     }
 
