@@ -93,3 +93,5 @@ As such, I will be able to work on some of the additional items.
     -   [x] When terms should be added, they are not
     -   [x] Terms are not overwritten properly
         -   [x] Remove user confirmation and replace with warning
+-   Buttons go to the next line instead of wrapping their text
+    -   [ ] No idea at this point...
