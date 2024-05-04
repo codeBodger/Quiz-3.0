@@ -2,6 +2,7 @@ import { EzComponent } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
 import { QuestionComponent } from "./app/question/question.component";
 import { Term, Set } from "./database";
+import { QuestionType } from "./question_types";
 
 export class SubComponent extends EzComponent {
     constructor(
@@ -26,10 +27,9 @@ export abstract class PageComponet extends EzComponent {
     abstract onActivate(): void;
 }
 
-export type QuestionTypes = "Multiple Choice" | "True/False" | "Text Entry";
 export abstract class QuestionBody extends SubComponent {
     constructor(
-        protected name: QuestionTypes,
+        protected type: QuestionType,
         protected term: Term,
         protected set: Set,
         protected sets: Set[],
@@ -39,6 +39,17 @@ export abstract class QuestionBody extends SubComponent {
         css: string,
     ) {
         super(parent, main, html, css);
-        this.parent.name = this.name;
+    }
+
+    abstract answer(expect: any): void;
+}
+
+declare const window: Window;
+export class OverlayError extends Error {
+    constructor(message?: string) {
+        super(message);
+        const errElem = window.document.getElementById("error");
+        errElem?.setAttribute("value", message ?? "");
+        errElem?.click();
     }
 }

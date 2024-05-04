@@ -5,6 +5,7 @@ import { Set, Term } from "../../database";
 import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
 import { Click } from "@gsilber/webez";
+import { getQuestionType } from "../../question_types";
 
 type TF = { prompt: Term; answer: Term };
 
@@ -18,7 +19,16 @@ export class TFQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super("True/False", term, set, sets, parent, main, html, css);
+        super(
+            getQuestionType("True/False"),
+            term,
+            set,
+            sets,
+            parent,
+            main,
+            html,
+            css,
+        );
         this.choices = { prompt: term, answer: term };
         if (Math.random() < 0.5) {
             let allOptions: Term[] = [];
@@ -47,7 +57,7 @@ export class TFQComponent extends QuestionBody {
         const correct =
             (this.choices.prompt.matches(this.choices.answer) === "exactly") ===
             expect;
-        this.term.update(correct, this.name, this.main);
+        this.term.update(correct, this.type, this.main);
         this.parent.answer(correct, expect ? "True" : "False");
     }
 }

@@ -5,6 +5,7 @@ import { Set, Term } from "../../database";
 import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
 import { Click, GenericEvent, Input, ValueEvent } from "@gsilber/webez";
+import { getQuestionType } from "../../question_types";
 
 export class TextQComponent extends QuestionBody {
     private input: string = "";
@@ -16,7 +17,16 @@ export class TextQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super("Text Entry", term, set, sets, parent, main, html, css);
+        super(
+            getQuestionType("Text Entry"),
+            term,
+            set,
+            sets,
+            parent,
+            main,
+            html,
+            css,
+        );
     }
 
     @Input("answer")
@@ -29,7 +39,7 @@ export class TextQComponent extends QuestionBody {
     answer(e: KeyboardEvent | MouseEvent): void {
         if (e instanceof KeyboardEvent && e.key !== "Enter") return;
         const correct = this.term.answer === this.input;
-        this.term.update(correct, this.name, this.main);
+        this.term.update(correct, this.type, this.main);
         this.parent.answer(correct, this.input);
     }
 }

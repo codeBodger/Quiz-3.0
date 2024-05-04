@@ -1,10 +1,6 @@
 import html from "./question.component.html";
 import css from "./question.component.css";
-import {
-    PageComponet,
-    QuestionBody,
-    QuestionTypes,
-} from "../../EzComponent_subclasses";
+import { PageComponet, QuestionBody } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Set, Term } from "../../database";
 import { MCQComponent } from "../MCQ/MCQ.component";
@@ -12,10 +8,12 @@ import { AnswerComponent } from "../answer/answer.component";
 import { BindValue } from "@gsilber/webez";
 import { TextQComponent } from "../TextQ/TextQ.component";
 import { TFQComponent } from "../TFQ/TFQ.component";
+import { NewQComponent } from "../NewQ/NewQ.component";
+import { QuestionType } from "../../question_types";
 
 export class QuestionComponent extends PageComponet {
-    @BindValue("name")
-    public name: QuestionTypes | "" = "";
+    @BindValue("name", (v?: QuestionType) => v?.name ?? "")
+    public type: QuestionType;
     @BindValue("prompt")
     public prompt: string = "";
     @BindValue("set")
@@ -40,7 +38,11 @@ export class QuestionComponent extends PageComponet {
             this,
             main,
         ];
-        switch (term.chooseQuestionType()) {
+        this.type = term.chooseQuestionType();
+        switch (this.type.name) {
+            case "New Term":
+                this.questionBody = new NewQComponent(...args);
+                break;
             case "Multiple Choice":
                 this.questionBody = new MCQComponent(...args);
                 break;
@@ -48,7 +50,6 @@ export class QuestionComponent extends PageComponet {
                 this.questionBody = new TFQComponent(...args);
                 break;
             case "Text Entry":
-            default:
                 this.questionBody = new TextQComponent(...args);
                 break;
         }

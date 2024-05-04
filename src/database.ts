@@ -1,6 +1,6 @@
 import { EzDialog } from "@gsilber/webez";
 import { MainComponent } from "./app/main.component";
-import { QuestionTypes } from "./EzComponent_subclasses";
+import { QuestionType, getQuestionType } from "./question_types";
 
 declare const window: Window;
 
@@ -12,8 +12,8 @@ export class Term {
         readonly prompt: string = "",
         mastery?: number,
     ) {
-        mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
-        this.mastery = mastery ?? 5_000_000;
+        // mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
+        this.mastery = mastery ?? NaN;
     }
 
     static fromTSV(data: string): Term | undefined {
@@ -32,34 +32,39 @@ export class Term {
         return "none";
     }
 
-    chooseQuestionType(): QuestionTypes {
+    chooseQuestionType(): QuestionType {
+        if (isNaN(this.mastery)) return getQuestionType("New Term");
         switch (Math.floor(Math.random() * 3)) {
             case 0:
-                return "Multiple Choice";
+                return getQuestionType("Multiple Choice");
             case 1:
-                return "True/False";
+                return getQuestionType("True/False");
             case 2:
             default:
-                return "Text Entry";
+                return getQuestionType("Text Entry");
         }
     }
 
-    update(success: boolean, type: QuestionTypes, main: MainComponent) {
+    update(success: boolean, type: QuestionType, main: MainComponent) {
         // console.log(success);
         // console.log(success ? 0 : 1);
-        let changeFactor = [1, 1];
-        switch (type) {
-            case "Multiple Choice":
-                changeFactor = [0.8, 1.2];
-                break;
-            case "True/False":
-                changeFactor = [0.9, 1.1];
-                break;
-            case "Text Entry":
-                changeFactor = [0.6, 1.2];
-                break;
-        }
-        this.mastery *= changeFactor[success ? 1 : 0];
+        // let changeFactor = [1, 1];
+        // switch (type.name) {
+        //     case "New Term":
+        //         changeFactor = [0, 0];
+        //         break;
+        //     case "Multiple Choice":
+        //         changeFactor = [0.8, 1.2];
+        //         break;
+        //     case "True/False":
+        //         changeFactor = [0.9, 1.1];
+        //         break;
+        //     case "Text Entry":
+        //         changeFactor = [0.6, 1.2];
+        //         break;
+        // }
+        // this.mastery *= changeFactor[success ? 1 : 0];
+        this.mastery = type.masteryUpdater(this.mastery, success);
         main.saveDatabase();
     }
 

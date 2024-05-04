@@ -5,6 +5,7 @@ import { Set, Term } from "../../database";
 import { QuestionComponent } from "../question/question.component";
 import { MainComponent } from "../main.component";
 import { BindValue, Click } from "@gsilber/webez";
+import { getQuestionType } from "../../question_types";
 
 export class MCQComponent extends QuestionBody {
     @BindValue("ans0", (v: Term[]) => v[0].answer)
@@ -25,7 +26,16 @@ export class MCQComponent extends QuestionBody {
         parent: QuestionComponent,
         main: MainComponent,
     ) {
-        super("Multiple Choice", term, set, sets, parent, main, html, css);
+        super(
+            getQuestionType("Multiple Choice"),
+            term,
+            set,
+            sets,
+            parent,
+            main,
+            html,
+            css,
+        );
         let choices = this.getOptions();
         // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
         let i: number = choices.length;
@@ -79,7 +89,7 @@ export class MCQComponent extends QuestionBody {
 
     answer(answer: Term) {
         const correct = this.term.matches(answer) === "exactly";
-        this.term.update(correct, this.name, this.main);
+        this.term.update(correct, this.type, this.main);
         this.parent.answer(correct, answer.answer);
     }
 }
