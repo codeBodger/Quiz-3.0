@@ -95,3 +95,5 @@ As such, I will be able to work on some of the additional items.
         -   [x] Remove user confirmation and replace with warning
 -   Buttons go to the next line instead of wrapping their text
     -   [ ] No idea at this point...
+-   SetError doesn't have linebreaks
+    -   [ ] Not much of an idea on this one either. Maybe `<br>` or just comma separated
