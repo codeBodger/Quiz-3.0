@@ -91,10 +91,14 @@ type SetError = {
 };
 export type SetActivities = "Practice";
 export class Set {
+    private mastered: boolean;
+
     constructor(
         readonly name: string,
         public terms: Term[] = [],
-    ) {}
+    ) {
+        this.mastered = this.getMastery() === MASTERED;
+    }
 
     static fromTSV(data: string, caller: Database): Set | undefined {
         data = data.replace(/^\s*/g, "");
@@ -165,6 +169,7 @@ export class Set {
                 break;
             case "exactly":
         }
+        this.mastered = this.getMastery() === MASTERED;
         return undefined;
     }
 
@@ -186,6 +191,11 @@ export class Set {
                 0,
             ) / this.terms.length
         );
+    }
+
+    justMastered(): boolean {
+        if (this.mastered) return false;
+        return (this.mastered = this.getMastery() === MASTERED);
     }
 
     toString(): string {

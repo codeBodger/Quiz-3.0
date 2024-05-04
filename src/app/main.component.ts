@@ -9,6 +9,7 @@ import { SetImporterComponent } from "./set-importer/set-importer.component";
 import { SetListComponent } from "./set-list/set-list.component";
 import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
+import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -58,6 +59,10 @@ export class MainComponent extends EzComponent {
     askFrom(sets: Set[]): void {
         const set = sets[Math.floor(Math.random() * sets.length)];
         this.activate(new QuestionComponent(set.chooseTerm(), set, sets, this));
+    }
+
+    masteredSet(set: Set, sets: Set[]): void {
+        this.activate(new SetMasteredComponent(set.name, sets, this));
     }
 
     private activate(page: PageComponet) {

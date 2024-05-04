@@ -16,8 +16,8 @@ export class QuestionComponent extends PageComponet {
     public type: QuestionType;
     @BindValue("prompt")
     public prompt: string = "";
-    @BindValue("set")
-    public setName: string = "";
+    @BindValue("set", (set?: Set) => set?.name ?? "")
+    private set: Set;
 
     private questionBody: QuestionBody;
     private answerBody: AnswerComponent;
@@ -30,7 +30,7 @@ export class QuestionComponent extends PageComponet {
     ) {
         super(main, html, css);
         this.prompt = term.prompt;
-        this.setName = set.name;
+        this.set = set;
         const args: [Term, Set, Set[], QuestionComponent, MainComponent] = [
             term,
             set,
@@ -68,6 +68,7 @@ export class QuestionComponent extends PageComponet {
     }
 
     continue(): void {
-        this.main.askFrom(this.sets);
+        if (this.set.justMastered()) this.main.masteredSet(this.set, this.sets);
+        else this.main.askFrom(this.sets);
     }
 }
