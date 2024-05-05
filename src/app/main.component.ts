@@ -10,6 +10,7 @@ import { SetListComponent } from "./set-list/set-list.component";
 import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
 import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
+import { checkImplementation } from "../question_types";
 
 /**
  * @description MainComponent is the main component of the app
@@ -35,6 +36,7 @@ export class MainComponent extends EzComponent {
         this.activate(this.mainMenu);
         this.database = Database.loadDatabase(this);
         this.saveDatabase();
+        checkImplementation();
     }
 
     exit() {

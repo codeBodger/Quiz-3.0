@@ -1,4 +1,4 @@
-import { OverlayError } from "./EzComponent_subclasses";
+import { EzError } from "./app/EzError/EzError.component";
 
 const types = [
     "New Term",
@@ -75,8 +75,7 @@ export function getQuestionType(name: QuestionTypes): QuestionType {
     for (let type of questionTypes) {
         if (type.name === name) return type;
     }
-    new OverlayError(`Invalid question type: ${name}`);
-    return new QuestionType("New Term");
+    throw new EzError(`Invalid question type: ${name}`);
 }
 
 export function checkImplementation(): void {

@@ -45,13 +45,3 @@ export abstract class QuestionBody extends SubComponent {
 
     abstract answer(expect: any): void;
 }
-
-declare const window: Window;
-export class OverlayError extends Error {
-    constructor(message?: string) {
-        super(message);
-        const errElem = window.document.getElementById("error");
-        errElem?.setAttribute("value", message ?? "");
-        errElem?.click();
-    }
-}
