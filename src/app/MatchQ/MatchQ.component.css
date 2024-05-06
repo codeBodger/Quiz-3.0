@@ -1,0 +1,13 @@
+.done {
+    visibility: hidden;
+}
+
+.clicked {
+    background-color: #98f;
+}
+.clicked:hover {
+    background-color: #675bbb;
+}
+.clicked:active {
+    background-color: #447;
+}

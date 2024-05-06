@@ -4,7 +4,7 @@ const types = [
     "New Term",
     "Multiple Choice",
     "True/False",
-    // "Matching",
+    "Matching",
     // "Letter Entry",
     "Text Entry",
 ] as const;
@@ -75,22 +75,22 @@ export const questionTypes: QuestionType[] = [
             return mastery / 10000000 - 0.5;
         },
     ),
-    // new QuestionType(
-    //     "Matching",
-    //     (mastery) => mastery / 1.15,
-    //     (mastery) => mastery * 1.15,
-    //     (mastery) => {
-    //         if (mastery <= 4800000)
-    //             return (
-    //                 (4 *
-    //                     (0.00169055154464 *
-    //                         1.00000126005 ** (1.00000036691 * mastery) +
-    //                         0.046476040631)) /
-    //                 (1 + Math.exp((mastery - 4370000) / 139000))
-    //             );
-    //         return 0;
-    //     },
-    // ),
+    new QuestionType(
+        "Matching",
+        (mastery) => mastery / 1.15,
+        (mastery) => mastery * 1.15,
+        (mastery) => {
+            if (mastery <= 4800000)
+                return (
+                    (4 * // is this `4 *` for getting the other two?
+                        (0.00169055154464 *
+                            1.00000126005 ** (1.00000036691 * mastery) +
+                            0.046476040631)) /
+                    (1 + Math.exp((mastery - 4370000) / 139000))
+                );
+            return 0;
+        },
+    ),
     // new QuestionType(
     //     "Letter Entry",
     //     (mastery) => mastery / 1.7,
