@@ -21,13 +21,14 @@ export class TFQComponent extends QuestionBody {
         super("True/False", term, set, sets, parent, main, html, css);
         this.choices = { prompt: term, answer: term };
         if (Math.random() < 0.5) {
-            let allOptions: Term[] = [];
-            this.sets.forEach((set: Set) => {
-                set.terms.forEach((term: Term) => {
-                    if (term.matches(this.term) === "none")
-                        allOptions.push(term);
-                });
-            });
+            let allOptions = this.term.allOptions(this.sets);
+            if (allOptions.length < 1) this.main.askFrom(sets, true);
+            // this.sets.forEach((set: Set) => {
+            //     set.terms.forEach((term: Term) => {
+            //         if (term.matches(this.term) === "none" && term.started)
+            //             allOptions.push(term);
+            //     });
+            // });
             const i = Math.floor(Math.random() * allOptions.length);
             this.choices.answer = allOptions[i];
         }

@@ -27,7 +27,7 @@ Items marked with only a number will be done only if I have time.
     -   [ ] 4. Matching
     -   [ ] 5. MC character entry
     -   [x] 6. Text entry
--   [ ] 14. **PROBABILITIES**: More mastered terms will be less frequent and tend to result in different question types.
+-   [x] 14. **PROBABILITIES**: More mastered terms will be less frequent and tend to result in different question types.
 -   [x] 15. **MASTERY**: Keep track of how well someone is doing. Tell them when they've mastered a set they're working on.
 
 16. **TERM TYPES**: So different term types aren't compared, giving away the answer.
@@ -64,7 +64,7 @@ Items marked with only a number will be done only if I have time.
 -   [x] Item 10 completed
 -   [ ] Item 13 completed
     -   [ ] Types 1, 4, and 5 completed
--   [ ] Item 14 completed
+-   [x] Item 14 completed
 -   [ ] Item 19 started
 
 ## Milestone 3 (2024-05-12)

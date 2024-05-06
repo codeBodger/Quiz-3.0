@@ -3,22 +3,24 @@ import { MainComponent } from "./app/main.component";
 import {
     BEGUN,
     MASTERED,
+    PROB_FACTOR_IF_ACTIVE_SET,
     QuestionType,
     getQuestionType,
+    questionTypes,
 } from "./question_types";
 
 declare const window: Window;
 
 export class Term {
     public index: number = -1;
-    private mastery: number;
+    private _mastery: number;
     constructor(
         readonly answer: string = "",
         readonly prompt: string = "",
         mastery?: number,
     ) {
         // mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
-        this.mastery = mastery ?? NaN;
+        this._mastery = mastery ?? NaN;
     }
 
     static fromTSV(data: string): Term | undefined {
@@ -38,16 +40,26 @@ export class Term {
     }
 
     chooseQuestionType(): QuestionType {
-        if (isNaN(this.mastery)) return getQuestionType("New Term");
-        switch (Math.floor(Math.random() * 3)) {
-            case 0:
-                return getQuestionType("Multiple Choice");
-            case 1:
-                return getQuestionType("True/False");
-            case 2:
-            default:
-                return getQuestionType("Text Entry");
+        if (isNaN(this._mastery)) return getQuestionType("New Term");
+        let probs: number[] = [];
+        for (let i = 0; i < questionTypes.length; i++) {
+            probs[i] =
+                questionTypes[i].probability(this._mastery) +
+                (probs[i - 1] ?? 0);
         }
+        const random = Math.random() * (probs.at(-1) ?? 0);
+        for (let i = 0; i < questionTypes.length; i++)
+            if (probs[i] > random) return questionTypes[i];
+        return questionTypes[questionTypes.length - 1];
+        // switch (Math.floor(Math.random() * 3)) {
+        //     case 0:
+        //         return getQuestionType("Multiple Choice");
+        //     case 1:
+        //         return getQuestionType("True/False");
+        //     case 2:
+        //     default:
+        //         return getQuestionType("Text Entry");
+        // }
     }
 
     update(success: boolean, type: QuestionType, main: MainComponent) {
@@ -69,18 +81,33 @@ export class Term {
         //         break;
         // }
         // this.mastery *= changeFactor[success ? 1 : 0];
-        this.mastery = type.masteryUpdater(this.mastery, success);
+        this._mastery = type.masteryUpdater(this._mastery, success);
         main.saveDatabase();
     }
 
-    getMastery(): number {
-        if (isNaN(this.mastery)) return BEGUN;
-        if (this.mastery < MASTERED) this.mastery = MASTERED;
-        return this.mastery;
+    get mastery(): number {
+        if (isNaN(this._mastery)) return BEGUN;
+        if (this._mastery < MASTERED) this._mastery = MASTERED;
+        return this._mastery;
+    }
+
+    get started(): boolean {
+        return !isNaN(this._mastery);
+    }
+
+    allOptions(sets: Set[]): Term[] {
+        let allOptions: Term[] = [];
+        sets.forEach((set: Set) => {
+            set.terms.forEach((term: Term) => {
+                if (term.matches(this) === "none" && term.started)
+                    allOptions.push(term);
+            });
+        });
+        return allOptions;
     }
 
     toString(): string {
-        return `${this.answer}\t${this.prompt}\t${this.mastery}`;
+        return `${this.answer}\t${this.prompt}\t${this._mastery}`;
     }
 }
 
@@ -89,6 +116,7 @@ type SetError = {
     issue: "have/has bad data" | "already exist(s)";
     errs: string[];
 };
+type Categorised = { done: Set[]; doing: Set | undefined };
 export type SetActivities = "Practice";
 export class Set {
     private mastered: boolean;
@@ -97,7 +125,7 @@ export class Set {
         readonly name: string,
         public terms: Term[] = [],
     ) {
-        this.mastered = this.getMastery() === MASTERED;
+        this.mastered = this.mastery === MASTERED;
     }
 
     static fromTSV(data: string, caller: Database): Set | undefined {
@@ -169,7 +197,7 @@ export class Set {
                 break;
             case "exactly":
         }
-        this.mastered = this.getMastery() === MASTERED;
+        this.mastered = this.mastery === MASTERED;
         return undefined;
     }
 
@@ -180,22 +208,70 @@ export class Set {
         }, undefined);
     }
 
-    chooseTerm(): Term {
-        return this.terms[Math.floor(Math.random() * this.terms.length)];
+    chooseTerm(onlyNew: boolean = false): Term | undefined {
+        let probs: number[] = [];
+        for (let term of this.terms)
+            probs.push(
+                (onlyNew ? +!term.started : term.mastery) + (probs.at(-1) ?? 0),
+            );
+        const random = Math.random() * (probs.at(-1) ?? 0);
+        for (let i = 0; i < this.length; i++)
+            if (probs[i] > random) return this.terms[i];
+        return undefined;
+        // return this.terms[Math.floor(Math.random() * this.length)];
     }
 
-    getMastery(): number {
+    static categorise(sets: Set[]): Categorised {
+        let out: Categorised = { done: [], doing: undefined };
+        for (let set of sets) {
+            if (set.mastered) {
+                out.done.push(set);
+            } else {
+                out.doing = set;
+                break;
+            }
+        }
+        return out;
+    }
+
+    static randomSet(sets: Categorised | Set[]): Set {
+        if (sets instanceof Array) sets = { done: sets, doing: undefined };
+        let probs: number[] = [];
+        for (let set of sets.done) probs.push(set.prob + (probs.at(-1) ?? 0));
+        if (sets.doing !== undefined) {
+            sets.done.push(sets.doing);
+            probs.push(
+                sets.doing.prob * PROB_FACTOR_IF_ACTIVE_SET +
+                    (probs.at(-1) ?? 0),
+            );
+        }
+        sets = sets.done;
+        const random = Math.random() * (probs.at(-1) ?? 0);
+        for (let i = 0; i < sets.length; i++)
+            if (probs[i] > random) return sets[i];
+        return sets[sets.length - 1];
+    }
+
+    get prob(): number {
+        return this.length * this.mastery;
+    }
+
+    get length(): number {
+        return this.terms.length;
+    }
+
+    get mastery(): number {
         return (
             this.terms.reduce(
-                (sum: number, term: Term) => sum + term.getMastery(),
+                (sum: number, term: Term) => sum + term.mastery,
                 0,
-            ) / this.terms.length
+            ) / this.length
         );
     }
 
     justMastered(): boolean {
         if (this.mastered) return false;
-        return (this.mastered = this.getMastery() === MASTERED);
+        return (this.mastered = this.mastery === MASTERED);
     }
 
     toString(): string {

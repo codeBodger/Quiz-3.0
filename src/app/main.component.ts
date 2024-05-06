@@ -11,6 +11,7 @@ import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
 import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
 import { checkImplementation } from "../question_types";
+import { EzError } from "./EzError/EzError.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -58,9 +59,13 @@ export class MainComponent extends EzComponent {
         this.activate(this.allImporter);
     }
 
-    askFrom(sets: Set[]): void {
-        const set = sets[Math.floor(Math.random() * sets.length)];
-        this.activate(new QuestionComponent(set.chooseTerm(), set, sets, this));
+    askFrom(sets: Set[], onlyNew: boolean = false): void {
+        const categorised = Set.categorise(sets);
+        const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
+        const term = set?.chooseTerm(onlyNew);
+        if (!set || !term)
+            throw new EzError("There are insufficient terms in your set(s).");
+        this.activate(new QuestionComponent(term, set, sets, this));
     }
 
     masteredSet(set: Set, sets: Set[]): void {
