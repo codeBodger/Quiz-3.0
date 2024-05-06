@@ -60,6 +60,7 @@ export class EzError extends Error {
     constructor(message?: string) {
         super(message);
         this.htmlElement = window.document.createElement("div");
+        this.htmlElement.id = "ez-error";
         this.shadow = this.htmlElement.attachShadow({ mode: "open" });
         this.template = window.document.createElement("template");
         this.template.innerHTML = html.replace(
