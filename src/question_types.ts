@@ -9,11 +9,6 @@ const types = [
     "Text Entry",
 ] as const;
 
-// type QuestionTypes =
-//     | "New Term"
-//     | "Multiple Choice"
-//     | "True/False"
-//     | "Text Entry";
 export type QuestionTypes = (typeof types)[number];
 
 export const BEGUN = 5_000_000;

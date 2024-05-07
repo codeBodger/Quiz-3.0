@@ -43,7 +43,6 @@ export class MainComponent extends EzComponent {
     exit() {
         this.activate(this.mainMenu);
         this.saveDatabase();
-        console.log(this.database);
     }
 
     toSetImporter(): void {

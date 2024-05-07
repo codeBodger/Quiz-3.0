@@ -40,7 +40,6 @@ export class QuestionComponent extends PageComponet {
             main,
         ];
         this.type = term.chooseQuestionType();
-        console.log(this.type.name);
         switch (this.type.name) {
             case "New Term":
                 this.questionBody = new NewQComponent(...args);

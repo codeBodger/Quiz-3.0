@@ -19,13 +19,6 @@ class Button {
 
     get clicked(): boolean {
         const yes = this === this.component.clicked;
-        // console.log(
-        //     this.index,
-        //     this.type,
-        //     yes,
-        //     this.component.clicked?.index,
-        //     this.component.clicked?.type,
-        // );
         return yes;
     }
 
@@ -45,7 +38,6 @@ function transform(
     //     return (v: Button[]) => (v[index][value] ? value : "");
 ): (v: Button[]) => boolean {
     return (v: Button[]) => {
-        console.log(v[index][value]);
         return v[index][value];
     };
 }
@@ -130,17 +122,11 @@ export class MatchQComponent extends QuestionBody {
             this.prompts[i].term = choices[i];
 
         this.update();
-        // console.log("fdsa");
-        // this["shadow"]
-        //     .getElementById("ans0")
-        //     .setAttribute("class", "aaaaaaaaaaaaaaaaa");
-        // console.log("asdf");
         this.parent.prompt = "&nbsp;";
     }
 
     getOptions(): [Term, Term, Term] {
         let allOptions = this.term.allOptions([this.set]);
-        console.log(allOptions);
         if (allOptions.length < 2) this.main.askFrom(this.sets, true);
         let out: [Term, Term, Term] = [this.term, this.term, this.term];
         for (let i = 1; i < 3; i++) {

@@ -40,14 +40,7 @@ export class MCQComponent extends QuestionBody {
 
     getOptions(): [Term, Term, Term, Term] {
         let allOptions = this.term.allOptions(this.sets);
-        console.log(allOptions);
         if (allOptions.length < 3) this.main.askFrom(this.sets, true);
-        // this.sets.forEach((set: Set) => {
-        //     set.terms.forEach((term: Term) => {
-        //         if (term.matches(this.term) === "none" && term.started)
-        //             allOptions.push(term);
-        //     });
-        // });
         let out: [Term, Term, Term, Term] = [
             this.term,
             this.term,

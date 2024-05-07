@@ -115,7 +115,6 @@ function BindCSSClassToBooleanSRA(
 ) {
     return function (target, context) {
         context.addInitializer(function () {
-            console.log("hi");
             const element = this["shadow"].getElementById(id);
             if (!element) {
                 throw new Error(`can not find HTML element with id: ${id}`);

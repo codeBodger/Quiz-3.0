@@ -23,12 +23,6 @@ export class TFQComponent extends QuestionBody {
         if (Math.random() < 0.5) {
             let allOptions = this.term.allOptions(this.sets);
             if (allOptions.length < 1) this.main.askFrom(sets, true);
-            // this.sets.forEach((set: Set) => {
-            //     set.terms.forEach((term: Term) => {
-            //         if (term.matches(this.term) === "none" && term.started)
-            //             allOptions.push(term);
-            //     });
-            // });
             const i = Math.floor(Math.random() * allOptions.length);
             this.choices.answer = allOptions[i];
         }

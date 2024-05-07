@@ -20,9 +20,6 @@
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const text = e.target.result.replace(/\r\n/g, "\n");
-                    console.log(text);
-                    // page().getElementById("file-text").value = text;
-                    // page().getElementById("file-text").click();
                     localStorage.setItem("file-text", text);
                 };
                 reader.onerror = (e) => alert(e.target.error.name);
