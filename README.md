@@ -24,7 +24,7 @@ Items marked with only a number will be done only if I have time.
     -   [x] 1. New Term
     -   [x] 2. Multiple Choice
     -   [x] 3. True/False
-    -   [ ] 4. Matching
+    -   [x] 4. Matching
     -   [ ] 5. MC character entry
     -   [x] 6. Text entry
 -   [x] 14. **PROBABILITIES**: More mastered terms will be less frequent and tend to result in different question types.
