@@ -4,7 +4,8 @@ import { QuestionBody } from "../../EzComponent_subclasses";
 import { Term, Set } from "../../database";
 import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
-import { BindCSSClass, BindValue, Click } from "@gsilber/webez";
+import { BindValue, Click } from "@gsilber/webez";
+import { BindCSSClassToBooleanSRA } from "../../bind.decorators";
 
 class Button {
     public done = false;
@@ -18,19 +19,19 @@ class Button {
 
     get clicked(): boolean {
         const yes = this === this.component.clicked;
-        console.log(
-            this.index,
-            this.type,
-            yes,
-            this.component.clicked?.index,
-            this.component.clicked?.type,
-        );
+        // console.log(
+        //     this.index,
+        //     this.type,
+        //     yes,
+        //     this.component.clicked?.index,
+        //     this.component.clicked?.type,
+        // );
         return yes;
     }
 
     click(): void {
         if (this.clicked) this.component.clicked = undefined;
-        if ((this.component.clicked?.type ?? this.type) === this.type)
+        else if ((this.component.clicked?.type ?? this.type) === this.type)
             this.component.clicked = this;
         else this.component.answer(this);
         this.component.update();
@@ -40,26 +41,37 @@ class Button {
 function transform(
     value: "done" | "clicked",
     index: 0 | 1 | 2,
-): (v: Button[]) => string {
-    return (v: Button[]) => (v[index][value] ? value : "");
+    // ): (v: Button[]) => string {
+    //     return (v: Button[]) => (v[index][value] ? value : "");
+): (v: Button[]) => boolean {
+    return (v: Button[]) => {
+        console.log(v[index][value]);
+        return v[index][value];
+    };
 }
 
 export class MatchQComponent extends QuestionBody {
     @BindValue("ans0", (v: Button[]) => v[0].term.answer)
     @BindValue("ans1", (v: Button[]) => v[1].term.answer)
     @BindValue("ans2", (v: Button[]) => v[2].term.answer)
-    @BindCSSClass("ans0", transform("done", 0))
-    @BindCSSClass("ans1", transform("done", 1))
-    @BindCSSClass("ans2", transform("done", 2))
-    @BindCSSClass("ans0", transform("clicked", 0))
-    @BindCSSClass("ans1", transform("clicked", 1))
-    @BindCSSClass("ans2", transform("clicked", 2))
+    // @BindCSSClass("ans0", transform("done", 0))
+    // @BindCSSClass("ans1", transform("done", 1))
+    // @BindCSSClass("ans2", transform("done", 2))
+    // @BindCSSClass("ans0", transform("clicked", 0))
+    // @BindCSSClass("ans1", transform("clicked", 1))
+    // @BindCSSClass("ans2", transform("clicked", 2))
     // @BindAttribute("ans0", "class", transform("done", 0))
     // @BindAttribute("ans1", "class", transform("done", 1))
     // @BindAttribute("ans2", "class", transform("done", 2))
     // @BindAttribute("ans0", "class", transform("clicked", 0))
     // @BindAttribute("ans1", "class", transform("clicked", 1))
     // @BindAttribute("ans2", "class", transform("clicked", 2))
+    @BindCSSClassToBooleanSRA("ans0", "done", transform("done", 0))
+    @BindCSSClassToBooleanSRA("ans1", "done", transform("done", 1))
+    @BindCSSClassToBooleanSRA("ans2", "done", transform("done", 2))
+    @BindCSSClassToBooleanSRA("ans0", "clicked", transform("clicked", 0))
+    @BindCSSClassToBooleanSRA("ans1", "clicked", transform("clicked", 1))
+    @BindCSSClassToBooleanSRA("ans2", "clicked", transform("clicked", 2))
     private answers: [Button, Button, Button] = [
         new Button(0, "answer", this),
         new Button(1, "answer", this),
@@ -69,18 +81,24 @@ export class MatchQComponent extends QuestionBody {
     @BindValue("pro0", (v: Button[]) => v[0].term.prompt)
     @BindValue("pro1", (v: Button[]) => v[1].term.prompt)
     @BindValue("pro2", (v: Button[]) => v[2].term.prompt)
-    @BindCSSClass("pro0", transform("done", 0))
-    @BindCSSClass("pro1", transform("done", 1))
-    @BindCSSClass("pro2", transform("done", 2))
-    @BindCSSClass("pro0", transform("clicked", 0))
-    @BindCSSClass("pro1", transform("clicked", 1))
-    @BindCSSClass("pro2", transform("clicked", 2))
+    // @BindCSSClass("pro0", transform("done", 0))
+    // @BindCSSClass("pro1", transform("done", 1))
+    // @BindCSSClass("pro2", transform("done", 2))
+    // @BindCSSClass("pro0", transform("clicked", 0))
+    // @BindCSSClass("pro1", transform("clicked", 1))
+    // @BindCSSClass("pro2", transform("clicked", 2))
     // @BindAttribute("pro0", "class", transform("done", 0))
     // @BindAttribute("pro1", "class", transform("done", 1))
     // @BindAttribute("pro2", "class", transform("done", 2))
     // @BindAttribute("pro0", "class", transform("clicked", 0))
     // @BindAttribute("pro1", "class", transform("clicked", 1))
     // @BindAttribute("pro2", "class", transform("clicked", 2))
+    @BindCSSClassToBooleanSRA("pro0", "done", transform("done", 0))
+    @BindCSSClassToBooleanSRA("pro1", "done", transform("done", 1))
+    @BindCSSClassToBooleanSRA("pro2", "done", transform("done", 2))
+    @BindCSSClassToBooleanSRA("pro0", "clicked", transform("clicked", 0))
+    @BindCSSClassToBooleanSRA("pro1", "clicked", transform("clicked", 1))
+    @BindCSSClassToBooleanSRA("pro2", "clicked", transform("clicked", 2))
     private prompts: [Button, Button, Button] = [
         new Button(0, "prompt", this),
         new Button(1, "prompt", this),
@@ -112,6 +130,11 @@ export class MatchQComponent extends QuestionBody {
             this.prompts[i].term = choices[i];
 
         this.update();
+        // console.log("fdsa");
+        // this["shadow"]
+        //     .getElementById("ans0")
+        //     .setAttribute("class", "aaaaaaaaaaaaaaaaa");
+        // console.log("asdf");
     }
 
     getOptions(): [Term, Term, Term] {
@@ -167,8 +190,22 @@ export class MatchQComponent extends QuestionBody {
         if (correct) {
             expect.done = true;
             this.clicked.done = true;
-            this.clicked = undefined;
         }
+        this.clicked = undefined;
+        if (this.checkAll()) this.parent.continue();
         this.update();
+    }
+
+    checkAll(): boolean {
+        return (
+            this.answers.reduce(
+                (acc: boolean, v: Button) => acc && v.done,
+                true,
+            ) ||
+            this.prompts.reduce(
+                (acc: boolean, v: Button) => acc && v.done,
+                true,
+            )
+        );
     }
 }
