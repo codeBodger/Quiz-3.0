@@ -11,17 +11,17 @@ import { EzComponent } from "./EzComponent";
  * @BindCSSClassToBoolean("myDiv", "myCSSClass")
  * public enabled: boolean = true;
  */
-export declare function BindCSSClassToBooleanSRA<
-    This extends EzComponent,
-    Value extends boolean,
->(
-    id: string,
-    cssClassName: string,
-    transform?: (this: This, value: Value) => boolean,
-): (
-    target: any,
-    context: ClassFieldDecoratorContext<EzComponent, Value>,
-) => any;
+// export declare function BindCSSClassToBooleanSRA<
+//     This extends EzComponent,
+//     Value extends boolean,
+// >(
+//     id: string,
+//     cssClassName: string,
+//     transform?: (this: This, value: Value) => boolean,
+// ): (
+//     target: any,
+//     context: ClassFieldDecoratorContext<EzComponent, Value>,
+// ) => any;
 
 /**
  * @description Decorator to bind the cssClassName property if the boolean property is true
