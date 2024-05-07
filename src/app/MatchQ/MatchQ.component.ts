@@ -135,10 +135,11 @@ export class MatchQComponent extends QuestionBody {
         //     .getElementById("ans0")
         //     .setAttribute("class", "aaaaaaaaaaaaaaaaa");
         // console.log("asdf");
+        this.parent.prompt = "&nbsp;";
     }
 
     getOptions(): [Term, Term, Term] {
-        let allOptions = this.term.allOptions(this.sets);
+        let allOptions = this.term.allOptions([this.set]);
         console.log(allOptions);
         if (allOptions.length < 2) this.main.askFrom(this.sets, true);
         let out: [Term, Term, Term] = [this.term, this.term, this.term];
