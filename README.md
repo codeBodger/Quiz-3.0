@@ -99,3 +99,5 @@ As such, I will be able to work on some of the additional items.
     -   [ ] Not much of an idea on this one either. Maybe `<br>` or just comma separated
 -   Terms with the same name cause issues
     -   [ ] Change how I'm checking if the input was correct
+-   Deal with mastery for MatchQ and CharQ and probabilities for MatchQ
+    -   [ ] Because I'm using a different structure than v2.0, this needs to be changed
