@@ -1,8 +1,8 @@
 #answer {
     min-height: 100%;
-    min-width: calc(100% - 0.3vmin * 2);
-    font-size: 3vh;
-    margin: 0.3vh 0.3vmin;
+    min-width: calc(100% - 0.3dvmin * 2);
+    font-size: 3dvh;
+    margin: 0.3dvh 0.3dvmin;
     border: 0;
-    border-radius: 0.6vh;
+    border-radius: 0.6dvh;
 }

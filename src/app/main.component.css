@@ -4,35 +4,35 @@ div {
 }
 #header {
     position: fixed;
-    top: 1vh;
-    min-width: 100vw;
-    min-height: 9vh;
+    top: 1dvh;
+    min-width: 100dvw;
+    min-height: 9dvh;
     color: #000;
 }
 #title {
     min-width: auto;
-    font-size: 3.5vh;
+    font-size: 3.5dvh;
     font-style: italic;
     font-weight: bold;
     color: rgb(173, 78, 232);
 }
 #creator {
     min-width: auto;
-    font-size: 2.5vh;
+    font-size: 2.5dvh;
     text-align: center;
 }
 #page {
-    min-width: 100vmin;
-    min-height: 100vh;
+    min-width: 100dvmin;
+    min-height: 100dvh;
     position: fixed;
     top: 0;
     bottom: 0;
-    left: calc((100vw - 100vmin) / 2);
+    left: calc((100dvw - 100dvmin) / 2);
     background-color: rgb(209, 218, 250);
 }
 #footer {
     background-color: #f865;
-    min-width: 100vw;
+    min-width: 100dvw;
     min-height: auto;
     max-height: fit-content;
     position: fixed;

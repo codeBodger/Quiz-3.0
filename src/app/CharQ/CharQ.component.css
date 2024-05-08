@@ -1,7 +1,7 @@
 button {
-    font-size: 8vmin;
-    line-height: 8vh;
+    font-size: 8dvmin;
+    line-height: 8dvh;
 }
 .td {
-    min-width: calc(100vmin / 7);
+    min-width: calc(100dvmin / 7);
 }
