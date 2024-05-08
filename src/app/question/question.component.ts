@@ -11,6 +11,7 @@ import { TFQComponent } from "../TFQ/TFQ.component";
 import { NewQComponent } from "../NewQ/NewQ.component";
 import { QuestionType } from "../../question_types";
 import { MatchQComponent } from "../MatchQ/MatchQ.component";
+import { CharQComponent } from "../CharQ/CharQ.component";
 
 export class QuestionComponent extends PageComponet {
     @BindValue("name", (v?: QuestionType) => v?.name ?? "")
@@ -52,6 +53,9 @@ export class QuestionComponent extends PageComponet {
                 break;
             case "Matching":
                 this.questionBody = new MatchQComponent(...args);
+                break;
+            case "Character Entry":
+                this.questionBody = new CharQComponent(...args);
                 break;
             case "Text Entry":
                 this.questionBody = new TextQComponent(...args);

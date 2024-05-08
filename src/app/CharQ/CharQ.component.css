@@ -1,0 +1,6 @@
+button {
+    font-size: 10vmin;
+}
+.td {
+    min-width: calc(100vmin / 7);
+}

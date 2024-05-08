@@ -20,12 +20,12 @@ Items marked with only a number will be done only if I have time.
 -   [x] 10. **EXPORT ALL**: A way to export all of your progress as a text file.
 -   [ ] 11. **PRACTICE GROUP**: A way to practice the sets in a group.
 -   [x] 12. **PRACTICE SET**: A way to practice only a single set.
--   [ ] 13. **QUESTION TYPES**: The following question types will be included:
+-   [x] 13. **QUESTION TYPES**: The following question types will be included:
     -   [x] 1. New Term
     -   [x] 2. Multiple Choice
     -   [x] 3. True/False
     -   [x] 4. Matching
-    -   [ ] 5. MC character entry
+    -   [x] 5. MC character entry
     -   [x] 6. Text entry
 -   [x] 14. **PROBABILITIES**: More mastered terms will be less frequent and tend to result in different question types.
 -   [x] 15. **MASTERY**: Keep track of how well someone is doing. Tell them when they've mastered a set they're working on.
@@ -62,8 +62,8 @@ Items marked with only a number will be done only if I have time.
 -   [x] Item 15 completed
 -   [x] Item 9 completed
 -   [x] Item 10 completed
--   [ ] Item 13 completed
-    -   [ ] Types 1, 4, and 5 completed
+-   [x] Item 13 completed
+    -   [x] Types 1, 4, and 5 completed
 -   [x] Item 14 completed
 -   [ ] Item 19 started
 

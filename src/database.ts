@@ -8,6 +8,7 @@ import {
     getQuestionType,
     questionTypes,
 } from "./question_types";
+import { CharQComponent } from "./app/CharQ/CharQ.component";
 
 declare const window: Window;
 
@@ -120,6 +121,7 @@ type Categorised = { done: Set[]; doing: Set | undefined };
 export type SetActivities = "Practice";
 export class Set {
     private mastered: boolean;
+    public allChars: string[] = [];
 
     constructor(
         readonly name: string,
@@ -198,6 +200,10 @@ export class Set {
             case "exactly":
         }
         this.mastered = this.mastery === MASTERED;
+        term.answer.split("").forEach((val: string) => {
+            val = CharQComponent.buttonify(val);
+            if (!this.allChars.includes(val)) this.allChars.push(val);
+        });
         return undefined;
     }
 

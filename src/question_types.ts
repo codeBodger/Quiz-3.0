@@ -5,7 +5,7 @@ const types = [
     "Multiple Choice",
     "True/False",
     "Matching",
-    // "Letter Entry",
+    "Character Entry",
     "Text Entry",
 ] as const;
 
@@ -86,24 +86,24 @@ export const questionTypes: QuestionType[] = [
             return 0;
         },
     ),
-    // new QuestionType(
-    //     "Letter Entry",
-    //     (mastery) => mastery / 1.7,
-    //     (mastery) => mastery * 1.7,
-    //     (mastery) => {
-    //         if (mastery <= 3700000)
-    //             return (
-    //                 (-0.248136529594 *
-    //                     1.00000332632 ** (-0.375173221214 * mastery) +
-    //                     0.327403990272) /
-    //                     (1 + Math.exp((mastery - 3900000) / 300000)) -
-    //                 (Math.exp(-(((mastery - 3120000) / 600000) ** 2)) *
-    //                     (mastery - 3120000)) /
-    //                     1700000
-    //             );
-    //         return 0;
-    //     },
-    // ),
+    new QuestionType(
+        "Character Entry",
+        (mastery) => mastery / 1.7,
+        (mastery) => mastery * 1.7,
+        (mastery) => {
+            if (mastery <= 3700000)
+                return (
+                    (-0.248136529594 *
+                        1.00000332632 ** (-0.375173221214 * mastery) +
+                        0.327403990272) /
+                        (1 + Math.exp((mastery - 3900000) / 300000)) -
+                    (Math.exp(-(((mastery - 3120000) / 600000) ** 2)) *
+                        (mastery - 3120000)) /
+                        1700000
+                );
+            return 0;
+        },
+    ),
     new QuestionType(
         "Text Entry",
         (mastery) => mastery / 2,
