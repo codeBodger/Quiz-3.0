@@ -26,7 +26,7 @@ div {
     top: 0;
     bottom: 0;
     left: calc((100vw - 100vmin) / 2);
-    background-color: #8f55;
+    background-color: rgb(209, 218, 250);
 }
 #footer {
     background-color: #f865;

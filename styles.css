@@ -72,9 +72,16 @@ button {
     padding: 1.5vh 1.5vmin;
     margin: 1.5vh 1.5vmin;
     border: 0.1vh;
-    border-color: black;
+    border-color: #fff0;
     border-style: solid;
     border-radius: 0.6vh;
+    background-color: rgb(210, 158, 255);
+}
+button:hover {
+    background-color: rgb(154, 108, 194);
+}
+button:active {
+    background-color: rgb(123, 92, 151);
 }
 
 .td {
