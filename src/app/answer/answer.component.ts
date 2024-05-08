@@ -7,7 +7,7 @@ import { Term } from "../../database";
 import { BindStyle, BindValue, Click } from "@gsilber/webez";
 
 export class AnswerComponent extends SubComponent {
-    @BindStyle("correct", "color", (val: boolean) => (val ? "green" : "red"))
+    @BindStyle("correct", "color", (val: boolean) => (val ? "#218c64" : "red"))
     @BindValue("correct", (val: boolean) => (val ? "Correct!" : "Incorrect"))
     @BindStyle("corrected-message", "visibility", (val: boolean) =>
         val ? "hidden" : "visible",
