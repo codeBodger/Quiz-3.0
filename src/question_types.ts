@@ -132,3 +132,10 @@ export function checkImplementation(): void {
         getQuestionType(name);
     }
 }
+
+function only(...names: QuestionTypes[]): void {
+    types
+        .filter((name) => !names.includes(name))
+        .forEach((name) => (getQuestionType(name).probability = () => 0));
+}
+only(...types);
