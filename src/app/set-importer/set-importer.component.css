@@ -1,10 +1,15 @@
 #instructions {
     margin: 0vh 1vmin 1vh;
     font-size: 2vh;
+    text-align: center;
 }
 #set-data {
     margin-left: 1vmin;
     margin-right: 1vmin;
-    height: 70vh;
+    height: calc(100% - 5vh - 11.2vh);
     width: 98vmin;
+}
+#menu {
+    position: absolute;
+    bottom: 0;
 }

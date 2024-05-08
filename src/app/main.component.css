@@ -19,9 +19,11 @@ div {
 #creator {
     min-width: auto;
     font-size: 2.5vh;
+    text-align: center;
 }
 #page {
     min-width: 100vmin;
+    min-height: 100vh;
     position: fixed;
     top: 0;
     bottom: 0;

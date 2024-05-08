@@ -18,12 +18,12 @@ body {
 .page {
     position: absolute;
     top: 10vh;
-    bottom: 11vh;
+    bottom: 11.2vh;
 }
 
 div {
     min-width: 100%;
-    min-height: fit-content;
+    /* min-height: fit-content; */
 }
 
 h1,
@@ -67,8 +67,9 @@ button {
     cursor: pointer;
     min-height: 100%;
     min-width: calc(100% - 1.5vmin * 2);
-    font-size: 5vh;
-    line-height: 100%;
+    font-size: 5vmin;
+    line-height: 5vh;
+    overflow: hidden;
     padding: 1.5vh 1.5vmin;
     margin: 1.5vh 1.5vmin;
     border: 0.1vh;

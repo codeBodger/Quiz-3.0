@@ -1,5 +1,5 @@
 #sets {
-    overflow: scroll;
+    overflow-y: auto;
     padding-bottom: 11vh;
     position: absolute;
     bottom: -11vh;
