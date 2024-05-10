@@ -9,8 +9,14 @@ import {
     questionTypes,
 } from "./question_types";
 import { CharQComponent } from "./app/CharQ/CharQ.component";
+import { EzError } from "./app/EzError/EzError.component";
 
 declare const window: Window;
+
+export type TermSet = {
+    term: Term;
+    set: string;
+};
 
 export class Term {
     public index: number = -1;
@@ -19,6 +25,7 @@ export class Term {
         readonly answer: string = "",
         readonly prompt: string = "",
         mastery?: number,
+        public confident = false,
     ) {
         // mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
         this._mastery = mastery ?? NaN;
@@ -29,7 +36,12 @@ export class Term {
         if (dataArr.length < 2) {
             return undefined;
         }
-        return new Term(dataArr[0], dataArr[1], parseFloat(dataArr[2]));
+        return new Term(
+            dataArr[0],
+            dataArr[1],
+            parseFloat(dataArr[2]),
+            !!dataArr[3],
+        );
     }
 
     matches(term: Term): "exactly" | "prompt" | "none" {
@@ -108,7 +120,7 @@ export class Term {
     }
 
     toString(): string {
-        return `${this.answer}\t${this.prompt}\t${this._mastery}`;
+        return `${this.answer}\t${this.prompt}\t${this._mastery}\t${this.confident || ""}`;
     }
 }
 
@@ -118,7 +130,7 @@ type SetError = {
     errs: string[];
 };
 type Categorised = { done: Set[]; doing: Set | undefined };
-export type SetActivities = "Practice";
+export type SetActivities = "Practice" | "Flashcards";
 export class Set {
     private mastered: boolean;
     public allChars: string[] = [];
@@ -227,10 +239,10 @@ export class Set {
         // return this.terms[Math.floor(Math.random() * this.length)];
     }
 
-    static categorise(sets: Set[]): Categorised {
+    static categorise(sets: Set[], by: "mastered" | "confident"): Categorised {
         let out: Categorised = { done: [], doing: undefined };
         for (let set of sets) {
-            if (set.mastered) {
+            if (set[by]) {
                 out.done.push(set);
             } else {
                 out.doing = set;
@@ -240,7 +252,7 @@ export class Set {
         return out;
     }
 
-    static randomSet(sets: Categorised | Set[]): Set {
+    static randomSet(sets: Categorised): Set {
         if (sets instanceof Array) sets = { done: sets, doing: undefined };
         let probs: number[] = [];
         for (let set of sets.done) probs.push(set.prob + (probs.at(-1) ?? 0));
@@ -251,11 +263,11 @@ export class Set {
                     (probs.at(-1) ?? 0),
             );
         }
-        sets = sets.done;
+        let out = sets.done;
         const random = Math.random() * (probs.at(-1) ?? 0);
-        for (let i = 0; i < sets.length; i++)
-            if (probs[i] > random) return sets[i];
-        return sets[sets.length - 1];
+        for (let i = 0; i < out.length; i++)
+            if (probs[i] > random) return out[i];
+        return out.at(-1)!;
     }
 
     get prob(): number {
@@ -273,6 +285,10 @@ export class Set {
                 0,
             ) / this.length
         );
+    }
+
+    get confident(): boolean {
+        return this.terms.every((term: Term) => term.confident);
     }
 
     justMastered(): boolean {
@@ -355,4 +371,13 @@ export class Database {
             this.sets.map((set: Set) => set.toString()).join("\n\n"),
         );
     }
+}
+
+export function randomSetAndTerm(sets: Set[], onlyNew: boolean): [Term, Set] {
+    const categorised = Set.categorise(sets, "mastered");
+    const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
+    const term = set?.chooseTerm(onlyNew);
+    if (!set || !term)
+        throw new EzError("There are insufficient terms in your set(s).");
+    return [term, set];
 }

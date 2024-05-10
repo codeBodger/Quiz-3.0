@@ -5,6 +5,7 @@ import { MainComponent } from "../main.component";
 import { Set, SetActivities } from "../../database";
 import { BindValue } from "@gsilber/webez";
 import { ListButtonComponent } from "../list-button/list-button.component";
+import { EzError } from "../EzError/EzError.component";
 
 export class SetListComponent extends PageComponet {
     @BindValue("activity")
@@ -35,6 +36,16 @@ export class SetListComponent extends PageComponet {
     }
 
     act(set: Set): void {
-        this.main.askFrom([set]);
+        switch (this.activity) {
+            case "Practice":
+                this.main.askFrom([set]);
+                break;
+            case "Flashcards":
+                this.main.toFlashcards([set]);
+                break;
+            default:
+                throw new EzError("Activity specified improperly.");
+        }
+        this.activity = "";
     }
 }

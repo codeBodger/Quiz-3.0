@@ -1,6 +1,9 @@
 "use strict";
+
+const { BindStyle } = require("@gsilber/webez/bind.decorators");
+
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BindCSSClassToBooleanSRA = void 0;
+exports.BindVisibleToBooleanSRA = exports.BindCSSClassToBooleanSRA = void 0;
 /**
  * @description Gets the public key of the field name
  * @param name the name of the field
@@ -148,3 +151,22 @@ function BindCSSClassToBooleanSRA(
     };
 }
 exports.BindCSSClassToBooleanSRA = BindCSSClassToBooleanSRA;
+/**
+ * @description Decorator to bind the visibility of an element to a boolean
+ * @param id the element to bind the property to
+ * @returns DecoratorCallback
+ * @export
+ * @group Bind Decorators
+ * @example
+ * //This will hide the div with id myDiv1 if the visible property is false
+ * @BindVisibleToBooleanSRA("myDiv1")
+ * public visible: boolean = true;
+ */
+function BindVisibleToBooleanSRA(id, transform = (value) => value) {
+    return BindStyle(id, "display", (value) => {
+        const t = transform(value);
+        // console.log(value, t, t ? "unset" : "none");
+        return t ? "unset" : "none";
+    });
+}
+exports.BindVisibleToBooleanSRA = BindVisibleToBooleanSRA;

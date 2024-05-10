@@ -1,0 +1,45 @@
+#set {
+    color: purple;
+}
+
+/* button {
+    min-height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+} */
+
+#previous,
+#next {
+    min-width: 7dvmin;
+    min-height: 10dvh;
+    margin-top: calc((53.2dvh - 10dvh - 3dvh - 0.2dvh) / 2);
+    color: #655193;
+}
+
+#practice,
+#confident {
+    min-width: 10dvmin;
+    min-height: 20dvmin;
+    margin-top: calc((53.2dvh - 20dvh - 3dvh - 0.2dvh) / 2);
+}
+#practice {
+    color: red;
+}
+#confident {
+    color: green;
+}
+
+#prompt,
+#answer {
+    min-width: 51dvmin;
+    min-height: 50dvmin;
+}
+
+.td {
+    /* float: none; */
+    display: inline-block;
+    min-width: fit-content;
+}
+.tr {
+    height: 53.2dvh;
+}

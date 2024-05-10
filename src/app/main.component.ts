@@ -4,14 +4,22 @@ import { BindValue, EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
-import { Database, Set, SetActivities } from "../database";
+import {
+    Database,
+    Set,
+    SetActivities,
+    TermSet,
+    randomSetAndTerm,
+} from "../database";
 import { SetImporterComponent } from "./set-importer/set-importer.component";
 import { SetListComponent } from "./set-list/set-list.component";
 import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
 import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
 import { checkImplementation } from "../question_types";
-import { EzError } from "./EzError/EzError.component";
+import { FlashcardsComponent } from "./flashcards/flashcards.component";
+import { StartFlashcardsComponent } from "./start-flashcards/start-flashcards.component";
+// import { EzError } from "./EzError/EzError.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -59,12 +67,25 @@ export class MainComponent extends EzComponent {
     }
 
     askFrom(sets: Set[], onlyNew: boolean = false): void {
-        const categorised = Set.categorise(sets);
-        const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
-        const term = set?.chooseTerm(onlyNew);
-        if (!set || !term)
-            throw new EzError("There are insufficient terms in your set(s).");
-        this.activate(new QuestionComponent(term, set, sets, this));
+        // const categorised = Set.categorise(sets);
+        // const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
+        // const term = set?.chooseTerm(onlyNew);
+        // if (!set || !term)
+        //     throw new EzError("There are insufficient terms in your set(s).");
+        this.activate(
+            new QuestionComponent(
+                ...randomSetAndTerm(sets, onlyNew),
+                sets,
+                this,
+            ),
+        );
+    }
+
+    toFlashcards(sets: Set[]): void {
+        this.activate(new StartFlashcardsComponent(sets, this));
+    }
+    doFlashcards(termSets: TermSet[]): void {
+        this.activate(new FlashcardsComponent(termSets, this));
     }
 
     masteredSet(set: Set, sets: Set[]): void {

@@ -1,0 +1,9 @@
+button {
+    min-height: 70dvh;
+    min-width: 30dvmin;
+    max-width: 30dvmin;
+}
+
+.td {
+    min-width: 0;
+}

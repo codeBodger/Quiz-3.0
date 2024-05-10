@@ -24,6 +24,11 @@ export class MainMenuComponent extends PageComponet {
         this.main.importAll();
     }
 
+    @Click("set-cards")
+    setCards(): void {
+        this.main.toSetList("Flashcards");
+    }
+
     onActivate(): void {
         return;
     }

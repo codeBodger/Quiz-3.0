@@ -33,7 +33,7 @@ Items marked with only a number will be done only if I have time.
 16. **TERM TYPES**: So different term types aren't compared, giving away the answer.
 
 -   [ ] 17. **GROUP FLASHCARDS**: Practice a group using flashcards (does not affect mastery).
--   [ ] 18. **SET FLASHCARDS**: Practice a set using flashcards (does not affect mastery).
+-   [x] 18. **SET FLASHCARDS**: Practice a set using flashcards (does not affect mastery).
 -   [ ] 19. **TESTS**: Tests for things, not sure how yet...
 
 20. **DELETE GROUP**
@@ -69,7 +69,7 @@ Items marked with only a number will be done only if I have time.
 
 ## Milestone 3 (2024-05-12)
 
--   [ ] Item 18 completed
+-   [x] Item 18 completed
 -   [ ] Item 4 completed
 -   [ ] Item 11 completed
 -   [ ] Item 17 completed
