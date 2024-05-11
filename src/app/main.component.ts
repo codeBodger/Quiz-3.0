@@ -19,6 +19,7 @@ import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
 import { checkImplementation } from "../question_types";
 import { FlashcardsComponent } from "./flashcards/flashcards.component";
 import { StartFlashcardsComponent } from "./start-flashcards/start-flashcards.component";
+import { EzError } from "./EzError/EzError.component";
 // import { EzError } from "./EzError/EzError.component";
 
 /**
@@ -127,7 +128,8 @@ export class MainComponent extends EzComponent {
         try {
             this.database.save();
         } catch {
-            //nothing to do here
+            // I have no idea what could go wrong here, but let's warn the user
+            throw new EzError("Failed to save the database!");
         }
     }
 
