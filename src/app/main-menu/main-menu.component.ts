@@ -32,4 +32,8 @@ export class MainMenuComponent extends PageComponet {
     onActivate(): void {
         return;
     }
+
+    onExit(): void {
+        return;
+    }
 }

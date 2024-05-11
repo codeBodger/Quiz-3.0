@@ -25,6 +25,7 @@ export abstract class PageComponet extends EzComponent {
     }
 
     abstract onActivate(): void;
+    abstract onExit(): void;
 }
 
 export abstract class QuestionBody extends SubComponent {

@@ -23,10 +23,10 @@ describe("Main Component", () => {
         component = bootstrap<MainComponent>(MainComponent, html);
     });
 
-    test("Contaned in MainComponent", () => {
-        expect(component["mainMenu"]).toBeDefined();
-        expect(component["mainMenu"]).toBeInstanceOf(MainMenuComponent);
-    });
+    // test("Contaned in MainComponent", () => {
+    //     expect(component["mainMenu"]).toBeDefined();
+    //     expect(component["mainMenu"]).toBeInstanceOf(MainMenuComponent);
+    // });
 
     test("It's been put into the 'page'", () => {
         const element = component["shadow"].getElementById(

@@ -5,23 +5,18 @@ import { MainComponent } from "../main.component";
 import { Set, SetActivities } from "../../database";
 import { BindValue } from "@gsilber/webez";
 import { ListButtonComponent } from "../list-button/list-button.component";
-import { EzError } from "../EzError/EzError.component";
+// import { EzError } from "../EzError/EzError.component";
 
 export class SetListComponent extends PageComponet {
     @BindValue("activity")
-    private activity: SetActivities | "" = "";
+    private activity: SetActivities;
 
     private buttons: ListButtonComponent<Set>[] = [];
 
-    constructor(main: MainComponent) {
+    constructor(activity: SetActivities, main: MainComponent) {
         super(main, html, css);
-    }
-
-    for(activity: SetActivities): void {
         this.activity = activity;
-    }
 
-    onActivate(): void {
         this.buttons.forEach((setButton: ListButtonComponent<Set>) => {
             this.removeComponent(setButton);
         });
@@ -35,6 +30,10 @@ export class SetListComponent extends PageComponet {
         });
     }
 
+    // for(activity: SetActivities): void {
+    //     this.activity = activity;
+    // }
+
     act(set: Set): void {
         switch (this.activity) {
             case "Practice":
@@ -43,9 +42,17 @@ export class SetListComponent extends PageComponet {
             case "Flashcards":
                 this.main.toFlashcards([set]);
                 break;
-            default:
-                throw new EzError("Activity specified improperly.");
+            // default:
+            //     throw new EzError("Activity specified improperly.");
         }
-        this.activity = "";
+        // this.activity = "";
+    }
+
+    onActivate(): void {
+        return;
+    }
+
+    onExit(): void {
+        return;
     }
 }

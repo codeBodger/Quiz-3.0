@@ -65,10 +65,6 @@ export class QuestionComponent extends PageComponet {
         this.answerBody = new AnswerComponent(term, this, this.main);
     }
 
-    onActivate(): void {
-        return;
-    }
-
     answer(correct: boolean, answer: string): void {
         this.removeComponent(this.questionBody);
         this.answerBody.init(correct, answer);
@@ -78,5 +74,13 @@ export class QuestionComponent extends PageComponet {
     continue(): void {
         if (this.set.justMastered()) this.main.masteredSet(this.set, this.sets);
         else this.main.askFrom(this.sets);
+    }
+
+    onActivate(): void {
+        return;
+    }
+
+    onExit(): void {
+        return;
     }
 }

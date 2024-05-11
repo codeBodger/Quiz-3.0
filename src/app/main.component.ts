@@ -30,11 +30,13 @@ export class MainComponent extends EzComponent {
     private database: Database;
 
     private footer: FooterComponent = new FooterComponent(this);
-    private mainMenu: MainMenuComponent = new MainMenuComponent(this);
-    private setImporter: SetImporterComponent = new SetImporterComponent(this);
-    private setList: SetListComponent = new SetListComponent(this);
-    private allImporter: DatabaseImporterComponent =
-        new DatabaseImporterComponent(this);
+
+    private page: PageComponet = new MainMenuComponent(this);
+    // private mainMenu: MainMenuComponent = new MainMenuComponent(this);
+    // private setImporter: SetImporterComponent = new SetImporterComponent(this);
+    // private setList: SetListComponent = new SetListComponent(this);
+    // private allImporter: DatabaseImporterComponent =
+    //     new DatabaseImporterComponent(this);
 
     @BindValue("page")
     private blank: string = "";
@@ -42,28 +44,35 @@ export class MainComponent extends EzComponent {
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");
-        this.activate(this.mainMenu);
+        // this.activate(this.mainMenu);
         this.database = Database.loadDatabase(this);
-        this.saveDatabase();
+        this.exit();
+        // this.saveDatabase();
         checkImplementation();
     }
 
     exit() {
-        this.activate(this.mainMenu);
+        this.page.onExit();
+        this.cancel();
         this.saveDatabase();
     }
 
+    cancel() {
+        this.activate(new MainMenuComponent(this));
+    }
+
     toSetImporter(): void {
-        this.activate(this.setImporter);
+        this.activate(new SetImporterComponent(this));
     }
 
     toSetList(activity: SetActivities): void {
-        this.setList.for(activity);
-        this.activate(this.setList);
+        const setList = new SetListComponent(activity, this);
+        // setList.for(activity);
+        this.activate(setList);
     }
 
     importAll(): void {
-        this.activate(this.allImporter);
+        this.activate(new DatabaseImporterComponent(this));
     }
 
     askFrom(sets: Set[], onlyNew: boolean = false): void {
@@ -93,9 +102,11 @@ export class MainComponent extends EzComponent {
     }
 
     private activate(page: PageComponet) {
-        this.freePage();
-        page.onActivate();
-        this.addComponent(page, "page");
+        // this.freePage();
+        this.removeComponent(this.page);
+        this.page = page;
+        this.page.onActivate();
+        this.addComponent(this.page, "page");
     }
 
     protected freePage(): void {
