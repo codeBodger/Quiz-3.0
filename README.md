@@ -37,8 +37,9 @@ Items marked with only a number will be done only if I have time.
 -   [x] 19. **SET FLASHCARDS**: Practice a set using flashcards (does not affect mastery).
 -   [ ] 20. **DOCUMENTATION**: Documentation for _everything_.
 
-21. **DELETE GROUP**
-22. **DELETE SET**
+-   [ ] 21. **DELETE GROUP**
+-   [ ] 22. **DELETE SET**
+
 23. **LOGOUT**
 24. **BACKEND** //Firebase? Mongo atlas?
 
@@ -82,10 +83,12 @@ By the time that I am done with Milestone 3, everything that I have actually pla
 
 As such, I will be able to work on some of the additional items.
 
+-   [ ] Item 21 completed
+-   [ ] Item 22 completed
 -   Item 2
 -   Items 4 - 7
 -   Item 17
--   Items 21 - 24
+-   Items 23, 24
 -   Item 20 continued for whatever I do here.
 
 ## Known Bugs
