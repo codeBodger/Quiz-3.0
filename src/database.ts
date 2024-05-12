@@ -375,6 +375,8 @@ export class Group {
     }
 }
 
+export type Constructor<T extends Set | Group> = { new (name: string): T };
+
 export class Database {
     public sets: Set[] = [];
     public groups: Group[] = [];

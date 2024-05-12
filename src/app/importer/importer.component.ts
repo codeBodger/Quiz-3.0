@@ -3,7 +3,7 @@ import css from "./importer.component.css";
 import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { BindValue, Change, Click, EzDialog, ValueEvent } from "@gsilber/webez";
-import { Set, Group } from "../../database";
+import { Set, Group, Constructor } from "../../database";
 
 const SET_DEFAULT_DATA = `Set Name
 Answer 1\tPrompt 1
@@ -18,8 +18,6 @@ Set 2
 Set 3
 Set 4
 `;
-
-type Constructor<T extends Set | Group> = { new (name: string): T };
 
 export class ImporterComponent<X extends Set | Group> extends PageComponet {
     @BindValue("data")
