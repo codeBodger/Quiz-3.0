@@ -427,7 +427,7 @@ export class Database {
 
     showAndResetErrors(main: MainComponent): void {
         for (let error of this.errors)
-            EzDialog.popup(main, error.errs.join("\n"), error.message);
+            EzDialog.popup(main, error.errs.join("<br>"), error.message);
         this.errors = [];
     }
 

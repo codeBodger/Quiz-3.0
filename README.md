@@ -97,7 +97,7 @@ As such, I will be able to work on some of the additional items.
 -   Buttons go to the next line instead of wrapping their text
     -   [x] Text size based on vmin instead of vh
 -   DatabaseError doesn't have linebreaks
-    -   [ ] Not much of an idea on this one either. Maybe `<br>` or just comma separated
+    -   [x] Use `<br>` instead of `\n`
 -   Terms with the same name cause issues
     -   [ ] Change how I'm checking if the input was correct
 -   On mobile, scrolling screws stuff up
