@@ -54,15 +54,8 @@ h4 {
     background-color: #700;
 }
 .back-burner {
-    /* background-color: #f77; */
-    visibility: hidden;
+    opacity: 0.2;
 }
-/* .back-burner:hover {
-    background-color: #b55;
-}
-.back-burner:active {
-    background-color: #733;
-} */
 button {
     cursor: pointer;
     min-height: 100%;
