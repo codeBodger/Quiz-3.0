@@ -124,11 +124,11 @@ export class Term {
     }
 }
 
-type SetError = {
-    setName: string;
-    issue: "have/has bad data" | "already exist(s)";
+type DatabaseError = {
+    message: string;
     errs: string[];
 };
+
 type Categorised = { done: Set[]; doing: Set | undefined };
 export type SetActivities = "Practice" | "Flashcards";
 export class Set {
@@ -163,15 +163,13 @@ export class Set {
             }
         }
         if (dataError.length)
-            caller.addSetError({
-                setName: name,
-                issue: "have/has bad data",
+            caller.addError({
+                message: `In set "${set.name}", the following term(s) have/has bad data`,
                 errs: dataError,
             });
         if (extantError.length)
-            caller.addSetError({
-                setName: name,
-                issue: "already exist(s)",
+            caller.addError({
+                message: `In set "${set.name}", the following term(s) already exist(s)`,
                 errs: extantError,
             });
         return set;
@@ -194,9 +192,8 @@ export class Set {
             if (err !== undefined) extantError.push(err);
         }
         if (extantError.length)
-            caller.addSetError({
-                setName: set.name,
-                issue: "already exist(s)",
+            caller.addError({
+                message: `In set "${set.name}", the following term(s) already exist(s)`,
                 errs: extantError,
             });
     }
@@ -305,14 +302,91 @@ export class Set {
     }
 }
 
+class Divide {
+    constructor(
+        public numerator: number,
+        public denominator: number,
+    ) {}
+    evaluate(): number {
+        return this.numerator / this.denominator;
+    }
+}
+export class Group {
+    private mastered: boolean;
+
+    constructor(
+        readonly name: string,
+        private _sets: string[] = [],
+        private database?: Database,
+    ) {
+        this.mastered = this.mastery === MASTERED;
+    }
+
+    static fromTSV(data: string, database: Database): Group | undefined {
+        const dataArr = data.replace(/\s+$/, "").split(/[\t\n]+/g);
+        const name = dataArr[0];
+        if (!name) return undefined;
+        return new Group(name, dataArr.slice(1), database);
+    }
+
+    overwrite(group: Group, caller: Database): void {
+        if (caller !== this.database || caller !== this.database)
+            throw new EzError(
+                `Attempt to merge group "${group.name}" into an external database.`,
+            );
+        this._sets = group._sets;
+    }
+
+    get sets(): Set[] {
+        if (!this.database) return [];
+        let errors: string[] = [];
+        const out = this._sets
+            .map((setName: string) => {
+                const set = this.database!.getSet(setName);
+                if (!set) errors.push(setName);
+                return set;
+            })
+            .filter((set) => set) as Set[];
+        if (errors.length)
+            this.database.addError({
+                message: `For group "${this.name}", the following set(s) do(es) not exist in the database`,
+                errs: errors,
+            });
+        return out;
+    }
+
+    get mastery(): number {
+        if (!this.database) return NaN;
+        return this.sets
+            .reduce(
+                (div: Divide, set: Set) => {
+                    return new Divide(
+                        div.numerator + set.mastery,
+                        div.denominator + set.length,
+                    );
+                },
+                new Divide(0, 0),
+            )
+            .evaluate();
+    }
+
+    toString(): string {
+        return `${this.name}\t${this._sets.join("\t")}`;
+    }
+}
+
 export class Database {
     private sets: Set[] = [];
-    private errors: SetError[] = [];
+    private groups: Group[] = [];
+    private errors: DatabaseError[] = [];
 
     constructor(data: string, main: MainComponent) {
-        data = data.replace(/^\s*/g, "");
+        data = data.replace(/(^[^\S\n]+)|([^\S\n]+$)/gm, "");
         if (!data) return;
-        for (let setStr of data.split("\n\n")) this.addOrUpdateSet(setStr);
+        const dataArr = data.split("\n\n");
+        for (let setStr of dataArr.slice(1)) this.addOrUpdateSet(setStr);
+        for (let groupStr of dataArr[0].split("\n"))
+            this.addOrUpdateGroup(groupStr);
 
         this.showAndResetErrors(main);
     }
@@ -330,17 +404,28 @@ export class Database {
         this.sets.push(newSet);
     }
 
-    addSetError(error: SetError): void {
+    addOrUpdateGroup(groupData: string | Group): void {
+        const newGroup =
+            groupData instanceof Group ? groupData : (
+                Group.fromTSV(groupData, this)
+            );
+        if (!newGroup) return;
+        for (let group of this.groups) {
+            if (group.name === newGroup.name) {
+                group.overwrite(newGroup, this);
+                return;
+            }
+        }
+        this.groups.push(newGroup);
+    }
+
+    addError(error: DatabaseError): void {
         this.errors.push(error);
     }
 
     showAndResetErrors(main: MainComponent): void {
         for (let error of this.errors)
-            EzDialog.popup(
-                main,
-                error.errs.join("\n"),
-                `In set "${error.setName}", the following term(s) ${error.issue}`,
-            );
+            EzDialog.popup(main, error.errs.join("\n"), error.message);
         this.errors = [];
     }
 
@@ -358,6 +443,9 @@ export class Database {
         for (let set of database.sets) {
             this.addOrUpdateSet(set);
         }
+        for (let group of database.groups) {
+            this.addOrUpdateGroup(group);
+        }
         main.saveDatabase();
     }
 
@@ -365,11 +453,18 @@ export class Database {
         return this.sets;
     }
 
+    getSet(setName: string): Set | undefined {
+        return this.sets.find((set: Set) => set.name === setName);
+    }
+
     save(): void {
-        window.localStorage.setItem(
-            "database",
-            this.sets.map((set: Set) => set.toString()).join("\n\n"),
-        );
+        window.localStorage.setItem("database", this.toString());
+    }
+
+    toString(): string {
+        return `${this.groups.map((group: Group) => group.toString()).join("\n")}
+
+${this.sets.map((set: Set) => set.toString()).join("\n\n")}`;
     }
 }
 

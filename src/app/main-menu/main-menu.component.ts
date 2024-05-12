@@ -9,6 +9,11 @@ export class MainMenuComponent extends PageComponet {
         super(main, html, css);
     }
 
+    @Click("import-group")
+    importGroup(): void {
+        this.main.toGroupImporter();
+    }
+
     @Click("import-set")
     importSet(): void {
         this.main.toSetImporter();

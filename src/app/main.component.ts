@@ -6,12 +6,13 @@ import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
 import {
     Database,
+    Group,
     Set,
     SetActivities,
     TermSet,
     randomSetAndTerm,
 } from "../database";
-import { SetImporterComponent } from "./set-importer/set-importer.component";
+import { ImporterComponent } from "./importer/importer.component";
 import { SetListComponent } from "./set-list/set-list.component";
 import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
@@ -59,7 +60,11 @@ export class MainComponent extends EzComponent {
     }
 
     toSetImporter(): void {
-        this.activate(new SetImporterComponent(this));
+        this.activate(new ImporterComponent(Set, this));
+    }
+
+    toGroupImporter(): void {
+        this.activate(new ImporterComponent(Group, this));
     }
 
     toSetList(activity: SetActivities): void {
@@ -103,8 +108,9 @@ export class MainComponent extends EzComponent {
         this.addComponent(this.page, "page");
     }
 
-    importSet(setData: string): void {
-        this.database.addOrUpdateSet(setData);
+    import(data: string, which: "set" | "group"): void {
+        if (which === "group") this.database.addOrUpdateGroup(data);
+        else this.database.addOrUpdateSet(data);
         this.database.showAndResetErrors(this);
         this.saveDatabase();
     }

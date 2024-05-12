@@ -3,7 +3,7 @@
     font-size: 2dvh;
     text-align: center;
 }
-#set-data {
+#data {
     margin-left: 1dvmin;
     margin-right: 1dvmin;
     height: calc(100% - 5dvh - 11.2dvh);

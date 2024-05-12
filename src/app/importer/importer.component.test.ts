@@ -1,16 +1,17 @@
 import { describe, expect, test, beforeAll } from "@jest/globals";
-import { SetImporterComponent } from "./set-importer.component";
+import { ImporterComponent } from "./importer.component";
 import { bootstrap } from "@gsilber/webez";
+import { Set } from "../../database";
 
-describe("SetImporterComponent", () => {
+describe("ImporterComponent", () => {
     let component: any = undefined;
     beforeAll(() => {
         const html: string = `<div>Testing Environment</div><div id='main-target'></div>`;
-        component = bootstrap<SetImporterComponent>(SetImporterComponent, html);
+        component = bootstrap<ImporterComponent<Set>>(ImporterComponent, html);
     });
     describe("Constructor", () => {
         test("Create Instance", () => {
-            expect(component).toBeInstanceOf(SetImporterComponent);
+            expect(component).toBeInstanceOf(ImporterComponent);
         });
     });
 });
