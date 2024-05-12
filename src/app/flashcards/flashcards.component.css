@@ -10,17 +10,17 @@
 
 #previous,
 #next {
-    min-width: 7dvmin;
-    min-height: 10dvh;
-    margin-top: calc((53.2dvh - 10dvh - 3dvh - 0.2dvh) / 2);
+    min-width: 7svmin;
+    min-height: 10svh;
+    margin-top: calc((53.2svh - 10svh - 3svh - 0.2svh) / 2);
     color: #655193;
 }
 
 #practice,
 #confident {
-    min-width: 10dvmin;
-    min-height: 20dvmin;
-    margin-top: calc((53.2dvh - 20dvh - 3dvh - 0.2dvh) / 2);
+    min-width: 10svmin;
+    min-height: 20svmin;
+    margin-top: calc((53.2svh - 20svh - 3svh - 0.2svh) / 2);
 }
 #practice {
     color: red;
@@ -31,8 +31,8 @@
 
 #prompt,
 #answer {
-    min-width: 51dvmin;
-    min-height: 50dvmin;
+    min-width: 51svmin;
+    min-height: 50svmin;
 }
 
 .td {
@@ -41,5 +41,5 @@
     min-width: fit-content;
 }
 .tr {
-    height: 53.2dvh;
+    height: 53.2svh;
 }

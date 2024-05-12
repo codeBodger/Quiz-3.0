@@ -100,6 +100,8 @@ As such, I will be able to work on some of the additional items.
     -   [ ] Not much of an idea on this one either. Maybe `<br>` or just comma separated
 -   Terms with the same name cause issues
     -   [ ] Change how I'm checking if the input was correct
+-   On mobile, scrolling screws stuff up
+    -   [x] Use `sv*` instead of `dv*`
 
 ## Things to Fix
 

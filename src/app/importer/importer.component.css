@@ -1,13 +1,13 @@
 #instructions {
-    margin: 0dvh 1dvmin 1dvh;
-    font-size: 2dvh;
+    margin: 0svh 1svmin 1svh;
+    font-size: 2svh;
     text-align: center;
 }
 #data {
-    margin-left: 1dvmin;
-    margin-right: 1dvmin;
-    height: calc(100% - 5dvh - 11.2dvh);
-    width: 98dvmin;
+    margin-left: 1svmin;
+    margin-right: 1svmin;
+    height: calc(100% - 5svh - 11.2svh);
+    width: 98svmin;
 }
 #menu {
     position: absolute;

@@ -17,8 +17,8 @@ body {
 
 .page {
     position: absolute;
-    top: 10dvh;
-    bottom: 11.2dvh;
+    top: 10svh;
+    bottom: 11.2svh;
 }
 
 div {
@@ -32,12 +32,12 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0 auto 1dvh;
+    margin: 0 auto 1svh;
     width: fit-content;
     line-height: 100%;
 }
 h2 {
-    font-size: 3dvh;
+    font-size: 3svh;
     color: #55f;
 }
 h4 {
@@ -66,16 +66,16 @@ h4 {
 button {
     cursor: pointer;
     min-height: 100%;
-    min-width: calc(100% - 1.5dvmin * 2);
-    font-size: 5dvmin;
-    line-height: 5dvh;
+    min-width: calc(100% - 1.5svmin * 2);
+    font-size: 5svmin;
+    line-height: 5svh;
     overflow: hidden;
-    padding: 1.5dvh 1.5dvmin;
-    margin: 1.5dvh 1.5dvmin;
-    border: 0.1dvh;
+    padding: 1.5svh 1.5svmin;
+    margin: 1.5svh 1.5svmin;
+    border: 0.1svh;
     border-color: #fff0;
     border-style: solid;
-    border-radius: 0.6dvh;
+    border-radius: 0.6svh;
     background-color: rgb(210, 158, 255);
 }
 button:hover {

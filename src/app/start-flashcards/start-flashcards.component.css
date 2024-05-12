@@ -1,7 +1,7 @@
 button {
-    min-height: 70dvh;
-    min-width: 30dvmin;
-    max-width: 30dvmin;
+    min-height: 70svh;
+    min-width: 30svmin;
+    max-width: 30svmin;
 }
 
 .td {

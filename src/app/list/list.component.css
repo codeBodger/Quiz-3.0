@@ -1,7 +1,7 @@
 #items {
     overflow-y: auto;
-    padding-bottom: 11dvh;
+    padding-bottom: 11svh;
     position: absolute;
-    bottom: -11dvh;
-    top: 4dvh;
+    bottom: -11svh;
+    top: 4svh;
 }
