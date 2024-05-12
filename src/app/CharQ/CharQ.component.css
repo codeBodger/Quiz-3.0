@@ -1,3 +1,12 @@
+.wrong {
+    background-color: #ff554e;
+}
+.wrong:hover {
+    background-color: #bb3b36;
+}
+.wrong:active {
+    background-color: #77322f;
+}
 button {
     font-size: 8svmin;
     line-height: 8svh;
