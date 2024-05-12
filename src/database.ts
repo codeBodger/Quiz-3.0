@@ -376,8 +376,8 @@ export class Group {
 }
 
 export class Database {
-    private sets: Set[] = [];
-    private groups: Group[] = [];
+    public sets: Set[] = [];
+    public groups: Group[] = [];
     private errors: DatabaseError[] = [];
 
     constructor(data: string, main: MainComponent) {
@@ -447,10 +447,6 @@ export class Database {
             this.addOrUpdateGroup(group);
         }
         main.saveDatabase();
-    }
-
-    getSets(): Set[] {
-        return this.sets;
     }
 
     getSet(setName: string): Set | undefined {

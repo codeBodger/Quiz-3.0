@@ -106,4 +106,4 @@ As such, I will be able to work on some of the additional items.
 -   Deal with mastery for MatchQ and CharQ and probabilities for MatchQ
     -   [ ] Because I'm using a different structure than v2.0, this needs to be changed
 -   Unnecessary method `Database.getSets()`, as it doesn't actually protect anything
-    -   [ ] Delete the method and make `Database.sets` public
+    -   [x] Delete the method and make `Database.sets` public

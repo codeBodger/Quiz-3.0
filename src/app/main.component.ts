@@ -116,7 +116,7 @@ export class MainComponent extends EzComponent {
     }
 
     getSets(): Set[] {
-        return this.database.getSets();
+        return this.database.sets;
     }
 
     saveDatabase(): void {
