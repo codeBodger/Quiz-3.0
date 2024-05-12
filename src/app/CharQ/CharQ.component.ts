@@ -99,7 +99,8 @@ export class CharQComponent extends QuestionBody {
     update(): void {
         if (this.index >= this.term.answer.length) this.parent.continue();
         this.answers = [...this.answers];
-        this.parent.prompt = `${this.term.prompt} ⇒&nbsp;${this.term.answer.slice(0, this.index)}`;
+        this.parent.prompt = `${this.term.prompt} ⇒
+            <span style="color: #467501;">${this.term.answer.slice(0, this.index)}</span>|`;
     }
 
     @Click("ans0")
