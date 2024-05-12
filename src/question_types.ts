@@ -134,8 +134,11 @@ export function checkImplementation(): void {
 }
 
 function only(...names: QuestionTypes[]): void {
-    types
-        .filter((name) => !names.includes(name))
-        .forEach((name) => (getQuestionType(name).probability = () => 0));
+    if (!names.length) return;
+    types.forEach(
+        (name) =>
+            (getQuestionType(name).probability = () =>
+                names.includes(name) ? 1 : 0),
+    );
 }
-only(...types);
+only();
