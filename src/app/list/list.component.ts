@@ -1,5 +1,5 @@
-import html from "./set-list.component.html";
-import css from "./set-list.component.css";
+import html from "./list.component.html";
+import css from "./list.component.css";
 import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Constructor, Group, Set, Activities } from "../../database";
@@ -24,8 +24,8 @@ export class ListComponent<X extends Set | Group> extends PageComponet {
         this.main.getData(x).forEach((data: X) => {
             this.buttons.push(new ListButtonComponent(data, this, this.main));
         });
-        this.buttons.forEach((setButton: ListButtonComponent<X>) => {
-            this.addComponent(setButton, "sets");
+        this.buttons.forEach((button: ListButtonComponent<X>) => {
+            this.addComponent(button, "items");
         });
     }
 

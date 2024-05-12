@@ -1,7 +1,7 @@
 import html from "./list-button.component.html";
 import css from "./list-button.component.css";
 import { SubComponent } from "../../EzComponent_subclasses";
-import { ListComponent } from "../set-list/set-list.component";
+import { ListComponent } from "../list/list.component";
 import { MainComponent } from "../main.component";
 import { BindValue, Click } from "@gsilber/webez";
 import { Group, Set } from "../../database";

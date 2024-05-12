@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeAll } from "@jest/globals";
-import { ListComponent } from "./set-list.component";
+import { ListComponent } from "./list.component";
 import { bootstrap } from "@gsilber/webez";
 import { Set } from "../../database";
 

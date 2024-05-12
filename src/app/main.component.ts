@@ -14,7 +14,7 @@ import {
     randomSetAndTerm,
 } from "../database";
 import { ImporterComponent } from "./importer/importer.component";
-import { ListComponent } from "./set-list/set-list.component";
+import { ListComponent } from "./list/list.component";
 import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
 import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
@@ -91,8 +91,13 @@ export class MainComponent extends EzComponent {
                     this,
                 ),
             );
-        } catch {
-            this.askFrom(sets, true);
+        } catch (e) {
+            if (
+                (e as Error).message ===
+                "Oops!  We didn't catch that there weren't enough terms!"
+            )
+                this.askFrom(sets, true);
+            else throw e;
         }
     }
 
