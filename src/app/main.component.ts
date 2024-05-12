@@ -1,19 +1,20 @@
 import html from "./main.component.html";
 import css from "./main.component.css";
-import { EzComponent } from "@gsilber/webez";
+import { BindValue, EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
 import {
+    Constructor,
     Database,
     Group,
     Set,
-    SetActivities,
+    Activities,
     TermSet,
     randomSetAndTerm,
 } from "../database";
 import { ImporterComponent } from "./importer/importer.component";
-import { SetListComponent } from "./set-list/set-list.component";
+import { ListComponent } from "./set-list/set-list.component";
 import { QuestionComponent } from "./question/question.component";
 import { DatabaseImporterComponent } from "./database-importer/database-importer.component";
 import { SetMasteredComponent } from "./set-mastered/set-mastered.component";
@@ -33,11 +34,9 @@ export class MainComponent extends EzComponent {
     private footer: FooterComponent = new FooterComponent(this);
 
     private page: PageComponet = new MainMenuComponent(this);
-    // private mainMenu: MainMenuComponent = new MainMenuComponent(this);
-    // private setImporter: SetImporterComponent = new SetImporterComponent(this);
-    // private setList: SetListComponent = new SetListComponent(this);
-    // private allImporter: DatabaseImporterComponent =
-    //     new DatabaseImporterComponent(this);
+
+    @BindValue("page")
+    private blank: string = "";
 
     constructor() {
         super(html, css);
@@ -67,9 +66,11 @@ export class MainComponent extends EzComponent {
         this.activate(new ImporterComponent(Group, this));
     }
 
-    toSetList(activity: SetActivities): void {
-        const setList = new SetListComponent(activity, this);
-        this.activate(setList);
+    toList<X extends Set | Group>(
+        activity: Activities,
+        x: Constructor<X>,
+    ): void {
+        this.activate(new ListComponent(activity, x, this));
     }
 
     importAll(): void {
@@ -82,13 +83,17 @@ export class MainComponent extends EzComponent {
         // const term = set?.chooseTerm(onlyNew);
         // if (!set || !term)
         //     throw new EzError("There are insufficient terms in your set(s).");
-        this.activate(
-            new QuestionComponent(
-                ...randomSetAndTerm(sets, onlyNew),
-                sets,
-                this,
-            ),
-        );
+        try {
+            this.activate(
+                new QuestionComponent(
+                    ...randomSetAndTerm(sets, onlyNew),
+                    sets,
+                    this,
+                ),
+            );
+        } catch {
+            this.askFrom(sets, true);
+        }
     }
 
     toFlashcards(sets: Set[]): void {
@@ -103,9 +108,14 @@ export class MainComponent extends EzComponent {
     }
 
     private activate(page: PageComponet) {
-        this.removeComponent(this.page);
+        this.freePage();
         this.page = page;
         this.addComponent(this.page, "page");
+    }
+
+    protected freePage(): void {
+        this.removeComponent(this.page);
+        this.blank = "";
     }
 
     import(data: string, which: "set" | "group"): void {
@@ -115,8 +125,11 @@ export class MainComponent extends EzComponent {
         this.saveDatabase();
     }
 
-    getSets(): Set[] {
-        return this.database.sets;
+    getData<X extends Set | Group>(x: Constructor<X>): X[] {
+        return (
+            new x("") instanceof Group ?
+                this.database.groups
+            :   this.database.sets) as X[];
     }
 
     saveDatabase(): void {

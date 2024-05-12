@@ -22,7 +22,11 @@ export class TFQComponent extends QuestionBody {
         this.choices = { prompt: term, answer: term };
         if (Math.random() < 0.5) {
             let allOptions = this.term.allOptions(this.sets);
-            if (allOptions.length < 1) this.main.askFrom(sets, true);
+            if (allOptions.length < 1)
+                throw new Error(
+                    "Oops!  We didn't catch that there weren't enough terms!",
+                );
+
             const i = Math.floor(Math.random() * allOptions.length);
             this.choices.answer = allOptions[i];
         }

@@ -3,6 +3,7 @@ import css from "./main-menu.component.css";
 import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Click } from "@gsilber/webez";
+import { Group, Set } from "../../database";
 
 export class MainMenuComponent extends PageComponet {
     constructor(main: MainComponent) {
@@ -21,7 +22,12 @@ export class MainMenuComponent extends PageComponet {
 
     @Click("practice-set")
     practiceSet(): void {
-        this.main.toSetList("Practice");
+        this.main.toList("Practice", Set);
+    }
+
+    @Click("practice-group")
+    practiceGroup(): void {
+        this.main.toList("Practice", Group);
     }
 
     @Click("import-all")
@@ -31,7 +37,12 @@ export class MainMenuComponent extends PageComponet {
 
     @Click("set-cards")
     setCards(): void {
-        this.main.toSetList("Flashcards");
+        this.main.toList("Flashcards", Set);
+    }
+
+    @Click("group-cards")
+    groupCards(): void {
+        this.main.toList("Flashcards", Group);
     }
 
     onExit(): void {

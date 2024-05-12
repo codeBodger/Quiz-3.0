@@ -19,7 +19,7 @@ Items marked with only a number will be done only if I have time.
 -   [x] 9. **IMPORT SET**: A way to import a set from a spreadsheet (adds terms if set already exists, new duplicate terms are resolved by the user).
 -   [x] 10. **IMPORT ALL**: A way to import (overwriting groups and sets with the same name) an exported text file of your progress.
 -   [x] 11. **EXPORT ALL**: A way to export all of your progress as a text file.
--   [ ] 12. **PRACTICE GROUP**: A way to practice the sets in a group.
+-   [x] 12. **PRACTICE GROUP**: A way to practice the sets in a group.
 -   [x] 13. **PRACTICE SET**: A way to practice only a single set.
 -   [x] 14. **QUESTION TYPES**: The following question types will be included:
     -   [x] 1. New Term
@@ -33,7 +33,7 @@ Items marked with only a number will be done only if I have time.
 
 17. **TERM TYPES**: So different term types aren't compared, giving away the answer.
 
--   [ ] 18. **GROUP FLASHCARDS**: Practice a group using flashcards (does not affect mastery).
+-   [x] 18. **GROUP FLASHCARDS**: Practice a group using flashcards (does not affect mastery).
 -   [x] 19. **SET FLASHCARDS**: Practice a set using flashcards (does not affect mastery).
 -   [ ] 20. **DOCUMENTATION**: Documentation for _everything_.
 
@@ -72,8 +72,8 @@ Items marked with only a number will be done only if I have time.
 
 -   [x] Item 19 completed
 -   [x] Item 8 completed
--   [ ] Item 12 completed
--   [ ] Item 18 completed
+-   [x] Item 12 completed
+-   [x] Item 18 completed
 -   [ ] Item 20 completed
 
 ## Final Submission (2024-05-19)

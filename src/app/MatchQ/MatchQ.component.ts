@@ -127,7 +127,11 @@ export class MatchQComponent extends QuestionBody {
 
     getOptions(): [Term, Term, Term] {
         let allOptions = this.term.allOptions([this.set]);
-        if (allOptions.length < 2) this.main.askFrom(this.sets, true);
+        if (allOptions.length < 2)
+            throw new Error(
+                "Oops!  We didn't catch that there weren't enough terms!",
+            );
+
         let out: [Term, Term, Term] = [this.term, this.term, this.term];
         for (let i = 1; i < 3; i++) {
             let ind = Math.floor(Math.random() * allOptions.length);

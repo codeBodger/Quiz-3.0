@@ -40,7 +40,11 @@ export class MCQComponent extends QuestionBody {
 
     getOptions(): [Term, Term, Term, Term] {
         let allOptions = this.term.allOptions(this.sets);
-        if (allOptions.length < 3) this.main.askFrom(this.sets, true);
+        if (allOptions.length < 3)
+            throw new Error(
+                "Oops!  We didn't catch that there weren't enough terms!",
+            );
+
         let out: [Term, Term, Term, Term] = [
             this.term,
             this.term,

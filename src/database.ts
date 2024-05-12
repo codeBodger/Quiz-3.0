@@ -130,7 +130,7 @@ type DatabaseError = {
 };
 
 type Categorised = { done: Set[]; doing: Set | undefined };
-export type SetActivities = "Practice" | "Flashcards";
+export type Activities = "Practice" | "Flashcards";
 export class Set {
     private mastered: boolean;
     public allChars: string[] = [];
@@ -470,6 +470,7 @@ export function randomSetAndTerm(sets: Set[], onlyNew: boolean): [Term, Set] {
     const categorised = Set.categorise(sets, "mastered");
     const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
     const term = set?.chooseTerm(onlyNew);
+    console.log(term);
     if (!set || !term)
         throw new EzError("There are insufficient terms in your set(s).");
     return [term, set];

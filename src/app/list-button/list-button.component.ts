@@ -1,18 +1,18 @@
 import html from "./list-button.component.html";
 import css from "./list-button.component.css";
 import { SubComponent } from "../../EzComponent_subclasses";
-import { SetListComponent } from "../set-list/set-list.component";
+import { ListComponent } from "../set-list/set-list.component";
 import { MainComponent } from "../main.component";
 import { BindValue, Click } from "@gsilber/webez";
-import { Set } from "../../database";
+import { Group, Set } from "../../database";
 
-export class ListButtonComponent<X extends Set> extends SubComponent {
+export class ListButtonComponent<X extends Set | Group> extends SubComponent {
     @BindValue("act")
     private readonly name;
 
     constructor(
         readonly x: X,
-        protected parent: SetListComponent,
+        protected parent: ListComponent<X>,
         main: MainComponent,
     ) {
         super(parent, main, html, css);
