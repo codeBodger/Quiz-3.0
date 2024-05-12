@@ -44,12 +44,11 @@ export class Term {
         );
     }
 
-    matches(term: Term): "exactly" | "prompt" | "none" {
-        if (this.prompt === term.prompt) {
-            if (this.answer === term.answer) return "exactly";
-            return "prompt";
-        }
-        return "none";
+    matches(term: Term): { prompt: boolean; answer: boolean } {
+        return {
+            prompt: this.prompt === term.prompt,
+            answer: this.answer === term.answer,
+        };
     }
 
     chooseQuestionType(): QuestionType {
@@ -112,7 +111,7 @@ export class Term {
         let allOptions: Term[] = [];
         sets.forEach((set: Set) => {
             set.terms.forEach((term: Term) => {
-                if (term.matches(this) === "none" && term.started)
+                if (!term.matches(this).prompt && term.started)
                     allOptions.push(term);
             });
         });
@@ -199,15 +198,13 @@ export class Set {
     }
 
     addTerm(term: Term): string | undefined {
-        let extantTerm = this.getTerm(term.prompt);
-        switch (extantTerm?.matches(term) ?? "none") {
-            case "prompt":
-                return term.prompt;
-            case "none":
-                this.terms.push(term);
-                break;
-            case "exactly":
-        }
+        let extantTermMatch = this.getTerm(term.prompt)?.matches(term) ?? {
+            prompt: false,
+            answer: false,
+        };
+        if (!extantTermMatch.prompt)
+            this.terms.push(term); // Formerly case "none":
+        else if (!extantTermMatch.answer) return term.prompt; // Formerly case "prompt":
         this.mastered = this.mastery === MASTERED;
         term.answer.split("").forEach((val: string) => {
             val = CharQComponent.buttonify(val);

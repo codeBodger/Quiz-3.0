@@ -78,7 +78,7 @@ export class MCQComponent extends QuestionBody {
     }
 
     answer(answer: Term) {
-        const correct = this.term.matches(answer) === "exactly";
+        const correct = this.term.matches(answer).answer;
         this.term.update(correct, this.type, this.main);
         this.parent.answer(correct, answer.answer);
     }

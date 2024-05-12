@@ -98,8 +98,8 @@ As such, I will be able to work on some of the additional items.
     -   [x] Text size based on vmin instead of vh
 -   DatabaseError doesn't have linebreaks
     -   [x] Use `<br>` instead of `\n`
--   Terms with the same name cause issues
-    -   [ ] Change how I'm checking if the input was correct
+-   Terms with the same answer cause issues
+    -   [x] Change how I'm checking if the input was correct (at answer time)
 -   On mobile, scrolling screws stuff up
     -   [x] Use `sv*` instead of `dv*`
 

@@ -44,8 +44,7 @@ export class TFQComponent extends QuestionBody {
 
     answer(expect: boolean): void {
         const correct =
-            (this.choices.prompt.matches(this.choices.answer) === "exactly") ===
-            expect;
+            this.choices.prompt.matches(this.choices.answer).answer === expect;
         this.term.update(correct, this.type, this.main);
         this.parent.answer(correct, expect ? "True" : "False");
     }
