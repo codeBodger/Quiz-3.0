@@ -1,6 +1,6 @@
 import html from "./main.component.html";
 import css from "./main.component.css";
-import { BindValue, EzComponent } from "@gsilber/webez";
+import { BindValue, EzComponent, EzDialog } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
@@ -92,12 +92,21 @@ export class MainComponent extends EzComponent {
                 ),
             );
         } catch (e) {
-            if (
-                (e as Error).message ===
-                "Oops!  We didn't catch that there weren't enough terms!"
-            )
-                this.askFrom(sets, true);
-            else throw e;
+            const message = e instanceof Error ? e.message : "";
+            switch (message.split('"')[0]) {
+                /**Go try to get a new term */
+                case "Oops!  We didn't catch that there weren't enough terms!":
+                    this.askFrom(sets, true);
+                    return;
+                /**Tell the user that there is no new term to get or that their
+                 * set has too few chars in it */
+                case "There are insufficient terms in your set(s).":
+                case "There are insufficient unique characters in the set ":
+                    EzDialog.popup(this, message);
+                    return;
+                default:
+                    throw e;
+            }
         }
     }
 

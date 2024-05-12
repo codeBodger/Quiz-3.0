@@ -110,4 +110,4 @@ As such, I will be able to work on some of the additional items.
 -   Unnecessary method `Database.getSets()`, as it doesn't actually protect anything
     -   [x] Delete the method and make `Database.sets` public
 -   Should probably make the errors in `database.randomSetAndTerm()` and `CharQComponent.updateButtons()` less harsh
-    -   [ ] Switch them to an EzDialog
+    -   [x] Switch them to an EzDialog

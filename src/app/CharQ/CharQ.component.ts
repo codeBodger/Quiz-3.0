@@ -6,7 +6,6 @@ import { QuestionComponent } from "../question/question.component";
 import { MainComponent } from "../main.component";
 import { BindCSSClassToBooleanSRA } from "../../bind.decorators";
 import { BindValue, Click } from "@gsilber/webez";
-import { EzError } from "../EzError/EzError.component";
 
 class Button {
     public char = "";
@@ -84,7 +83,7 @@ export class CharQComponent extends QuestionBody {
             (v: string) => v !== this.charNow,
         );
         if (validChars.length < 7)
-            throw new EzError(
+            throw new Error(
                 `There are insufficient unique characters in the set "${this.set.name}".`,
             );
         for (let answer of this.answers) {
