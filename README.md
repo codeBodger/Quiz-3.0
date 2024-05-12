@@ -96,7 +96,7 @@ As such, I will be able to work on some of the additional items.
         -   [x] Remove user confirmation and replace with warning
 -   Buttons go to the next line instead of wrapping their text
     -   [x] Text size based on vmin instead of vh
--   SetError doesn't have linebreaks
+-   DatabaseError doesn't have linebreaks
     -   [ ] Not much of an idea on this one either. Maybe `<br>` or just comma separated
 -   Terms with the same name cause issues
     -   [ ] Change how I'm checking if the input was correct
