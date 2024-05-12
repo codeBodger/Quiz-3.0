@@ -8,8 +8,6 @@ import { Database } from "../../database";
 declare const window: Window;
 
 export class DatabaseImporterComponent extends PageComponet {
-    private value = "";
-
     constructor(main: MainComponent) {
         super(main, html, css);
     }
@@ -22,10 +20,6 @@ export class DatabaseImporterComponent extends PageComponet {
         );
         this.main.mergeDatabase(database);
         window.localStorage.removeItem("file-text");
-    }
-
-    onActivate(): void {
-        return;
     }
 
     onExit(): void {

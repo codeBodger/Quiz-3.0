@@ -81,10 +81,6 @@ export class FlashcardsComponent extends PageComponet {
         this.update();
     }
 
-    onActivate(): void {
-        return;
-    }
-
     onExit(): void {
         return;
     }

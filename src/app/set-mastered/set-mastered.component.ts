@@ -23,10 +23,6 @@ export class SetMasteredComponent extends PageComponet {
         this.main.askFrom(this.sets);
     }
 
-    onActivate(): void {
-        return;
-    }
-
     onExit(): void {
         return;
     }

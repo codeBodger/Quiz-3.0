@@ -35,10 +35,6 @@ export class SetImporterComponent extends PageComponet {
         this.main.cancel();
     }
 
-    onActivate(): void {
-        // this.setData = DEFAULT_DATA;
-    }
-
     onExit(): void {
         this.import();
     }

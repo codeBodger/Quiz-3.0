@@ -1,6 +1,6 @@
 import html from "./main.component.html";
 import css from "./main.component.css";
-import { BindValue, EzComponent } from "@gsilber/webez";
+import { EzComponent } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
@@ -20,7 +20,6 @@ import { checkImplementation } from "../question_types";
 import { FlashcardsComponent } from "./flashcards/flashcards.component";
 import { StartFlashcardsComponent } from "./start-flashcards/start-flashcards.component";
 import { EzError } from "./EzError/EzError.component";
-// import { EzError } from "./EzError/EzError.component";
 
 /**
  * @description MainComponent is the main component of the app
@@ -38,9 +37,6 @@ export class MainComponent extends EzComponent {
     // private setList: SetListComponent = new SetListComponent(this);
     // private allImporter: DatabaseImporterComponent =
     //     new DatabaseImporterComponent(this);
-
-    @BindValue("page")
-    private blank: string = "";
 
     constructor() {
         super(html, css);
@@ -68,7 +64,6 @@ export class MainComponent extends EzComponent {
 
     toSetList(activity: SetActivities): void {
         const setList = new SetListComponent(activity, this);
-        // setList.for(activity);
         this.activate(setList);
     }
 
@@ -103,15 +98,9 @@ export class MainComponent extends EzComponent {
     }
 
     private activate(page: PageComponet) {
-        // this.freePage();
         this.removeComponent(this.page);
         this.page = page;
-        this.page.onActivate();
         this.addComponent(this.page, "page");
-    }
-
-    protected freePage(): void {
-        this.blank = "";
     }
 
     importSet(setData: string): void {
@@ -128,7 +117,7 @@ export class MainComponent extends EzComponent {
         try {
             this.database.save();
         } catch {
-            // I have no idea what could go wrong here, but let's warn the user
+            // I have no recolection of what could go wrong here, but let's warn the user
             throw new EzError("Failed to save the database!");
         }
     }

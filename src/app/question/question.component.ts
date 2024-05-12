@@ -76,10 +76,6 @@ export class QuestionComponent extends PageComponet {
         else this.main.askFrom(this.sets);
     }
 
-    onActivate(): void {
-        return;
-    }
-
     onExit(): void {
         return;
     }

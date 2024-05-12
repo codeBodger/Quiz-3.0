@@ -24,7 +24,6 @@ export abstract class PageComponet extends EzComponent {
         super(html, css);
     }
 
-    abstract onActivate(): void;
     abstract onExit(): void;
 }
 

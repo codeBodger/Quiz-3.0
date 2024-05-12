@@ -54,10 +54,6 @@ export class StartFlashcardsComponent extends PageComponet {
         this.main.doFlashcards(termSets);
     }
 
-    onActivate(): void {
-        return;
-    }
-
     onExit(): void {
         return;
     }

@@ -29,10 +29,6 @@ export class MainMenuComponent extends PageComponet {
         this.main.toSetList("Flashcards");
     }
 
-    onActivate(): void {
-        return;
-    }
-
     onExit(): void {
         return;
     }
