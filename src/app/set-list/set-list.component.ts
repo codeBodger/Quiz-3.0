@@ -29,14 +29,14 @@ export class SetListComponent extends PageComponet {
         });
     }
 
-    act(set: Set): void {
+    act(set: Set): true {
         switch (this.activity) {
             case "Practice":
                 this.main.askFrom([set]);
-                break;
+                return true;
             case "Flashcards":
                 this.main.toFlashcards([set]);
-                break;
+                return true;
         }
     }
 
