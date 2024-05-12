@@ -17,29 +17,27 @@ export const PROB_FACTOR_IF_ACTIVE_SET = 5;
 export class QuestionType {
     constructor(
         public readonly name: QuestionTypes,
-        private onSuccess: (mastery: number) => number = (n) => n,
-        private onFailure: (mastery: number) => number = (n) => n,
         public probability: (mastery: number) => number = () => 0,
+        private readonly weight: number = 1,
+        private readonly divideAmongst: (length: number) => number = () => 1,
     ) {}
 
-    masteryUpdater(mastery: number, success: boolean): number {
-        const out = success ? this.onSuccess(mastery) : this.onFailure(mastery);
+    masteryUpdater(mastery: number, success: boolean, length: number): number {
+        if (this.name === "New Term") return success ? MASTERED : BEGUN;
+
+        /**For CharQ, if no mistakes are made, this results in the same thing as
+         * `scale = this.weight`, when considering the entire term. */
+        const scale = Math.pow(this.weight, 1 / this.divideAmongst(length));
+        const out = success ? mastery / scale : mastery * scale;
         return out < MASTERED ? MASTERED : out;
     }
 }
 
 // Probabilities taken from https://github.com/codeBodger/Quiz-2/blob/main/public/index.html#L95
 export const questionTypes: QuestionType[] = [
-    new QuestionType(
-        "New Term",
-        () => MASTERED,
-        () => BEGUN,
-        () => 0,
-    ),
+    new QuestionType("New Term"),
     new QuestionType(
         "Multiple Choice",
-        (mastery) => mastery / 1.2,
-        (mastery) => mastery * 1.2,
         (mastery) => {
             return (
                 (0.00143777949286 *
@@ -53,11 +51,10 @@ export const questionTypes: QuestionType[] = [
                 )
             );
         },
+        1.2,
     ),
     new QuestionType(
         "True/False",
-        (mastery) => mastery / 1.1,
-        (mastery) => mastery * 1.1,
         (mastery) => {
             if (mastery <= 4900000)
                 return (
@@ -69,27 +66,25 @@ export const questionTypes: QuestionType[] = [
             if (mastery < 5100000) return 0;
             return mastery / 10000000 - 0.5;
         },
+        1.1,
     ),
     new QuestionType(
         "Matching",
-        (mastery) => mastery / 1.15,
-        (mastery) => mastery * 1.15,
         (mastery) => {
             if (mastery <= 4800000)
                 return (
-                    (4 * // is this `4 *` for getting the other two?
-                        (0.00169055154464 *
-                            1.00000126005 ** (1.00000036691 * mastery) +
-                            0.046476040631)) /
+                    (0.00169055154464 *
+                        1.00000126005 ** (1.00000036691 * mastery) +
+                        0.046476040631) /
                     (1 + Math.exp((mastery - 4370000) / 139000))
                 );
             return 0;
         },
+        1.15,
+        () => 2,
     ),
     new QuestionType(
         "Character Entry",
-        (mastery) => mastery / 1.7,
-        (mastery) => mastery * 1.7,
         (mastery) => {
             if (mastery <= 3700000)
                 return (
@@ -103,11 +98,11 @@ export const questionTypes: QuestionType[] = [
                 );
             return 0;
         },
+        1.7,
+        (length) => length,
     ),
     new QuestionType(
         "Text Entry",
-        (mastery) => mastery / 2,
-        (mastery) => mastery * 2,
         (mastery) => {
             if (mastery <= 2900000)
                 return (
@@ -117,6 +112,7 @@ export const questionTypes: QuestionType[] = [
                 );
             return 0;
         },
+        2,
     ),
 ] as const;
 
@@ -141,4 +137,4 @@ function only(...names: QuestionTypes[]): void {
                 names.includes(name) ? 1 : 0),
     );
 }
-only();
+only("Character Entry");

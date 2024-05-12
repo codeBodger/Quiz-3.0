@@ -106,7 +106,7 @@ As such, I will be able to work on some of the additional items.
 ## Things to Fix
 
 -   Deal with mastery for MatchQ and CharQ and probabilities for MatchQ
-    -   [ ] Because I'm using a different structure than v2.0, this needs to be changed
+    -   [x] Because I'm using a different structure than v2.0, this needs to be changed
 -   Unnecessary method `Database.getSets()`, as it doesn't actually protect anything
     -   [x] Delete the method and make `Database.sets` public
 -   Should probably make the errors in `database.randomSetAndTerm()` and `CharQComponent.updateButtons()` less harsh

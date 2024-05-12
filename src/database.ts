@@ -75,25 +75,11 @@ export class Term {
     }
 
     update(success: boolean, type: QuestionType, main: MainComponent) {
-        // console.log(success);
-        // console.log(success ? 0 : 1);
-        // let changeFactor = [1, 1];
-        // switch (type.name) {
-        //     case "New Term":
-        //         changeFactor = [0, 0];
-        //         break;
-        //     case "Multiple Choice":
-        //         changeFactor = [0.8, 1.2];
-        //         break;
-        //     case "True/False":
-        //         changeFactor = [0.9, 1.1];
-        //         break;
-        //     case "Text Entry":
-        //         changeFactor = [0.6, 1.2];
-        //         break;
-        // }
-        // this.mastery *= changeFactor[success ? 1 : 0];
-        this._mastery = type.masteryUpdater(this._mastery, success);
+        this._mastery = type.masteryUpdater(
+            this._mastery,
+            success,
+            this.answer.length,
+        );
         main.saveDatabase();
     }
 
