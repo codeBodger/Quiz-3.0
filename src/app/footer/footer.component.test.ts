@@ -18,7 +18,7 @@ describe("FooterComponent", () => {
 });
 
 describe("Main Component", () => {
-    let component: MainComponent;
+    let component: any = undefined;
     beforeEach(() => {
         const html: string = `<div>Testing Environment</div><div id='main-target'></div>`;
         component = bootstrap<MainComponent>(MainComponent, html);
