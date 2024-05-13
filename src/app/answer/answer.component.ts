@@ -6,6 +6,13 @@ import { MainComponent } from "../main.component";
 import { Term } from "../../database";
 import { BindStyle, BindValue, Click } from "@gsilber/webez";
 
+/**
+ * @description A component to display whether the user got a question right or not
+ * @export
+ * @class AnswerComponent
+ * @extends {SubComponent}
+ * @example const ans = new AnswerComponent(term, this, this.main);
+ */
 export class AnswerComponent extends SubComponent {
     @BindStyle("correct", "color", (val: boolean) => (val ? "#218c64" : "red"))
     @BindValue("correct", (val: boolean) => (val ? "Correct!" : "Incorrect"))
@@ -20,6 +27,16 @@ export class AnswerComponent extends SubComponent {
     @BindValue("corrected")
     private corrected: string = "";
 
+    /**
+     * @description Creates an instance of AnswerComponent
+     * @param {Term} [term] The term that is being answered
+     * @param {QuestionComponent} [parent] The component that created this
+     * @param {MainComponent} [main] The root/main component of the whole webapp
+     * @memberof AnswerComponent
+     * @public
+     * @constructor
+     * @example const ans = new AnswerComponent(term, this, this.main);
+     */
     constructor(
         private term: Term,
         protected parent: QuestionComponent,
@@ -28,12 +45,25 @@ export class AnswerComponent extends SubComponent {
         super(parent, main, html, css);
     }
 
+    /**
+     * @description Updates this with the latest information, so we don't have to create a new one each time
+     * @param {boolean} [correct] Whether the user chose the correct option
+     * @param {string} [answer] The answer given by the user
+     * @returns void
+     * @memberof AnswerComponent
+     * @example ans.init(true, "easy_answer");
+     */
     init(correct: boolean, answer: string): void {
         this.correct = correct;
         this.answer = answer;
         this.corrected = this.term.answer;
     }
 
+    /**
+     * @description Goes to the next Question when "Continue" is pressed
+     * @returns void
+     * @memberof AnswerComponent
+     */
     @Click("continue")
     continue(): void {
         this.parent.continue();

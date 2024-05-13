@@ -7,17 +7,44 @@ import { MainComponent } from "../main.component";
 import { BindCSSClassToBooleanSRA } from "../../bind.decorators";
 import { BindValue, Click } from "@gsilber/webez";
 
+/**
+ * @description A button class to help with CharQComponent
+ * @class Button
+ * @example const b = new Button(this);
+ */
 class Button {
     public char = "";
     public failed = false;
 
+    /**
+     * @description Creates an instance of Button
+     * @param {CharQComponent} [component] The component to which to attach this button
+     * @memberof Button
+     * @public
+     * @constructor
+     * @example const b = new Button(this);
+     */
     constructor(private readonly component: CharQComponent) {}
 
+    /**
+     * @description Updates the values of the button so we don't need a new one each time
+     * @param char The character for the button
+     * @returns void
+     * @memberof Button
+     * @example b.update("H");
+     */
     update(char: string): void {
         this.char = char;
         this.failed = false;
     }
 
+    /**
+     * @description Checks if the given char matches this button and sets `this.failed` accordingly
+     * @param char The character to check against this button
+     * @returns {boolean} Whether or not the char matched
+     * @memberof Button
+     * @example const correct = b.check("H");
+     */
     check(char: string): boolean {
         return !(this.failed = char !== this.char);
     }
@@ -42,13 +69,6 @@ export class CharQComponent extends QuestionBody {
     @BindCSSClassToBooleanSRA("ans4", "wrong", transform(4))
     @BindCSSClassToBooleanSRA("ans5", "wrong", transform(5))
     @BindCSSClassToBooleanSRA("ans6", "wrong", transform(6))
-    // @BindCSSClassToBooleanSRA("ans0", "unimplemented", transform(0))
-    // @BindCSSClassToBooleanSRA("ans1", "unimplemented", transform(1))
-    // @BindCSSClassToBooleanSRA("ans2", "unimplemented", transform(2))
-    // @BindCSSClassToBooleanSRA("ans3", "unimplemented", transform(3))
-    // @BindCSSClassToBooleanSRA("ans4", "unimplemented", transform(4))
-    // @BindCSSClassToBooleanSRA("ans5", "unimplemented", transform(5))
-    // @BindCSSClassToBooleanSRA("ans6", "unimplemented", transform(6))
     private answers: [Button, Button, Button, Button, Button, Button, Button] =
         [
             new Button(this),
@@ -104,37 +124,30 @@ export class CharQComponent extends QuestionBody {
 
     @Click("ans0")
     act0(): void {
-        // this.answers[0].click(this.charNow);
         this.answer(this.answers[0]);
     }
     @Click("ans1")
     act1(): void {
-        // this.answers[1].click(this.charNow);
         this.answer(this.answers[1]);
     }
     @Click("ans2")
     act2(): void {
-        // this.answers[2].click(this.charNow);
         this.answer(this.answers[2]);
     }
     @Click("ans3")
     act3(): void {
-        // this.answers[3].click(this.charNow);
         this.answer(this.answers[3]);
     }
     @Click("ans4")
     act4(): void {
-        // this.answers[4].click(this.charNow);
         this.answer(this.answers[4]);
     }
     @Click("ans5")
     act5(): void {
-        // this.answers[5].click(this.charNow);
         this.answer(this.answers[5]);
     }
     @Click("ans6")
     act6(): void {
-        // this.answers[6].click(this.charNow);
         this.answer(this.answers[6]);
     }
 
