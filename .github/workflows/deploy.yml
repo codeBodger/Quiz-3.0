@@ -70,6 +70,12 @@ jobs:
               run: |
                   git clone https://github.com/jpwhite3/gitinspector.git
                   python ./gitinspector/gitinspector.py ./ --grading --format=html -f tsx,ts,html,css -x ./gitinspector -x ./node_modules -x ./wbcore > ./dist/git.html
+            - name: Create class diagrams
+              continue-on-error: true
+              run: |
+                  npm install @acbart/tsuml2
+                  npm exec tsuml2 -- --glob "./src/**/*.ts" --memberAssociations true -o docs/__class_diagram.svg --typeLinks false
+                  echo "![Class Diagram](__class_diagram.svg)" > docs/diagram.md
             - name: Copy over index.md to docs/
               run: |
                   cp README.md docs/index.md
