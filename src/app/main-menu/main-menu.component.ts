@@ -45,6 +45,16 @@ export class MainMenuComponent extends PageComponet {
         this.main.toList("Flashcards", Group);
     }
 
+    @Click("delete-set")
+    deleteSet(): void {
+        this.main.toList("Delete", Set);
+    }
+
+    @Click("delete-group")
+    deleteGroup(): void {
+        this.main.toList("Delete", Group);
+    }
+
     onExit(): void {
         return;
     }

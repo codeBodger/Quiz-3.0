@@ -117,6 +117,10 @@ export class MainComponent extends EzComponent {
         this.activate(new FlashcardsComponent(termSets, this));
     }
 
+    delete(item: Set | Group): void {
+        this.database.delete(item);
+    }
+
     masteredSet(set: Set, sets: Set[]): void {
         this.activate(new SetMasteredComponent(set.name, sets, this));
     }

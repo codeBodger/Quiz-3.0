@@ -115,7 +115,7 @@ type DatabaseError = {
 };
 
 type Categorised = { done: Set[]; doing: Set | undefined };
-export type Activities = "Practice" | "Flashcards";
+export type Activities = "Practice" | "Flashcards" | "Delete";
 export class Set {
     private mastered: boolean;
     public allChars: string[] = [];
@@ -436,6 +436,13 @@ export class Database {
 
     getSet(setName: string): Set | undefined {
         return this.sets.find((set: Set) => set.name === setName);
+    }
+
+    delete(item: Set | Group): void {
+        const del = <X extends Set | Group>(list: X[]): X[] =>
+            list.filter((v: X) => v !== item);
+        this.sets = del(this.sets);
+        this.groups = del(this.groups);
     }
 
     save(): void {

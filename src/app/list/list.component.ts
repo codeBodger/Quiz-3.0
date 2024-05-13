@@ -3,7 +3,7 @@ import css from "./list.component.css";
 import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Constructor, Group, Set, Activities } from "../../database";
-import { BindValue } from "@gsilber/webez";
+import { BindValue, EzDialog } from "@gsilber/webez";
 import { ListButtonComponent } from "../list-button/list-button.component";
 
 export class ListComponent<X extends Set | Group> extends PageComponet {
@@ -30,7 +30,9 @@ export class ListComponent<X extends Set | Group> extends PageComponet {
     }
 
     act(data: X): true {
-        const toAskFrom = data instanceof Set ? [data] : data.sets;
+        const [type, toAskFrom]: ["Set" | "Group", Set[]] =
+            data instanceof Set ? ["Set", [data]] : ["Group", data.sets];
+        // const toAskFrom = data instanceof Set ? [data] : data.sets;
         // const toAskFrom = data instanceof Group ? data.sets : [data];
         switch (this.activity) {
             case "Practice":
@@ -38,6 +40,29 @@ export class ListComponent<X extends Set | Group> extends PageComponet {
                 return true;
             case "Flashcards":
                 this.main.toFlashcards(toAskFrom);
+                return true;
+            case "Delete":
+                EzDialog.popup(
+                    this,
+                    `Are you sure you want to delete the ${type} "${data.name}"?` +
+                        "<h2>THIS CAN NOT BE UNDONE</h2>" +
+                        (type === "Set" ?
+                            "This will delete the terms within the set as well."
+                        :   "The sets within the group will not be deleted."),
+                    `Delete ${type}`,
+                    ["Delete", "Cancel"],
+                ).subscribe((v: string) => {
+                    switch (v) {
+                        case "Delete":
+                            this.main.delete(data);
+                            this.main.exit();
+                            return;
+                        case "Cancel":
+                            return;
+                        default:
+                            this.act(data);
+                    }
+                });
                 return true;
         }
     }
