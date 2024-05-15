@@ -8,7 +8,7 @@ import {
     BindCSSClassToBooleanSRA,
     ClickSRA,
     MouseEventSRA,
-} from "../../bind.decorators";
+} from "../../decoratorsSRA";
 import { BindValue } from "@gsilber/webez";
 
 /**

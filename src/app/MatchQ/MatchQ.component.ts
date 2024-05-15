@@ -5,7 +5,7 @@ import { Term, Set } from "../../database";
 import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
 import { BindValue, Click } from "@gsilber/webez";
-import { BindCSSClassToBooleanSRA } from "../../bind.decorators";
+import { BindCSSClassToBooleanSRA } from "../../decoratorsSRA";
 
 class Button {
     public done = false;

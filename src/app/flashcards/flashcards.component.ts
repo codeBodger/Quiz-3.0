@@ -4,7 +4,7 @@ import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Term, TermSet } from "../../database";
 import { BindValue, Click } from "@gsilber/webez";
-import { BindVisibleToBooleanSRA } from "../../bind.decorators";
+import { BindVisibleToBooleanSRA } from "../../decoratorsSRA";
 
 export type AdjacentCards = {
     previous: FlashcardsComponent | undefined;
