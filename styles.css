@@ -45,16 +45,13 @@ h4 {
 }
 
 .unimplemented {
-    background-color: #f00;
-}
-.unimplemented:hover {
-    background-color: #b00;
-}
-.unimplemented:active {
-    background-color: #700;
+    background-color: #f00 !important;
+    cursor: auto;
 }
 .back-burner {
     opacity: 0.2;
+    background-color: rgb(210, 158, 255) !important;
+    cursor: auto;
 }
 button {
     cursor: pointer;
