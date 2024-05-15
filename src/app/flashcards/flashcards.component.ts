@@ -4,12 +4,12 @@ import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Term, TermSet } from "../../database";
 import { BindValue, Click } from "@gsilber/webez";
-import { BindVisibleToBooleanSRA } from "../../decoratorsSRA";
+import {
+    BindVisibleToBooleanSRA,
+    ClickSRA,
+    MouseEventSRA,
+} from "../../decoratorsSRA";
 
-export type AdjacentCards = {
-    previous: FlashcardsComponent | undefined;
-    next: FlashcardsComponent | undefined;
-};
 type ProAns = "prompt" | "answer";
 export class FlashcardsComponent extends PageComponet {
     @BindValue("prompt", (v: Term) => v.prompt)
@@ -17,14 +17,8 @@ export class FlashcardsComponent extends PageComponet {
     @BindVisibleToBooleanSRA("star", (v: Term) => v.confident)
     private term: Term = new Term();
 
-    @BindVisibleToBooleanSRA("prompt", (v: ProAns) => {
-        console.log(v, v === "prompt");
-        return v === "prompt";
-    })
-    @BindVisibleToBooleanSRA("answer", (v: ProAns) => {
-        console.log(v, v === "answer");
-        return v === "answer";
-    })
+    @BindVisibleToBooleanSRA("prompt", (v: ProAns) => v === "prompt")
+    @BindVisibleToBooleanSRA("answer", (v: ProAns) => v === "answer")
     private side: ProAns = "prompt";
 
     @BindValue("set")
@@ -53,24 +47,25 @@ export class FlashcardsComponent extends PageComponet {
     @Click("previous")
     previous(): void {
         this.index--;
+        this.side = "prompt";
         this.update();
     }
 
     @Click("next")
     next(): void {
         this.index++;
+        this.side = "prompt";
         this.update();
     }
 
-    @Click("practice")
-    practice(): void {
-        this.term.confident = false;
-        this.next();
-    }
+    @ClickSRA("practice")
+    @ClickSRA("confident")
+    practice(e: MouseEventSRA): void {
+        let confident = false;
+        if (e.idSRA === "confident") confident = true;
+        else if (e.idSRA !== "practice") return;
 
-    @Click("confident")
-    confident(): void {
-        this.term.confident = true;
+        this.term.update(confident, "Flashcard", this.main);
         this.next();
     }
 

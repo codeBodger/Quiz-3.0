@@ -74,12 +74,18 @@ export class Term {
         // }
     }
 
-    update(success: boolean, type: QuestionType, main: MainComponent) {
-        this._mastery = type.masteryUpdater(
-            this._mastery,
-            success,
-            this.answer.length,
-        );
+    update(
+        success: boolean,
+        type: QuestionType | "Flashcard",
+        main: MainComponent,
+    ) {
+        if (type === "Flashcard") this.confident = success;
+        else
+            this._mastery = type.masteryUpdater(
+                this._mastery,
+                success,
+                this.answer.length,
+            );
         main.saveDatabase();
     }
 
