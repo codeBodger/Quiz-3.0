@@ -137,4 +137,4 @@ function only(...names: QuestionTypes[]): void {
                 names.includes(name) ? 1 : 0),
     );
 }
-only("Character Entry");
+only();
