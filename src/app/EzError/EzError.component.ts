@@ -1,11 +1,12 @@
-// import { BindValue, EzComponent } from "@gsilber/webez";
 import html from "./EzError.component.html";
-// import css from "./EzError.component.css";
 import { EzComponent } from "@gsilber/webez";
 
 declare const window: Window;
 
-// A manual partial extenssion of EzComponent
+/**
+ * @description A manual partial extenssion of EzComponent
+ * @summary If pressed, I could probably explain this, or at least what I added
+ */
 export class EzError extends Error {
     private htmlElement;
     private shadow;
