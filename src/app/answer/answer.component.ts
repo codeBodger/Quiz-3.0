@@ -14,6 +14,12 @@ import { BindStyle, BindValue, Click } from "@gsilber/webez";
  * @example const ans = new AnswerComponent(term, this, this.main);
  */
 export class AnswerComponent extends SubComponent {
+    /**
+     * @description Whether the user's answer was correct; used for the message
+     * @memberof AnswerComponent
+     * @type {boolean}
+     * @private
+     */
     @BindStyle("correct", "color", (val: boolean) => (val ? "#218c64" : "red"))
     @BindValue("correct", (val: boolean) => (val ? "Correct!" : "Incorrect"))
     @BindStyle("corrected-message", "visibility", (val: boolean) =>
@@ -21,9 +27,21 @@ export class AnswerComponent extends SubComponent {
     )
     private correct: boolean = true;
 
+    /**
+     * @description The answer given, again used for part of the message
+     * @memberof AnswerComponent
+     * @type {string}
+     * @private
+     */
     @BindValue("answer")
     private answer: string = "";
 
+    /**
+     * @description The correct answer, used in the message, buy only shown if wrong
+     * @memberof AnswerComponent
+     * @type {string}
+     * @private
+     */
     @BindValue("corrected")
     private corrected: string = "";
 
@@ -49,7 +67,7 @@ export class AnswerComponent extends SubComponent {
      * @description Updates this with the latest information, so we don't have to create a new one each time
      * @param {boolean} [correct] Whether the user chose the correct option
      * @param {string} [answer] The answer given by the user
-     * @returns void
+     * @returns {void}
      * @memberof AnswerComponent
      * @example ans.init(true, "easy_answer");
      */
@@ -61,7 +79,7 @@ export class AnswerComponent extends SubComponent {
 
     /**
      * @description Goes to the next Question when "Continue" is pressed
-     * @returns void
+     * @returns {void}
      * @memberof AnswerComponent
      */
     @Click("continue")
