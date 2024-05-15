@@ -4,8 +4,12 @@ import { QuestionBody } from "../../EzComponent_subclasses";
 import { Term, Set } from "../../database";
 import { QuestionComponent } from "../question/question.component";
 import { MainComponent } from "../main.component";
-import { BindCSSClassToBooleanSRA } from "../../bind.decorators";
-import { BindValue, Click } from "@gsilber/webez";
+import {
+    BindCSSClassToBooleanSRA,
+    ClickSRA,
+    MouseEventSRA,
+} from "../../bind.decorators";
+import { BindValue } from "@gsilber/webez";
 
 /**
  * @description A button class to help with CharQComponent
@@ -122,33 +126,16 @@ export class CharQComponent extends QuestionBody {
             <span style="color: #467501;">${this.term.answer.slice(0, this.index)}</span>|`;
     }
 
-    @Click("ans0")
-    act0(): void {
-        this.answer(this.answers[0]);
-    }
-    @Click("ans1")
-    act1(): void {
-        this.answer(this.answers[1]);
-    }
-    @Click("ans2")
-    act2(): void {
-        this.answer(this.answers[2]);
-    }
-    @Click("ans3")
-    act3(): void {
-        this.answer(this.answers[3]);
-    }
-    @Click("ans4")
-    act4(): void {
-        this.answer(this.answers[4]);
-    }
-    @Click("ans5")
-    act5(): void {
-        this.answer(this.answers[5]);
-    }
-    @Click("ans6")
-    act6(): void {
-        this.answer(this.answers[6]);
+    @ClickSRA("ans0")
+    @ClickSRA("ans1")
+    @ClickSRA("ans2")
+    @ClickSRA("ans3")
+    @ClickSRA("ans4")
+    @ClickSRA("ans5")
+    @ClickSRA("ans6")
+    act(e: MouseEventSRA): void {
+        console.log(e.idSRA);
+        this.answer(this.answers[parseInt(e.idSRA.at(-1)!)]);
     }
 
     answer(expect: Button): void {

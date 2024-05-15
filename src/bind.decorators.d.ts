@@ -1,4 +1,5 @@
 import { EzComponent } from "./EzComponent";
+import { ExtendedEventMap } from "@gsilber/webez";
 /**
  * @description Decorator to bind the cssClassName property if the boolean property is true
  * @param id the element to bind the property to
@@ -67,3 +68,51 @@ export declare function BindVisibleToBooleanSRA<
     target: undefined,
     context: ClassFieldDecoratorContext<EzComponent, Value>,
 ) => any;
+
+/**
+ * @description Decorator to bind a generic event to an element
+ * @param htmlElementID the element to bind the event to
+ * @param type the event to bind
+ * @returns DecoratorCallback
+ * @export
+ * @group Event Decorators
+ * @example
+ * @GenericEventSRA("myButton", "click")
+ * myButtonClick(e: MouseEventSRA) {
+ *    console.log(`Button "${e.idSRA}" was clicked`);
+ * }
+ */
+export declare function GenericEventSRA<K extends keyof HTMLElementEventMap>(
+    htmlElementID: string,
+    type: K,
+): <This extends EzComponent>(
+    target: (this: This, event: ExtendedEventMap[K]) => void,
+    context: ClassMethodDecoratorContext<
+        This,
+        (this: This, event: ExtendedEventMap[K]) => void
+    >,
+) => void;
+export class MouseEventSRA extends MouseEvent {
+    public readonly idSRA: string;
+}
+/**
+ * @description Decorator to bind a click event to an element
+ * @param htmlElementID the element to bind the event to
+ * @returns DecoratorCallback
+ * @export
+ * @group Event Decorators
+ * @example
+ * @ClickSRA("myButton")
+ * myButtonClick(e: MouseEventSRA) {
+ *   console.log("Button was clicked");
+ * }
+ */
+export declare function ClickSRA(
+    htmlElementID: string,
+): <This_1 extends EzComponent>(
+    target: (this: This_1, event: MouseEventSRA) => void,
+    context: ClassMethodDecoratorContext<
+        This_1,
+        (this: This_1, event: MouseEventSRA) => void
+    >,
+) => void;

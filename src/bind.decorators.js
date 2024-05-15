@@ -3,7 +3,11 @@
 const { BindStyle } = require("@gsilber/webez/bind.decorators");
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BindVisibleToBooleanSRA = exports.BindCSSClassToBooleanSRA = void 0;
+exports.ClickSRA =
+    exports.GenericEventSRA =
+    exports.BindVisibleToBooleanSRA =
+    exports.BindCSSClassToBooleanSRA =
+        void 0;
 /**
  * @description Gets the public key of the field name
  * @param name the name of the field
@@ -170,3 +174,53 @@ function BindVisibleToBooleanSRA(id, transform = (value) => value) {
     });
 }
 exports.BindVisibleToBooleanSRA = BindVisibleToBooleanSRA;
+
+/**
+ * @description Decorator to bind a generic event to an element
+ * @param htmlElementID the element to bind the event to
+ * @param type the event to bind
+ * @returns DecoratorCallback
+ * @export
+ * @group Event Decorators
+ * @example
+ * @GenericEventSRA("myButton", "click")
+ * myButtonClick(e: MouseEventSRA) {
+ *    console.log(`Button "${e.idSRA}" was clicked`);
+ * }
+ */
+function GenericEventSRA(htmlElementID, type) {
+    return function (target, context) {
+        context.addInitializer(function () {
+            let element = this["shadow"].getElementById(htmlElementID);
+            if (element) {
+                element.addEventListener(type, (e) => {
+                    if (type === "input" || type === "change")
+                        if (element.type === "checkbox") {
+                            e.value = element.checked ? "on" : "";
+                        } else {
+                            e.value = element.value;
+                        }
+                    e.idSRA = htmlElementID;
+                    target.call(this, e);
+                });
+            }
+        });
+    };
+}
+exports.GenericEventSRA = GenericEventSRA;
+/**
+ * @description Decorator to bind a click event to an element
+ * @param htmlElementID the element to bind the event to
+ * @returns DecoratorCallback
+ * @export
+ * @group Event Decorators
+ * @example
+ * @Click("myButton")
+ * myButtonClick(e: MouseEvent) {
+ *   console.log("Button was clicked");
+ * }
+ */
+function ClickSRA(htmlElementID, idSRA) {
+    return GenericEventSRA(htmlElementID, "click", idSRA);
+}
+exports.ClickSRA = ClickSRA;
