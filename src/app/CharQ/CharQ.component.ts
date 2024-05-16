@@ -23,7 +23,7 @@ class Button {
 
     /**
      * @description Updates the values of the button so we don't need a new one each time
-     * @param {string} [char] The character for the button
+     * @param {string} char The character for the button
      * @returns void
      * @memberof Button
      * @example b.update("H");
@@ -35,7 +35,7 @@ class Button {
 
     /**
      * @description Checks if the given char matches this button and sets `this.failed` accordingly
-     * @param {string} [char] The character to check against this button
+     * @param {string} char The character to check against this button
      * @returns {boolean} Whether or not the char matched
      * @memberof Button
      * @example const correct = b.check("H");
@@ -47,13 +47,13 @@ class Button {
 
 /**
  * @description A generator for the transforms used in `BindCSSClassToBooleanSRA()` on `CharQComponent.answers`
- * @param {0 | 1 | 2 | 3 | 4 | 5 | 6} [index] The index of the button to bind to
+ * @param {0 | 1 | 2 | 3 | 4 | 5 | 6} index The index of the button to bind to
  * @returns {(v: Button[]): boolean} A function to determine if the button should be displayed as "wrong"
  * @example
- * ⋮
- * @BindCSSClassToBooleanSRA("ans4", "wrong", transform(4))
- * ⋮
- * private answers: [Button, Button, Button, Button, Button, Button, Button] = [...];
+ * -⋮
+ * -@BindCSSClassToBooleanSRA("ans4", "wrong", transform(4))
+ * -⋮
+ * -private answers: [Button, Button, Button, Button, Button, Button, Button] = [...];
  */
 function transform(index: 0 | 1 | 2 | 3 | 4 | 5 | 6): (v: Button[]) => boolean {
     return (v: Button[]) => v[index].failed;
@@ -106,7 +106,7 @@ export class CharQComponent extends QuestionBody {
      * @type {number}
      * @private
      */
-    private index = 0;
+    private index: number = 0;
 
     /**
      * @description Creates an instance of CharQComponent
