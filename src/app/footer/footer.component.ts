@@ -5,8 +5,8 @@ import { MainComponent } from "../main.component";
 import { SubComponent } from "../../EzComponent_subclasses";
 
 export class FooterComponent extends SubComponent {
-    constructor(main: MainComponent) {
-        super(main, main, html, css);
+    constructor(parent: MainComponent) {
+        super(parent, html, css);
     }
 
     @Click("exit")

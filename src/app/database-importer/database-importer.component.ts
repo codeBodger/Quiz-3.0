@@ -18,12 +18,12 @@ declare const window: Window;
 export class DatabaseImporterComponent extends PageComponet {
     /**
      * @description Creates an instance of DatabaseImporterComponent
-     * @param {MainComponent} main The main component this is attached to, for additional handling
+     * @param {MainComponent} parent The main component this is attached to, for additional handling
      * @memberof DatabaseImporterComponent
      * @constructor
      */
-    constructor(main: MainComponent) {
-        super(main, html, css);
+    constructor(parent: MainComponent) {
+        super(parent, html, css);
     }
 
     /**

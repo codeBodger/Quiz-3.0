@@ -12,8 +12,12 @@ export class ListComponent<X extends Set | Group> extends PageComponet {
 
     private buttons: ListButtonComponent<X>[] = [];
 
-    constructor(activity: Activities, x: Constructor<X>, main: MainComponent) {
-        super(main, html, css);
+    constructor(
+        activity: Activities,
+        x: Constructor<X>,
+        parent: MainComponent,
+    ) {
+        super(parent, html, css);
         this.activity = activity;
 
         this.buttons.forEach((setButton: ListButtonComponent<X>) => {
@@ -22,7 +26,7 @@ export class ListComponent<X extends Set | Group> extends PageComponet {
         this.buttons = [];
 
         this.main.getData(x).forEach((data: X) => {
-            this.buttons.push(new ListButtonComponent(data, this, this.main));
+            this.buttons.push(new ListButtonComponent(data, this));
         });
         this.buttons.forEach((button: ListButtonComponent<X>) => {
             this.addComponent(button, "items");

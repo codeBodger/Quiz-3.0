@@ -2,7 +2,6 @@ import html from "./answer.component.html";
 import css from "./answer.component.css";
 import { SubComponent } from "../../EzComponent_subclasses";
 import { QuestionComponent } from "../question/question.component";
-import { MainComponent } from "../main.component";
 import { Term } from "../../database";
 import { BindStyle, BindValue, Click } from "@gsilber/webez";
 
@@ -49,7 +48,6 @@ export class AnswerComponent extends SubComponent {
      * @description Creates an instance of AnswerComponent
      * @param {Term} [term] The term that is being answered
      * @param {QuestionComponent} [parent] The component that created this
-     * @param {MainComponent} [main] The root/main component of the whole webapp
      * @memberof AnswerComponent
      * @public
      * @constructor
@@ -58,9 +56,8 @@ export class AnswerComponent extends SubComponent {
     constructor(
         private term: Term,
         protected parent: QuestionComponent,
-        main: MainComponent,
     ) {
-        super(parent, main, html, css);
+        super(parent, html, css);
     }
 
     /**

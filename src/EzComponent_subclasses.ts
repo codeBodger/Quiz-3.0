@@ -4,27 +4,37 @@ import { QuestionComponent } from "./app/question/question.component";
 import { Term, Set } from "./database";
 import { QuestionType, QuestionTypes, getQuestionType } from "./question_types";
 
-export class SubComponent extends EzComponent {
+export abstract class EzComponentSRA extends EzComponent {
     constructor(
-        protected parent: SubComponent | MainComponent | PageComponet,
-        protected main: MainComponent,
+        protected parent: EzComponentSRA | MainComponent,
         html: string,
         css: string,
     ) {
         super(html, css);
+    }
+    public get main(): MainComponent {
+        return this.parent.main;
     }
 }
 
-export abstract class PageComponet extends EzComponent {
+export abstract class SubComponent extends EzComponentSRA {
     constructor(
-        protected main: MainComponent,
+        parent: EzComponentSRA | MainComponent,
         html: string,
         css: string,
     ) {
-        super(html, css);
+        super(parent, html, css);
+    }
+}
+
+export abstract class PageComponet extends EzComponentSRA {
+    constructor(parent: MainComponent, html: string, css: string) {
+        super(parent, html, css);
     }
 
-    abstract onExit(): void;
+    onExit(): void {
+        return;
+    }
 }
 
 export abstract class QuestionBody extends SubComponent {
@@ -35,11 +45,10 @@ export abstract class QuestionBody extends SubComponent {
         protected set: Set,
         protected sets: Set[],
         protected parent: QuestionComponent,
-        main: MainComponent,
         html: string,
         css: string,
     ) {
-        super(parent, main, html, css);
+        super(parent, html, css);
         this.type = getQuestionType(type);
     }
 

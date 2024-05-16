@@ -28,17 +28,16 @@ export class QuestionComponent extends PageComponet {
         term: Term,
         set: Set,
         private sets: Set[],
-        main: MainComponent,
+        parent: MainComponent,
     ) {
-        super(main, html, css);
+        super(parent, html, css);
         this.prompt = term.prompt;
         this.set = set;
-        const args: [Term, Set, Set[], QuestionComponent, MainComponent] = [
+        const args: [Term, Set, Set[], QuestionComponent] = [
             term,
             set,
             sets,
             this,
-            main,
         ];
         this.type = term.chooseQuestionType();
         switch (this.type.name) {
@@ -62,7 +61,7 @@ export class QuestionComponent extends PageComponet {
                 break;
         }
         this.addComponent(this.questionBody, "question-answer");
-        this.answerBody = new AnswerComponent(term, this, this.main);
+        this.answerBody = new AnswerComponent(term, this);
     }
 
     answer(correct: boolean, answer: string): void {

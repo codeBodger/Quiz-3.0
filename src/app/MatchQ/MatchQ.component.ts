@@ -2,7 +2,6 @@ import html from "./MatchQ.component.html";
 import css from "./MatchQ.component.css";
 import { QuestionBody } from "../../EzComponent_subclasses";
 import { Term, Set } from "../../database";
-import { MainComponent } from "../main.component";
 import { QuestionComponent } from "../question/question.component";
 import { BindValue, Click } from "@gsilber/webez";
 import { BindCSSClassToBooleanSRA } from "../../decoratorsSRA";
@@ -99,14 +98,8 @@ export class MatchQComponent extends QuestionBody {
 
     public clicked: Button | undefined = undefined;
 
-    constructor(
-        term: Term,
-        set: Set,
-        sets: Set[],
-        parent: QuestionComponent,
-        main: MainComponent,
-    ) {
-        super("Matching", term, set, sets, parent, main, html, css);
+    constructor(term: Term, set: Set, sets: Set[], parent: QuestionComponent) {
+        super("Matching", term, set, sets, parent, html, css);
         let choices = this.getOptions();
         for (let i = 0; i < choices.length; i++)
             this.answers[i].term = choices[i];

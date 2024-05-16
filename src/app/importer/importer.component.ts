@@ -26,8 +26,8 @@ export class ImporterComponent<X extends Set | Group> extends PageComponet {
     @BindValue("type")
     private type: "set" | "group" = "set";
 
-    constructor(x: Constructor<X>, main: MainComponent) {
-        super(main, html, css);
+    constructor(x: Constructor<X>, parent: MainComponent) {
+        super(parent, html, css);
         if (new x("") instanceof Group) {
             this.data = GROUP_DEFAULT_DATA;
             this.type = "group";

@@ -8,9 +8,9 @@ import { Click } from "@gsilber/webez";
 export class StartFlashcardsComponent extends PageComponet {
     constructor(
         private sets: Set[],
-        main: MainComponent,
+        parent: MainComponent,
     ) {
-        super(main, html, css);
+        super(parent, html, css);
     }
 
     @Click("all")

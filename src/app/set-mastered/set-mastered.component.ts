@@ -12,9 +12,9 @@ export class SetMasteredComponent extends PageComponet {
     constructor(
         name: string,
         private sets: Set[],
-        main: MainComponent,
+        parent: MainComponent,
     ) {
-        super(main, html, css);
+        super(parent, html, css);
         this.name = name;
     }
 

@@ -77,12 +77,12 @@ export class FlashcardsComponent extends PageComponet {
     /**
      * @description Creates an instance of FlashcardsComponent
      * @param {TermSet[]} termSets See this.termSets
-     * @param {MainComponent} main The main component that of the program
+     * @param {MainComponent} parent The main component that of the program
      * @memberof FlashcardsComponent
      * @constructor
      */
-    constructor(termSets: TermSet[], main: MainComponent) {
-        super(main, html, css);
+    constructor(termSets: TermSet[], parent: MainComponent) {
+        super(parent, html, css);
         this.termSets = termSets;
         this.update();
     }

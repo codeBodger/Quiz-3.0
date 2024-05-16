@@ -3,7 +3,6 @@ import css from "./CharQ.component.css";
 import { QuestionBody } from "../../EzComponent_subclasses";
 import { Term, Set } from "../../database";
 import { QuestionComponent } from "../question/question.component";
-import { MainComponent } from "../main.component";
 import {
     BindCSSClassToBooleanSRA,
     ClickSRA,
@@ -115,18 +114,11 @@ export class CharQComponent extends QuestionBody {
      * @param {Set} set The set the term comes from, so we can update it
      * @param {Set[]} sets The sets the user is studying, so we can go to another term
      * @param {QuestionComponent} parent The parent component, for additional handling
-     * @param {MainComponent} main The main component, to keep track of the overall state
      * @memberof CharQComponent
      * @constructor
      */
-    constructor(
-        term: Term,
-        set: Set,
-        sets: Set[],
-        parent: QuestionComponent,
-        main: MainComponent,
-    ) {
-        super("Character Entry", term, set, sets, parent, main, html, css);
+    constructor(term: Term, set: Set, sets: Set[], parent: QuestionComponent) {
+        super("Character Entry", term, set, sets, parent, html, css);
         this.updateButtons();
         this.update();
     }

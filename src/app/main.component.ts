@@ -38,6 +38,10 @@ export class MainComponent extends EzComponent {
     @BindValue("page")
     private blank: string = "";
 
+    public get main(): MainComponent {
+        return this;
+    }
+
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");

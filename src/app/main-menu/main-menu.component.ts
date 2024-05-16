@@ -6,8 +6,8 @@ import { Click } from "@gsilber/webez";
 import { Group, Set } from "../../database";
 
 export class MainMenuComponent extends PageComponet {
-    constructor(main: MainComponent) {
-        super(main, html, css);
+    constructor(parent: MainComponent) {
+        super(parent, html, css);
     }
 
     @Click("import-group")
