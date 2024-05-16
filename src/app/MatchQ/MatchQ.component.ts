@@ -3,8 +3,12 @@ import css from "./MatchQ.component.css";
 import { QuestionBody } from "../../EzComponent_subclasses";
 import { Term, Set } from "../../database";
 import { QuestionComponent } from "../question/question.component";
-import { BindValue, Click } from "@gsilber/webez";
-import { BindCSSClassToBooleanSRA } from "../../decoratorsSRA";
+import { BindValue } from "@gsilber/webez";
+import {
+    BindCSSClassToBooleanSRA,
+    ClickSRA,
+    MouseEventSRA,
+} from "../../decoratorsSRA";
 
 class Button {
     public done = false;
@@ -33,8 +37,6 @@ class Button {
 function transform(
     value: "done" | "clicked",
     index: 0 | 1 | 2,
-    // ): (v: Button[]) => string {
-    //     return (v: Button[]) => (v[index][value] ? value : "");
 ): (v: Button[]) => boolean {
     return (v: Button[]) => {
         return v[index][value];
@@ -45,18 +47,6 @@ export class MatchQComponent extends QuestionBody {
     @BindValue("ans0", (v: Button[]) => v[0].term.answer)
     @BindValue("ans1", (v: Button[]) => v[1].term.answer)
     @BindValue("ans2", (v: Button[]) => v[2].term.answer)
-    // @BindCSSClass("ans0", transform("done", 0))
-    // @BindCSSClass("ans1", transform("done", 1))
-    // @BindCSSClass("ans2", transform("done", 2))
-    // @BindCSSClass("ans0", transform("clicked", 0))
-    // @BindCSSClass("ans1", transform("clicked", 1))
-    // @BindCSSClass("ans2", transform("clicked", 2))
-    // @BindAttribute("ans0", "class", transform("done", 0))
-    // @BindAttribute("ans1", "class", transform("done", 1))
-    // @BindAttribute("ans2", "class", transform("done", 2))
-    // @BindAttribute("ans0", "class", transform("clicked", 0))
-    // @BindAttribute("ans1", "class", transform("clicked", 1))
-    // @BindAttribute("ans2", "class", transform("clicked", 2))
     @BindCSSClassToBooleanSRA("ans0", "done", transform("done", 0))
     @BindCSSClassToBooleanSRA("ans1", "done", transform("done", 1))
     @BindCSSClassToBooleanSRA("ans2", "done", transform("done", 2))
@@ -72,18 +62,6 @@ export class MatchQComponent extends QuestionBody {
     @BindValue("pro0", (v: Button[]) => v[0].term.prompt)
     @BindValue("pro1", (v: Button[]) => v[1].term.prompt)
     @BindValue("pro2", (v: Button[]) => v[2].term.prompt)
-    // @BindCSSClass("pro0", transform("done", 0))
-    // @BindCSSClass("pro1", transform("done", 1))
-    // @BindCSSClass("pro2", transform("done", 2))
-    // @BindCSSClass("pro0", transform("clicked", 0))
-    // @BindCSSClass("pro1", transform("clicked", 1))
-    // @BindCSSClass("pro2", transform("clicked", 2))
-    // @BindAttribute("pro0", "class", transform("done", 0))
-    // @BindAttribute("pro1", "class", transform("done", 1))
-    // @BindAttribute("pro2", "class", transform("done", 2))
-    // @BindAttribute("pro0", "class", transform("clicked", 0))
-    // @BindAttribute("pro1", "class", transform("clicked", 1))
-    // @BindAttribute("pro2", "class", transform("clicked", 2))
     @BindCSSClassToBooleanSRA("pro0", "done", transform("done", 0))
     @BindCSSClassToBooleanSRA("pro1", "done", transform("done", 1))
     @BindCSSClassToBooleanSRA("pro2", "done", transform("done", 2))
@@ -140,30 +118,17 @@ export class MatchQComponent extends QuestionBody {
         this.prompts = [...this.prompts];
     }
 
-    @Click("ans0")
-    actA0(): void {
-        this.answers[0].click();
+    @ClickSRA("ans0")
+    @ClickSRA("ans1")
+    @ClickSRA("ans2")
+    actA(e: MouseEventSRA): void {
+        this.answers[parseInt(e.idSRA.at(-1)!)].click();
     }
-    @Click("ans1")
-    actA1(): void {
-        this.answers[1].click();
-    }
-    @Click("ans2")
-    actA2(): void {
-        this.answers[2].click();
-    }
-
-    @Click("pro0")
-    actP0(): void {
-        this.prompts[0].click();
-    }
-    @Click("pro1")
-    actP1(): void {
-        this.prompts[1].click();
-    }
-    @Click("pro2")
-    actP2(): void {
-        this.prompts[2].click();
+    @ClickSRA("pro0")
+    @ClickSRA("pro1")
+    @ClickSRA("pro2")
+    actP(e: MouseEventSRA): void {
+        this.prompts[parseInt(e.idSRA.at(-1)!)].click();
     }
 
     answer(expect: Button): void {
