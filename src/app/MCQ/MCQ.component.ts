@@ -3,7 +3,8 @@ import css from "./MCQ.component.css";
 import { QuestionBody } from "../../EzComponent_subclasses";
 import { Set, Term } from "../../database";
 import { QuestionComponent } from "../question/question.component";
-import { BindValue, Click } from "@gsilber/webez";
+import { BindValue } from "@gsilber/webez";
+import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
 
 export class MCQComponent extends QuestionBody {
     @BindValue("ans0", (v: Term[]) => v[0].answer)
@@ -53,21 +54,12 @@ export class MCQComponent extends QuestionBody {
         return out;
     }
 
-    @Click("ans0")
-    act1(): void {
-        this.answer(this.choices[0]);
-    }
-    @Click("ans1")
-    act2(): void {
-        this.answer(this.choices[1]);
-    }
-    @Click("ans2")
-    act3(): void {
-        this.answer(this.choices[2]);
-    }
-    @Click("ans3")
-    act4(): void {
-        this.answer(this.choices[3]);
+    @ClickSRA("ans0")
+    @ClickSRA("ans1")
+    @ClickSRA("ans2")
+    @ClickSRA("ans3")
+    act(e: MouseEventSRA): void {
+        this.answer(this.choices[parseInt(e.idSRA.at(-1)!)]);
     }
 
     answer(answer: Term) {
