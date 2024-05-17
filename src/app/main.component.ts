@@ -1,6 +1,11 @@
 import html from "./main.component.html";
 import css from "./main.component.css";
-import { BindValue, EzComponent, EzDialog } from "@gsilber/webez";
+import {
+    BindCSSClassToBoolean,
+    BindValue,
+    EzComponent,
+    EzDialog,
+} from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
 import { PageComponet } from "../EzComponent_subclasses";
@@ -37,6 +42,9 @@ export class MainComponent extends EzComponent {
 
     @BindValue("page")
     private blank: string = "";
+
+    @BindCSSClassToBoolean("page", "egg")
+    private egg: boolean = false;
 
     public get main(): MainComponent {
         return this;
@@ -157,6 +165,10 @@ export class MainComponent extends EzComponent {
     saveDatabase(): void {
         try {
             this.database.save();
+            this.egg = this.database
+                .toString()
+                .toLowerCase()
+                .includes("samhain");
         } catch {
             // I have no recolection of what could go wrong here, but let's warn the user
             throw new EzError("Failed to save the database!");
