@@ -27,7 +27,7 @@ export class DatabaseImporterComponent extends PageComponet {
     }
 
     /**
-     * @description Actually handles the importing, relies on some stuff in index.html
+     * @description Actually handles the importing, relies on `upload()` in index.html being run `onchange`
      * @returns {void}
      * @memberof DatabaseImporterComponent
      */
