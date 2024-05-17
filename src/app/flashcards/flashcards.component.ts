@@ -104,7 +104,7 @@ export class FlashcardsComponent extends PageComponet {
     }
 
     /**
-     * @description Returns to the previous term in the list (prevents index from being < 0)
+     * @description Returns to the previous indexed term in the list (prevents index from being < 0)
      * @returns {void}
      * @memberof FlashcardsComponent
      */
