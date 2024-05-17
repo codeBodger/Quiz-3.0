@@ -5,6 +5,7 @@ import { MainComponent } from "../main.component";
 import { Term, TermSet } from "../../database";
 import { BindValue, Click } from "@gsilber/webez";
 import {
+    BindCSSClassToBooleanSRA,
     BindVisibleToBooleanSRA,
     ClickSRA,
     MouseEventSRA,
@@ -60,8 +61,10 @@ export class FlashcardsComponent extends PageComponet {
      * @type {number}
      * @private
      * @summary Bound (+1) to a message telling the user their progress in the set
+     * Bound to style of "previous", so it's disabled if the user is at the first flashcard
      */
     @BindValue("index", (v: number) => `${v + 1}`)
+    @BindCSSClassToBooleanSRA("previous", "disabled", (v: number) => v === 0)
     private index: number = 0;
 
     /**
@@ -101,13 +104,17 @@ export class FlashcardsComponent extends PageComponet {
     }
 
     /**
-     * @description Returns to the previous term in the list
+     * @description Returns to the previous term in the list (prevents index from being < 0)
      * @returns {void}
      * @memberof FlashcardsComponent
      */
     @Click("previous")
     previous(): void {
         this.index--;
+        if (this.index < 0) {
+            this.index = 0;
+            return;
+        }
         this.side = "prompt";
         this.update();
     }
