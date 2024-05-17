@@ -51,7 +51,7 @@ export class AnswerComponent extends SubComponent {
      * @memberof AnswerComponent
      * @public
      * @constructor
-     * @example const ans = new AnswerComponent(term, this, this.main);
+     * @example const ans = new AnswerComponent(term, this);
      */
     constructor(
         private term: Term,
