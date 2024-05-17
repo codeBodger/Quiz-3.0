@@ -24,6 +24,7 @@ export class FooterComponent extends SubComponent {
      * @description Called when the user presses "Save and Exit"
      * @returns {void}
      * @memberof FooterComponent
+     * @private
      * @summary Calls `.exit()` on the main component of the site, allowing the active page component
      * to do anything it needs to and saving the database (in case it wasn't anyway).
      */
