@@ -2,57 +2,67 @@ import html from "./main-menu.component.html";
 import css from "./main-menu.component.css";
 import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
-import { Click } from "@gsilber/webez";
 import { Group, Set } from "../../database";
+import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
+import { EzError } from "../EzError/EzError.component";
 
 export class MainMenuComponent extends PageComponet {
     constructor(parent: MainComponent) {
         super(parent, html, css);
     }
 
-    @Click("import-group")
-    importGroup(): void {
-        this.main.toGroupImporter();
-    }
+    @ClickSRA("import-group")
+    @ClickSRA("import-set")
+    @ClickSRA("import-all")
+    @ClickSRA("export-all")
+    @ClickSRA("practice-group")
+    @ClickSRA("practice-set")
+    @ClickSRA("group-cards")
+    @ClickSRA("set-cards")
+    @ClickSRA("delete-group")
+    @ClickSRA("delete-set")
+    act(e: MouseEventSRA): void {
+        switch (e.idSRA) {
+            case "import-group":
+                this.main.toGroupImporter();
+                break;
+            case "import-set":
+                this.main.toSetImporter();
+                break;
 
-    @Click("import-set")
-    importSet(): void {
-        this.main.toSetImporter();
-    }
+            case "import-all":
+                this.main.importAll();
+                break;
+            case "export-all":
+                console.log("exporting...");
+                break;
 
-    @Click("practice-set")
-    practiceSet(): void {
-        this.main.toList("Practice", Set);
-    }
+            case "practice-group":
+                this.main.toList("Practice", Group);
+                break;
+            case "practice-set":
+                this.main.toList("Practice", Set);
+                break;
 
-    @Click("practice-group")
-    practiceGroup(): void {
-        this.main.toList("Practice", Group);
-    }
+            case "group-cards":
+                this.main.toList("Flashcards", Group);
+                break;
+            case "set-cards":
+                this.main.toList("Flashcards", Set);
+                break;
 
-    @Click("import-all")
-    importAll(): void {
-        this.main.importAll();
-    }
+            case "delete-group":
+                this.main.toList("Delete", Group);
+                break;
+            case "delete-set":
+                this.main.toList("Delete", Set);
+                break;
 
-    @Click("set-cards")
-    setCards(): void {
-        this.main.toList("Flashcards", Set);
-    }
-
-    @Click("group-cards")
-    groupCards(): void {
-        this.main.toList("Flashcards", Group);
-    }
-
-    @Click("delete-set")
-    deleteSet(): void {
-        this.main.toList("Delete", Set);
-    }
-
-    @Click("delete-group")
-    deleteGroup(): void {
-        this.main.toList("Delete", Group);
+            default:
+                throw new EzError(
+                    "How did you choose something that doesn't exist???",
+                );
+        }
     }
 
     onExit(): void {
