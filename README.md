@@ -116,3 +116,5 @@ As such, I will be able to work on some of the additional items.
     -   [x] Delete the method and make `Database.sets` public
 -   Should probably make the errors in `database.randomSetAndTerm()` and `CharQComponent.updateButtons()` less harsh
     -   [x] Switch them to an EzDialog
+-   Unnecessary method `onExit()` in classes inhereting from `PageComponent`
+    -   [ ] Remove it, since the method in the superclass is nolonger abstract
