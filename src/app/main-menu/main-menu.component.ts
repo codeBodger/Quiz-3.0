@@ -6,11 +6,28 @@ import { Group, Set } from "../../database";
 import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
 import { EzError } from "../EzError/EzError.component";
 
+/**
+ * @description A class representing the main menu of the site
+ * @class MainMenuComponent
+ * @extends {PageComponet}
+ */
 export class MainMenuComponent extends PageComponet {
+    /**
+     * @description Creates an instance of MainMenuComponent
+     * @param {MainComponent} parent The main component this is attached to, for additional handling
+     * @memberof MainMenuComponent
+     * @constructor
+     */
     constructor(parent: MainComponent) {
         super(parent, html, css);
     }
 
+    /**
+     * @description Does the right thing based on the button that's clicked
+     * @param {MouseEventSRA} e The event created when the button is pressed, includes the id of the decorator
+     * @returns {void}
+     * @memberof MainMenuComponent
+     */
     @ClickSRA("import-group")
     @ClickSRA("import-set")
     @ClickSRA("import-all")
@@ -34,6 +51,7 @@ export class MainMenuComponent extends PageComponet {
                 this.main.importAll();
                 break;
             case "export-all":
+                // Is really done by `download()` in `index.html`
                 console.log("exporting...");
                 break;
 
