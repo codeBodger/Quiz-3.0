@@ -3,7 +3,7 @@ import css from "./start-flashcards.component.css";
 import { PageComponet } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Set, Term, TermSet } from "../../database";
-import { Click } from "@gsilber/webez";
+import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
 
 export class StartFlashcardsComponent extends PageComponet {
     constructor(
@@ -13,32 +13,22 @@ export class StartFlashcardsComponent extends PageComponet {
         super(parent, html, css);
     }
 
-    @Click("all")
-    all(): void {
-        this.procede(true, () => true);
-    }
-
-    @Click("started")
-    started(): void {
-        this.procede(false, () => true);
-    }
-
-    @Click("practice")
-    practice(): void {
-        this.procede(false, (term: Term) => !term.confident);
-    }
-
-    procede(all: boolean, predicate: (term: Term) => boolean): void {
+    @ClickSRA("all")
+    @ClickSRA("started")
+    @ClickSRA("practice")
+    procede(v: MouseEventSRA): void {
         let sets = this.sets;
-        if (!all) {
+        if (v.idSRA !== "all") {
             const categorised = Set.categorise(this.sets, "confident");
             sets = categorised.done;
             if (categorised.doing) sets.push(categorised.doing);
         }
+        const practice = v.idSRA === "practice";
         let termSets: TermSet[] = [];
         sets.forEach((set: Set) => {
             set.terms.forEach((term: Term) => {
-                if (predicate(term)) termSets.push({ term, set: set.name });
+                if (!(practice && term.confident))
+                    termSets.push({ term, set: set.name });
             });
         });
 
