@@ -5,7 +5,19 @@ import { MainComponent } from "../main.component";
 import { Set, Term, TermSet } from "../../database";
 import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
 
+/**
+ * @description A class to handle the user choosing how they want to practice with flashcards
+ * @class StartFlashcardsComponent
+ * @extends PageComponet
+ */
 export class StartFlashcardsComponent extends PageComponet {
+    /**
+     * @description Creates an instance of StartFlashcardsComponent
+     * @param {Set[]} sets The sets to be practiced
+     * @param {MainComponent} parent The main component of the app, for additonal handling
+     * @memberof StartFlashcardsComponent
+     * @constructor
+     */
     constructor(
         private sets: Set[],
         parent: MainComponent,
@@ -13,6 +25,12 @@ export class StartFlashcardsComponent extends PageComponet {
         super(parent, html, css);
     }
 
+    /**
+     * @description Called when the user clicks on one of the options; handles which terms to give and gives them to FlashcardsComponent
+     * @param {MouseEventSRA} e The event created when the button is pressed, includes the id of the decorator
+     * @returns {void}
+     * @memberof StartFlashcardsComponent
+     */
     @ClickSRA("all")
     @ClickSRA("started")
     @ClickSRA("practice")
