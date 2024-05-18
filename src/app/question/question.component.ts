@@ -33,33 +33,29 @@ export class QuestionComponent extends PageComponet {
         super(parent, html, css);
         this.prompt = term.prompt;
         this.set = set;
-        const args: [Term, Set, Set[], QuestionComponent] = [
-            term,
-            set,
-            sets,
-            this,
-        ];
         this.type = term.chooseQuestionType();
+        let bodyConstructor;
         switch (this.type.name) {
             case "New Term":
-                this.questionBody = new NewQComponent(...args);
+                bodyConstructor = NewQComponent;
                 break;
             case "Multiple Choice":
-                this.questionBody = new MCQComponent(...args);
+                bodyConstructor = MCQComponent;
                 break;
             case "True/False":
-                this.questionBody = new TFQComponent(...args);
+                bodyConstructor = TFQComponent;
                 break;
             case "Matching":
-                this.questionBody = new MatchQComponent(...args);
+                bodyConstructor = MatchQComponent;
                 break;
             case "Character Entry":
-                this.questionBody = new CharQComponent(...args);
+                bodyConstructor = CharQComponent;
                 break;
             case "Text Entry":
-                this.questionBody = new TextQComponent(...args);
+                bodyConstructor = TextQComponent;
                 break;
         }
+        this.questionBody = new bodyConstructor(term, set, sets, this);
         this.addComponent(this.questionBody, "question-answer");
         this.answerBody = new AnswerComponent(term, this);
     }
