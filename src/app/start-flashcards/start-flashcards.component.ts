@@ -16,14 +16,14 @@ export class StartFlashcardsComponent extends PageComponet {
     @ClickSRA("all")
     @ClickSRA("started")
     @ClickSRA("practice")
-    procede(v: MouseEventSRA): void {
+    procede(e: MouseEventSRA): void {
         let sets = this.sets;
-        if (v.idSRA !== "all") {
+        if (e.idSRA !== "all") {
             const categorised = Set.categorise(this.sets, "confident");
             sets = categorised.done;
             if (categorised.doing) sets.push(categorised.doing);
         }
-        const practice = v.idSRA === "practice";
+        const practice = e.idSRA === "practice";
         let termSets: TermSet[] = [];
         sets.forEach((set: Set) => {
             set.terms.forEach((term: Term) => {
