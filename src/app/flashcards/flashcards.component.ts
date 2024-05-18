@@ -133,6 +133,7 @@ export class FlashcardsComponent extends PageComponet {
 
     /**
      * @description Sets whether the user is confident in the term and then advances
+     * @param {MouseEventSRA} e The event created when the button is pressed, includes the id of the decorator
      * @returns {void}
      * @memberof FlashcardsComponent
      */
