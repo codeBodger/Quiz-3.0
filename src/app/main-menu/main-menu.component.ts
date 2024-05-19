@@ -26,6 +26,7 @@ export class MainMenuComponent extends PageComponent {
      * @description Does the right thing based on the button that's clicked
      * @param {MouseEventSRA} e The event created when the button is pressed, includes the id of the decorator
      * @returns {void}
+     * @throws {EzError} If the user somehow chose an option that doesn't exist
      * @memberof MainMenuComponent
      */
     @ClickSRA("import-group")

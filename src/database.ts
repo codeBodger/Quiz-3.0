@@ -534,10 +534,11 @@ export class Group {
     }
 
     /**
-     * @description Overwrites the set name list of this group with that of the provided group (throws an error if the databases don't match)
+     * @description Overwrites the set name list of this group with that of the provided group
      * @param {Group} group The group to effectively replace this one with
      * @param {Database} caller The database that called this method, for more insurance that it's being called from somewhere that makes sense
      * @returns {void}
+     * @throws {EzError} If the databases don't match somehow, that's a bad sign
      * @memberof Group
      */
     overwrite(group: Group, caller: Database): void {

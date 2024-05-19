@@ -166,6 +166,7 @@ export class MatchQComponent extends QuestionBody {
      * @description Get the three (other two) terms for use in matching
      * @memberof MatchQComponent
      * @returns {[Term, Term, Term]}
+     * @throws {Error} If we somehow didn't catch that there weren't enough terms (maybe should be `EzError`?)
      */
     getOptions(): [Term, Term, Term] {
         let allOptions = this.term.allOptions([this.set]);

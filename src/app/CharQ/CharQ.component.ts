@@ -138,6 +138,7 @@ export class CharQComponent extends QuestionBody {
      * @description Updates the buttons with the new chars if the user was correct
      * @memberof CharQComponent
      * @returns {void}
+     * @throws {Error} If there aren't enough characters in the set for all 7 buttons
      */
     updateButtons(): void {
         let validChars = this.set.allChars.filter(

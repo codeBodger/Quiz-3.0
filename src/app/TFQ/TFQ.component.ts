@@ -50,6 +50,7 @@ export class TFQComponent extends QuestionBody {
      * @param {Set} set The set the term comes from, so we can update it
      * @param {Set[]} sets The sets the user is studying, so we can go to another term
      * @param {QuestionComponent} parent The parent component, for additional handling
+     * @throws {Error} If we somehow didn't catch that there weren't enough terms (maybe should be `EzError`?)
      * @memberof TFQComponent
      * @constructor
      */

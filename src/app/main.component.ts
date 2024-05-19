@@ -167,6 +167,7 @@ export class MainComponent extends EzComponent {
      * @param {Set[]} sets The sets that the user is studying
      * @param {boolean} onlyNew Whether we need to give the user a new term from the set (because there aren't enough for a given question type)
      * @returns {void}
+     * @throws {Error} If something weird went wrong, rethrow the error
      * @memberof MainComponent
      * @summary If we've tried to use a question type that there aren't enough started terms for,
      * used to force getting a new term.  If this still fails or there aren't enough letters in the set,
@@ -293,6 +294,7 @@ export class MainComponent extends EzComponent {
     /**
      * @description Makes the database save itself and handles an error if one occurs
      * @returns {void}
+     * @throws {EzError} I have no recolection of what could go wrong here, but let's warn the user
      * @memberof MainComponent
      */
     saveDatabase(): void {
@@ -303,7 +305,6 @@ export class MainComponent extends EzComponent {
                 .toLowerCase()
                 .includes("samhain");
         } catch {
-            /**I have no recolection of what could go wrong here, but let's warn the user */
             throw new EzError("Failed to save the database!");
         }
     }

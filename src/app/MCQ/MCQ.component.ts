@@ -59,6 +59,7 @@ export class MCQComponent extends QuestionBody {
      * @description Get the four (other three) terms for the multiple choice
      * @memberof MCQComponent
      * @returns {[Term, Term, Term, Term]}
+     * @throws {Error} If we somehow didn't catch that there weren't enough terms (maybe should be `EzError`?)
      */
     getOptions(): [Term, Term, Term, Term] {
         let allOptions = this.term.allOptions(this.sets);
