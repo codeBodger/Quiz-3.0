@@ -1,6 +1,6 @@
 import html from "./list.component.html";
 import css from "./list.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Constructor, Group, Set, Activities } from "../../database";
 import { BindValue, EzDialog } from "@gsilber/webez";
@@ -9,9 +9,9 @@ import { ListButtonComponent } from "../list-button/list-button.component";
 /**
  * @description A class representing a list of buttons of sets or groups for a specific `Activity`
  * @class ListComponent
- * @extends {PageComponet}
+ * @extends {PageComponent}
  */
-export class ListComponent<X extends Set | Group> extends PageComponet {
+export class ListComponent<X extends Set | Group> extends PageComponent {
     /**
      * @description The `Activity` that this list of buttons is for, shown as a header
      * @memberof ListComponent
@@ -98,9 +98,5 @@ export class ListComponent<X extends Set | Group> extends PageComponet {
                 });
                 return true;
         }
-    }
-
-    onExit(): void {
-        return;
     }
 }

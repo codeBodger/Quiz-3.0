@@ -1,6 +1,6 @@
 import html from "./question.component.html";
 import css from "./question.component.css";
-import { PageComponet, QuestionBody } from "../../EzComponent_subclasses";
+import { PageComponent, QuestionBody } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Set, Term } from "../../database";
 import { MCQComponent } from "../MCQ/MCQ.component";
@@ -16,10 +16,10 @@ import { CharQComponent } from "../CharQ/CharQ.component";
 /**
  * @description The wrapper for the individual questions
  * @class QuestionComponent
- * @extends {PageComponet}
+ * @extends {PageComponent}
  * @property {string} prompt The prompt, by default the prompt of the term, but could be different depending on the QuestionType
  */
-export class QuestionComponent extends PageComponet {
+export class QuestionComponent extends PageComponent {
     /**
      * @description The type of question, the name of which is bound to a header
      * @memberof QuestionComponent
@@ -127,9 +127,5 @@ export class QuestionComponent extends PageComponet {
     continue(): void {
         if (this.set.justMastered()) this.main.masteredSet(this.set, this.sets);
         else this.main.askFrom(this.sets);
-    }
-
-    onExit(): void {
-        return;
     }
 }

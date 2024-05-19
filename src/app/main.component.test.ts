@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from "@jest/globals";
 import { MainComponent } from "./main.component";
 import { bootstrap } from "@gsilber/webez";
-import { PageComponet } from "../EzComponent_subclasses";
+import { PageComponent } from "../EzComponent_subclasses";
 
 describe("MainComponent", () => {
     let component: any = undefined;
@@ -9,8 +9,8 @@ describe("MainComponent", () => {
     let childElement = () => pageElement.firstChild as HTMLElement;
     const html1 = "<div>a page</div>";
     const html2 = "<p>a different page</p>";
-    let page1: PageComponet;
-    let page2: PageComponet;
+    let page1: PageComponent;
+    let page2: PageComponent;
     beforeEach(() => {
         const html: string = `<div>Testing Environment</div><div id='main-target'></div>`;
         component = bootstrap<MainComponent>(MainComponent, html);

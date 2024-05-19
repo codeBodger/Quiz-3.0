@@ -1,6 +1,6 @@
 import html from "./importer.component.html";
 import css from "./importer.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { BindValue, Change, Click, EzDialog, ValueEvent } from "@gsilber/webez";
 import { Set, Group, Constructor } from "../../database";
@@ -33,10 +33,10 @@ Set 4
 /**
  * @description A class for handling importing a single set or group
  * @class ImporterComponent
- * @extends {PageComponet}
+ * @extends {PageComponent}
  * @param {extends Set | Group} X The type we're importing, either Set or Group
  */
-export class ImporterComponent<X extends Set | Group> extends PageComponet {
+export class ImporterComponent<X extends Set | Group> extends PageComponent {
     /**
      * @description The data in the textarea that the user will enter
      * @memberof ImporterComponent

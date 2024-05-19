@@ -1,6 +1,6 @@
 import html from "./database-importer.component.html";
 import css from "./database-importer.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Click } from "@gsilber/webez";
 import { Database } from "../../database";
@@ -13,9 +13,9 @@ declare const window: Window;
 /**
  * @description The component for handling importing a database from the user's disk
  * @class DatabaseImporterComponent
- * @extends {PageComponet}
+ * @extends {PageComponent}
  */
-export class DatabaseImporterComponent extends PageComponet {
+export class DatabaseImporterComponent extends PageComponent {
     /**
      * @description Creates an instance of DatabaseImporterComponent
      * @param {MainComponent} parent The main component this is attached to, for additional handling
@@ -39,9 +39,5 @@ export class DatabaseImporterComponent extends PageComponet {
         );
         this.main.mergeDatabase(database);
         window.localStorage.removeItem("file-text");
-    }
-
-    onExit(): void {
-        return;
     }
 }

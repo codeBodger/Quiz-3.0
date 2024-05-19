@@ -27,7 +27,7 @@ export abstract class SubComponent extends EzComponentSRA {
     }
 }
 
-export abstract class PageComponet extends EzComponentSRA {
+export abstract class PageComponent extends EzComponentSRA {
     constructor(parent: MainComponent, html: string, css: string) {
         super(parent, html, css);
     }

@@ -1,6 +1,6 @@
 import html from "./start-flashcards.component.html";
 import css from "./start-flashcards.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Set, Term, TermSet } from "../../database";
 import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
@@ -8,9 +8,9 @@ import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
 /**
  * @description A class to handle the user choosing how they want to practice with flashcards
  * @class StartFlashcardsComponent
- * @extends PageComponet
+ * @extends PageComponent
  */
-export class StartFlashcardsComponent extends PageComponet {
+export class StartFlashcardsComponent extends PageComponent {
     /**
      * @description Creates an instance of StartFlashcardsComponent
      * @param {Set[]} sets The sets to be practiced
@@ -60,9 +60,5 @@ export class StartFlashcardsComponent extends PageComponet {
         }
 
         this.main.doFlashcards(termSets);
-    }
-
-    onExit(): void {
-        return;
     }
 }

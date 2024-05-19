@@ -1,6 +1,6 @@
 import html from "./flashcards.component.html";
 import css from "./flashcards.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Term, TermSet } from "../../database";
 import { BindValue, Click } from "@gsilber/webez";
@@ -19,9 +19,9 @@ type ProAns = "prompt" | "answer";
 /**
  * @description The component for dealing with flashcards
  * @class FlashcardsComponent
- * @extends PageComponet
+ * @extends PageComponent
  */
-export class FlashcardsComponent extends PageComponet {
+export class FlashcardsComponent extends PageComponent {
     /**
      * @description The term currently being practiced
      * @memberof FlashcardsComponent
@@ -158,9 +158,5 @@ export class FlashcardsComponent extends PageComponet {
     toggle(): void {
         this.side = this.side === "prompt" ? "answer" : "prompt";
         this.update();
-    }
-
-    onExit(): void {
-        return;
     }
 }

@@ -1,6 +1,6 @@
 import html from "./set-mastered.component.html";
 import css from "./set-mastered.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { BindValue, Click } from "@gsilber/webez";
 import { Set } from "../../database";
@@ -8,9 +8,9 @@ import { Set } from "../../database";
 /**
  * @description A class for displaying that the user has mastered a set
  * @class SetMasteredComponent
- * @extends PageComponet
+ * @extends PageComponent
  */
-export class SetMasteredComponent extends PageComponet {
+export class SetMasteredComponent extends PageComponent {
     /**
      * @description The name of the set that was mastered
      * @type {string}
@@ -45,9 +45,5 @@ export class SetMasteredComponent extends PageComponet {
     @Click("continue")
     continue(): void {
         this.main.askFrom(this.sets);
-    }
-
-    onExit(): void {
-        return;
     }
 }

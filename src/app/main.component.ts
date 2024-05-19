@@ -8,7 +8,7 @@ import {
 } from "@gsilber/webez";
 import { FooterComponent } from "./footer/footer.component";
 import { MainMenuComponent } from "./main-menu/main-menu.component";
-import { PageComponet } from "../EzComponent_subclasses";
+import { PageComponent } from "../EzComponent_subclasses";
 import {
     Constructor,
     Database,
@@ -53,11 +53,11 @@ export class MainComponent extends EzComponent {
 
     /**
      * @description The component storing whatever page is currently being displayed; defaulted to the main menu on startup
-     * @type {PageComponet}
+     * @type {PageComponent}
      * @memberof MainComponent
      * @private
      */
-    private page: PageComponet = new MainMenuComponent(this);
+    private page: PageComponent = new MainMenuComponent(this);
 
     /**
      * @description An empty string that's just here to make sure that the part of the DOM with the page gets cleared completely
@@ -240,12 +240,12 @@ export class MainComponent extends EzComponent {
 
     /**
      * @description Removes the current page and replaces it with the one provided in the argument
-     * @param {PageComponet} page The page to activate
+     * @param {PageComponent} page The page to activate
      * @returns {void}
      * @memberof MainComponent
      * @private
      */
-    private activate(page: PageComponet): void {
+    private activate(page: PageComponent): void {
         this.freePage();
         this.page = page;
         this.addComponent(this.page, "page");

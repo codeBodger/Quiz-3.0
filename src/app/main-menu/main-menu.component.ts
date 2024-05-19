@@ -1,6 +1,6 @@
 import html from "./main-menu.component.html";
 import css from "./main-menu.component.css";
-import { PageComponet } from "../../EzComponent_subclasses";
+import { PageComponent } from "../../EzComponent_subclasses";
 import { MainComponent } from "../main.component";
 import { Group, Set } from "../../database";
 import { ClickSRA, MouseEventSRA } from "../../decoratorsSRA";
@@ -9,9 +9,9 @@ import { EzError } from "../EzError/EzError.component";
 /**
  * @description A class representing the main menu of the site
  * @class MainMenuComponent
- * @extends {PageComponet}
+ * @extends {PageComponent}
  */
-export class MainMenuComponent extends PageComponet {
+export class MainMenuComponent extends PageComponent {
     /**
      * @description Creates an instance of MainMenuComponent
      * @param {MainComponent} parent The main component this is attached to, for additional handling
@@ -81,9 +81,5 @@ export class MainMenuComponent extends PageComponet {
                     "How did you choose something that doesn't exist???",
                 );
         }
-    }
-
-    onExit(): void {
-        return;
     }
 }
