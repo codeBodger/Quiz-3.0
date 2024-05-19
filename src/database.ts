@@ -29,6 +29,9 @@ export type TermSet = {
 /**
  * @description A class representing a term
  * @class Term
+ * @readonly @prop {string} answer The answer to the term
+ * @readonly @prop {string} prompt The prompt for the term
+ * @prop {boolean} confident Whether the user is confident in the term (for flashcards)
  * @prop {number} mastery The mastery in the form of an actually useful number
  * @prop {boolean} started Whether or not the user has actually started learning the term
  */
@@ -36,7 +39,7 @@ export class Term {
     /**
      * @description Creates an instance of Term
      * @readonly @param {string} answer The answer to the term; defaults to ""
-     * @readonly @param {string} prompt The prompt for the tern; defaults to ""
+     * @readonly @param {string} prompt The prompt for the term; defaults to ""
      * @private @param {number} _mastery The mastery of the term; `NaN` if not started; defaults to `NaN`
      * @param {boolean} confident Whether the user is confident in this term (for flashcards); defaults to `false`
      */
