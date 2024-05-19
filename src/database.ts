@@ -197,16 +197,36 @@ export type Activities = "Practice" | "Flashcards" | "Delete";
  * @description A class representing a set of terms
  * @class Set
  * @prop {string[]} allChars An array of all of the chars used in the set (so we can use them for CharQ)
+ * @readonly @prop {string} name The name of the set
+ * @prop {Term[]} terms The terms contained within the set
  * @prop {number} prob The probability of choosing this set to get a term from, based on mastery and length
  * @prop {number} length The number of terms in this set (this.terms.length)
  * @prop {number} mastery The average mastery of the terms in the set
  * @prop {boolean} confident If the user is confident in *every* term in the set (for flashcards)
  */
-// 44 more in this file alone; I'm going to cry ):
 export class Set {
+    /**
+     * @description Whether or not the set is mastered (only set to false on load)
+     * @type {boolean}
+     * @memberof Set
+     * @private
+     */
     private mastered: boolean;
+
+    /**
+     * @description An array of all of the chars used in the set (so we can use them for CharQ)
+     * @type {string[]}
+     * @memberof Set
+     */
     public allChars: string[] = [];
 
+    /**
+     * @description Creates an instance of Set
+     * @readonly @param {string} name The name of this set
+     * @param {Term[]} terms The terms in this set
+     * @memberof Set
+     * @constructor
+     */
     constructor(
         readonly name: string,
         public terms: Term[] = [],
@@ -214,6 +234,14 @@ export class Set {
         this.mastered = this.mastery === MASTERED;
     }
 
+    /**
+     * @description Loads a set from an appropriate TSV representation, returns undefined the name can't exist
+     * @param {string} data The TSV data
+     * @param {Database} caller The database that called this method, so we can tell it about the errors
+     * @returns {Set | undefined}
+     * @memberof Set
+     * @static
+     */
     static fromTSV(data: string, caller: Database): Set | undefined {
         data = data.replace(/^\s*/g, "");
         const dataArr = data.split("\n");
@@ -246,6 +274,13 @@ export class Set {
         return set;
     }
 
+    /**
+     * @description Merges another set into this one; adds terms with new prompts, displays an error for old prompts with new answers
+     * @param {Set} set The set to merge into this one
+     * @param {Database} caller The database that called this method, so we can tell it about the errors
+     * @returns {void}
+     * @memberof Set
+     */
     merge(set: Set, caller: Database): void {
         let extantError: string[] = [];
         for (let term of set.terms) {
@@ -259,6 +294,14 @@ export class Set {
             });
     }
 
+    /**
+     * @description Adds a term to this set (`undefined` on success)
+     * @param {Term} term The term to be added
+     * @returns {string | undefined}
+     * @memberof Set
+     * @summary Returns the prompt if the prompt exists with a different answer,
+     * does nothing if the prompt exists with the same prompt; the term already exists!
+     */
     addTerm(term: Term): string | undefined {
         let extantTermMatch = this.getTerm(term.prompt)?.matches(term) ?? {
             prompt: false,
@@ -275,12 +318,24 @@ export class Set {
         return undefined;
     }
 
+    /**
+     * @description Gets a term given the prompt; `undefined` if none found
+     * @param {string} prompt The prompt to find the term with
+     * @returns {string | undefined}
+     * @memberof Set
+     */
     getTerm(prompt: string): Term | undefined {
         return this.terms.reduce((acc: Term | undefined, term) => {
             return term.prompt === prompt ? term : acc;
         }, undefined);
     }
 
+    /**
+     * @description Gets a random term from the set weighted by the terms' masteries; `undefined` if something goes wrong
+     * @param {boolean} onlyNew Whether we're only looking for terms that haven't been started (defaults to false)
+     * @returns {Term | undefined}
+     * @memberof Set
+     */
     chooseTerm(onlyNew: boolean = false): Term | undefined {
         let probs: number[] = [];
         for (let term of this.terms)
@@ -293,6 +348,13 @@ export class Set {
         return undefined;
     }
 
+    /**
+     * @description Generates an object of type `Categorised` from an array of sets
+     * @param {Set[]} sets The sets to categorise
+     * @param {"mastered" | "confident"} by The way to categorise them, either by if they're mastered or deemed confident
+     * @returns {Categorised}
+     * @memberof Set
+     */
     static categorise(sets: Set[], by: "mastered" | "confident"): Categorised {
         let out: Categorised = { done: [], doing: undefined };
         for (let set of sets) {
@@ -306,6 +368,13 @@ export class Set {
         return out;
     }
 
+    /**
+     * @description Gets a random set from a Categorised object, considering `Set.prob` and favouring `Categorised.doing`
+     * @param {Categorised} sets The categorised sets to take a random one from
+     * @returns {Set}
+     * @memberof Set
+     * @static
+     */
     static randomSet(sets: Categorised): Set {
         if (sets instanceof Array) sets = { done: sets, doing: undefined };
         let probs: number[] = [];
@@ -324,14 +393,29 @@ export class Set {
         return out.at(-1)!;
     }
 
+    /**
+     * @description The probability of choosing this set to get a term from, based on mastery and length
+     * @type {number}
+     * @memberof Set
+     */
     get prob(): number {
         return this.length * this.mastery;
     }
 
+    /**
+     * @description The number of terms in this set (this.terms.length)
+     * @type {number}
+     * @memberof Set
+     */
     get length(): number {
         return this.terms.length;
     }
 
+    /**
+     * @description The average mastery of the terms in the set
+     * @type {number}
+     * @memberof Set
+     */
     get mastery(): number {
         return (
             this.terms.reduce(
@@ -341,15 +425,30 @@ export class Set {
         );
     }
 
+    /**
+     * @description If the user is confident in *every* term in the set (for flashcards)
+     * @type {boolean}
+     * @memberof Set
+     */
     get confident(): boolean {
         return this.terms.every((term: Term) => term.confident);
     }
 
+    /**
+     * @description Whether the set was *just* mastered; sets `this.mastered`
+     * @returns {boolean}
+     * @memberof Set
+     */
     justMastered(): boolean {
         if (this.mastered) return false;
         return (this.mastered = this.mastery === MASTERED);
     }
 
+    /**
+     * @description Creates the proper TSV representation of this set for use in exporting and saving
+     * @returns {string}
+     * @memberof Set
+     */
     toString(): string {
         return (
             this.name +
@@ -359,6 +458,7 @@ export class Set {
     }
 }
 
+// 28 more in this file alone; I'm going to cry ):
 class Divide {
     constructor(
         public numerator: number,
