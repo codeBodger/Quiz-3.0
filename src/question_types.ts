@@ -1,5 +1,8 @@
 import { EzError } from "./app/EzError/EzError.component";
 
+/**
+ * @description A list of types of question, to be turned into a type, but necessary for looping through it
+ */
 const types = [
     "New Term",
     "Multiple Choice",
@@ -9,12 +12,41 @@ const types = [
     "Text Entry",
 ] as const;
 
+/**
+ * @description The names of the possible types of question
+ */
 export type QuestionTypes = (typeof types)[number];
 
-export const BEGUN = 5_000_000;
-export const MASTERED = 100_000;
-export const PROB_FACTOR_IF_ACTIVE_SET = 5;
+/**
+ * @description The number representing the mastery of a term only just begun
+ * @type {number}
+ */
+export const BEGUN: number = 5_000_000;
+/**
+ * @description The number representing the mastery of a mastered term
+ * @type {number}
+ */
+export const MASTERED: number = 100_000;
+/**
+ * @description The amount that the currently active set is favoured when choosing a random set
+ * @type {number}
+ */
+export const PROB_FACTOR_IF_ACTIVE_SET: number = 5;
+
+/**
+ * @description A class representing a type of question
+ * @class QuestionType
+ * @readonly @prop {QuestionTypes} name The name of the question type
+ * @prop {(mastery: number) => number} probability A function of the mastery of a term to determine how likely this type is for it
+ */
 export class QuestionType {
+    /**
+     * @description Creates an instance of QuestionType
+     * @public @readonly @param {QuestionTypes} name The name of the question tyoe
+     * @public @param {(mastery: number) => number} probability Determines the probability of this question type from term mastery
+     * @private @readonly @param {number} weight The weight to change a terms mastery by up or down
+     * @private @readonly @param {(length: number) => number} divideAmongst How many things to divide this change amongst
+     */
     constructor(
         public readonly name: QuestionTypes,
         public probability: (mastery: number) => number = () => 0,
@@ -22,6 +54,13 @@ export class QuestionType {
         private readonly divideAmongst: (length: number) => number = () => 1,
     ) {}
 
+    /**
+     * @description Calculates the proper new mastery for the term
+     * @param {number} mastery The current mastery of the term
+     * @param {boolean} success Whether or not the user gave the right answer
+     * @param {number} length The lenght of the term's answer
+     * @returns
+     */
     masteryUpdater(mastery: number, success: boolean, length: number): number {
         if (this.name === "New Term") return success ? MASTERED : BEGUN;
 
@@ -33,7 +72,11 @@ export class QuestionType {
     }
 }
 
-// Probabilities taken from https://github.com/codeBodger/Quiz-2/blob/main/public/index.html#L95
+/**
+ * @description The actual question types with the necessary information
+ * @type {QuestionType[]}
+ * @summary Probabilities taken from https://github.com/codeBodger/Quiz-2/blob/main/public/index.html#L95
+ */
 export const questionTypes: QuestionType[] = [
     new QuestionType("New Term"),
     new QuestionType(
@@ -81,7 +124,7 @@ export const questionTypes: QuestionType[] = [
             return 0;
         },
         1.15,
-        () => 2,
+        () => 2, // Because it changes the mastery for both the answer and prompt given
     ),
     new QuestionType(
         "Character Entry",
@@ -99,7 +142,7 @@ export const questionTypes: QuestionType[] = [
             return 0;
         },
         1.7,
-        (length) => length,
+        (length) => length, // Because it changes for each character
     ),
     new QuestionType(
         "Text Entry",
@@ -116,6 +159,12 @@ export const questionTypes: QuestionType[] = [
     ),
 ] as const;
 
+/**
+ * @description Gets a `QuestionType` given its name
+ * @param {QuestionTypes} name The name of the `QuestionType` to get
+ * @returns {QuestionType}
+ * @throws {EzError} If it can't find the question type
+ */
 export function getQuestionType(name: QuestionTypes): QuestionType {
     for (let type of questionTypes) {
         if (type.name === name) return type;
@@ -123,12 +172,22 @@ export function getQuestionType(name: QuestionTypes): QuestionType {
     throw new EzError(`Invalid question type: ${name}`);
 }
 
+/**
+ * @description Check to make sure all of the `QuestionTypes` are implemented
+ * @returns {void}
+ * @throws {EzError} If it can't find the question type
+ */
 export function checkImplementation(): void {
     for (let name of types) {
         getQuestionType(name);
     }
 }
 
+/**
+ * @description Restricts the question types to those provided (if none provided, don't restrict)
+ * @param {QuestionTypes[]} ...names The names of the question types to include
+ * @returns {void}
+ */
 function only(...names: QuestionTypes[]): void {
     if (!names.length) return;
     types.forEach(
