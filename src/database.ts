@@ -602,6 +602,9 @@ export class Group {
     }
 }
 
+/**
+ * @description A basic constructor for either `Set` or `Group`, for use here or elsewhwere to dynamically create the right one
+ */
 export type Constructor<T extends Set | Group> = { new (name: string): T };
 
 export class Database {
