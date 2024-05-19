@@ -6,15 +6,24 @@
     <body>
         <div id="main-target"></div>
         <script>
+            /**
+             * @description Gets the DOM element inside the #shadow-root for the main component of the site
+             */
             const main = () =>
                 document
                     .getElementById("main-target")
                     .getElementsByTagName("div")[0].shadowRoot;
+            /**
+             * @description Gets the DOM element inside the #shadow-root for the curent page component
+             */
             const page = () =>
                 main().getElementById("page").getElementsByTagName("div")[0]
                     .shadowRoot;
 
-            // Method adapted from https://www.geeksforgeeks.org/how-to-load-the-contents-of-a-text-file-into-a-javascript-variable/
+            /**
+             * @description Uploads a file and puts it into a temporary localStorage item so TS can access it and import the TSV in it
+             * @sumary Method adapted from https://www.geeksforgeeks.org/how-to-load-the-contents-of-a-text-file-into-a-javascript-variable/
+             */
             function upload() {
                 const file = page().getElementById("file").files[0];
                 const reader = new FileReader();
@@ -26,13 +35,17 @@
                 reader.readAsText(file);
             }
 
-            // Method adapted from https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+            /**
+             * @description Downloads a file with the TSV of the current database, after saving it
+             * @sumary Method adapted from
+             * https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+             */
             function download() {
                 main()
                     .getElementById("footer")
                     .getElementsByTagName("div")[0]
                     .shadowRoot.getElementById("exit")
-                    .click();
+                    .click(); // does the saving
 
                 const data = localStorage.getItem("database");
 
