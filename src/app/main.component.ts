@@ -2,6 +2,7 @@ import html from "./main.component.html";
 import css from "./main.component.css";
 import {
     BindCSSClassToBoolean,
+    BindStyle,
     BindValue,
     EzComponent,
     EzDialog,

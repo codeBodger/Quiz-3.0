@@ -172,12 +172,25 @@ export class Term {
     }
 }
 
+/**
+ * @description A way of keeping track of errors that occur when importing things
+ * @prop {string} message The name of the error that occured
+ * @prop {string[]} errs The text to display for each of the errors that happened of the type specified in `message`
+ */
 type DatabaseError = {
     message: string;
     errs: string[];
 };
 
+/**
+ * @description A way of categorising a group of sets into those that are mastered/confident and the first that isn't
+ * @prop {Set[]} done The sets that are mastered/confident
+ * @prop {Set | undefined} doing The first set that is not done (undefined if they're all done)
+ */
 type Categorised = { done: Set[]; doing: Set | undefined };
+/**
+ * @description A union of the different activites that can be performed on sets and groups for `List(Button)Component`
+ */
 export type Activities = "Practice" | "Flashcards" | "Delete";
 export class Set {
     private mastered: boolean;
