@@ -223,7 +223,7 @@ export class Set {
     /**
      * @description Creates an instance of Set
      * @readonly @param {string} name The name of this set
-     * @param {Term[]} terms The terms in this set
+     * @param {Term[]} terms The terms in this set, defaults to empty
      * @memberof Set
      * @constructor
      */
@@ -488,9 +488,29 @@ class Divide {
 }
 
 // 25 more in this file alone; I'm going to cry ):
+/**
+ * @description A class representing a group of sets (does not actually contain sets, just their names)
+ * @class Set
+ * @readonly @prop {string} name The name of the group
+ * @prop {Set[]} sets The actual sets of the group, retrieved dynamically from the database
+ * @prop {number} mastery The mastery of the group, a weighted average of the sets based on their lengths
+ */
 export class Group {
+    /**
+     * @description Whether or not this group is mastered (not used yet, will be used when I have a component for group-mastered)
+     * @type {boolean}
+     * @memberof Group
+     */
     private mastered: boolean;
 
+    /**
+     * @description Creates an instance of Group
+     * @readonly @param {string} name The name of the group
+     * @private @param {string[]} _sets The *names* of the sets within the group, defaults to empty
+     * @private @param {Database} database The database from which to get the actual sets, can be undefined in certain circumstances
+     * @memberof Group
+     * @constructor
+     */
     constructor(
         readonly name: string,
         private _sets: string[] = [],
@@ -499,6 +519,14 @@ export class Group {
         this.mastered = this.mastery === MASTERED;
     }
 
+    /**
+     * @description Loads a group from an appropriate TSV representation, returns undefined the name can't exist
+     * @param {string} data The TSV data
+     * @param {Database} database The database to attach the newly created group to
+     * @returns {Group | undefined}
+     * @memberof Group
+     * @static
+     */
     static fromTSV(data: string, database: Database): Group | undefined {
         const dataArr = data.replace(/\s+$/, "").split(/[\t\n]+/g);
         const name = dataArr[0];
@@ -506,6 +534,13 @@ export class Group {
         return new Group(name, dataArr.slice(1), database);
     }
 
+    /**
+     * @description Overwrites the set name list of this group with that of the provided group (throws an error if the databases don't match)
+     * @param {Group} group The group to effectively replace this one with
+     * @param {Database} caller The database that called this method, for more insurance that it's being called from somewhere that makes sense
+     * @returns {void}
+     * @memberof Group
+     */
     overwrite(group: Group, caller: Database): void {
         if (caller !== this.database || caller !== this.database)
             throw new EzError(
@@ -514,6 +549,11 @@ export class Group {
         this._sets = group._sets;
     }
 
+    /**
+     * @description Gets the actual sets from the database, given the set names here; adds errors to the database if not found
+     * @type {Set[]}
+     * @memberof Group
+     */
     get sets(): Set[] {
         if (!this.database) return [];
         let errors: string[] = [];
@@ -532,6 +572,11 @@ export class Group {
         return out;
     }
 
+    /**
+     * @description The mastery of the group, a weighted average of the sets based on their lengths
+     * @type {number}
+     * @memberof Group
+     */
     get mastery(): number {
         if (!this.database) return NaN;
         return this.sets
@@ -547,6 +592,11 @@ export class Group {
             .evaluate();
     }
 
+    /**
+     * @description Creates the proper TSV representation of this group for use in exporting and saving
+     * @returns {string}
+     * @memberof Group
+     */
     toString(): string {
         return `${this.name}\t${this._sets.join("\t")}`;
     }
