@@ -8,6 +8,10 @@ exports.ClickSRA =
     exports.BindVisibleToBooleanSRA =
     exports.BindCSSClassToBooleanSRA =
         void 0;
+
+/**A bunch of stuff I had to take from the WebEZ source, since it wasn't exported
+ * It's possible that I modified some of it, but I don't think I did */
+
 /**
  * @description Gets the public key of the field name
  * @param name the name of the field
@@ -103,17 +107,19 @@ function getPropertyDescriptor(target, key) {
     }
     return origDescriptor;
 }
+
 /**
  * @description Decorator to bind the cssClassName property if the boolean property is true
- * @param id the element to bind the property to
- * @param cssClassName the class name to add
+ * @param {string} id the element to bind the property to
+ * @param {string} cssClassName the class name(s) to add (space separated)
+ * @param {(this: This, value: Value) => boolean} transform Transforms the bound value into a boolean
  * @returns DecoratorCallback
  * @export
  * @group Bind Decorators
  * @example
- * //This will add the css class myCSSClass to the div with id myDiv if the enabled property is "good"
- * @BindCSSClassToBooleanSRA("myDiv", "myCSSClass", (v: string) => (v === "good") ? true : false)
- * public enabled: string = "good";
+ * -//This will add the css class myCSSClass to the div with id myDiv if the enabled property is true
+ * -@BindCSSClassToBooleanSRA("myDiv", "myCSSClass", (v: string) => v.toLowerCase().startsWith("y"))
+ * -public enabled: string = "Yes";
  */
 function BindCSSClassToBooleanSRA(
     id,
@@ -157,14 +163,15 @@ function BindCSSClassToBooleanSRA(
 exports.BindCSSClassToBooleanSRA = BindCSSClassToBooleanSRA;
 /**
  * @description Decorator to bind the visibility of an element to a boolean
- * @param id the element to bind the property to
+ * @param {string} id the element to bind the property to
+ * @param {(this: This, value: Value) => boolean} transform Transforms the bound value into a boolean
  * @returns DecoratorCallback
  * @export
  * @group Bind Decorators
  * @example
- * //This will hide the div with id myDiv1 if the visible property is false
- * @BindVisibleToBooleanSRA("myDiv1")
- * public visible: boolean = true;
+ * -//This will hide the div with id myDiv1 if the visible property is false
+ * -@BindVisibleToBooleanSRA("myDiv1", (v: string) => v.toLowerCase().startsWith("y"))
+ * -public visible: string = "Yes";
  */
 function BindVisibleToBooleanSRA(id, transform = (value) => value) {
     return BindStyle(id, "display", (value) => {
@@ -177,16 +184,16 @@ exports.BindVisibleToBooleanSRA = BindVisibleToBooleanSRA;
 
 /**
  * @description Decorator to bind a generic event to an element
- * @param htmlElementID the element to bind the event to
- * @param type the event to bind
+ * @param {string} htmlElementID the element to bind the event to
+ * @param {K extends keyof HTMLElementEventMap} type the event to bind
  * @returns DecoratorCallback
  * @export
  * @group Event Decorators
  * @example
- * @GenericEventSRA("myButton", "click")
- * myButtonClick(e: MouseEventSRA) {
- *    console.log(`Button "${e.idSRA}" was clicked`);
- * }
+ * -@GenericEventSRA("myButton", "click")
+ * -myButtonClick(e: MouseEventSRA) {
+ * -   console.log(`Button "${e.idSRA}" was clicked`);
+ * -}
  */
 function GenericEventSRA(htmlElementID, type) {
     return function (target, context) {
@@ -210,15 +217,15 @@ function GenericEventSRA(htmlElementID, type) {
 exports.GenericEventSRA = GenericEventSRA;
 /**
  * @description Decorator to bind a click event to an element
- * @param htmlElementID the element to bind the event to
+ * @param {string} htmlElementID the element to bind the event to
  * @returns DecoratorCallback
  * @export
  * @group Event Decorators
  * @example
- * @Click("myButton")
- * myButtonClick(e: MouseEvent) {
- *   console.log("Button was clicked");
- * }
+ * -@ClickSRA("myButton")
+ * -myButtonClick(e: MouseEventSRA) {
+ * -    console.log(`Button "${e.idSRA}" was clicked`);
+ * -}
  */
 function ClickSRA(htmlElementID, idSRA) {
     return GenericEventSRA(htmlElementID, "click", idSRA);
