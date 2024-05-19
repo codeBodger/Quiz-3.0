@@ -458,16 +458,36 @@ export class Set {
     }
 }
 
-// 28 more in this file alone; I'm going to cry ):
+/**
+ * @description A class for use in `reduce` to divide something
+ * @prop {number} numerator The numerator of the division
+ * @prop {number} denominator The denominator of the division
+ * @class Divide
+ */
 class Divide {
+    /**
+     * @description Creates an instance of Divide
+     * @param {number} numerator The numerator of the division
+     * @param {number} denominator The denominator of the division
+     * @memberof Divide
+     * @constructor
+     */
     constructor(
         public numerator: number,
         public denominator: number,
     ) {}
+
+    /**
+     * @description Evaluates the division
+     * @returns {number}
+     * @memberof Divide
+     */
     evaluate(): number {
         return this.numerator / this.denominator;
     }
 }
+
+// 25 more in this file alone; I'm going to cry ):
 export class Group {
     private mastered: boolean;
 
