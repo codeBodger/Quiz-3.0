@@ -788,6 +788,13 @@ ${this.sets.map((set: Set) => set.toString()).join("\n\n")}`;
     }
 }
 
+/**
+ * @description Gets a random term from a random set from an array of sets and returns both (see `Set.categorise()` and `Set.randomSet()`)
+ * @param {Set[]} sets The sets from which to randomly select the set and term
+ * @param {boolean} onlyNew If we should only look for terms that have not yet been started
+ * @returns {[Term, Set]}
+ * @throws {Error} Used to deal with there being insufficient terms in the set
+ */
 export function randomSetAndTerm(sets: Set[], onlyNew: boolean): [Term, Set] {
     const categorised = Set.categorise(sets, "mastered");
     const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
