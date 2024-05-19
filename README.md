@@ -106,7 +106,7 @@ As such, I will be able to work on some of the additional items.
 -   On mobile, scrolling screws stuff up
     -   [x] Use `sv*` instead of `dv*`
 -   Import All looks very off
-    -   [ ] Why do buttons need `min-height: 100%;`?
+    -   [x] Stuck the button in a `<div class="td" />`?
 
 ## Things to Fix
 
