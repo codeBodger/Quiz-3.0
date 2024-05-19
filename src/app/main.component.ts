@@ -73,6 +73,7 @@ export class MainComponent extends EzComponent {
      * If you figure out what this does, you'll have learned something about me; something I only learned myself quite recently.
      */
     @BindCSSClassToBoolean("page", "egg")
+    @BindStyle("name", "display", (v: boolean) => (v ? "unset" : "none"))
     private egg: boolean = false;
 
     /**

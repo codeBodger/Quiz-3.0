@@ -192,6 +192,17 @@ type Categorised = { done: Set[]; doing: Set | undefined };
  * @description A union of the different activites that can be performed on sets and groups for `List(Button)Component`
  */
 export type Activities = "Practice" | "Flashcards" | "Delete";
+
+/**
+ * @description A class representing a set of terms
+ * @class Set
+ * @prop {string[]} allChars An array of all of the chars used in the set (so we can use them for CharQ)
+ * @prop {number} prob The probability of choosing this set to get a term from, based on mastery and length
+ * @prop {number} length The number of terms in this set (this.terms.length)
+ * @prop {number} mastery The average mastery of the terms in the set
+ * @prop {boolean} confident If the user is confident in *every* term in the set (for flashcards)
+ */
+// 44 more in this file alone; I'm going to cry ):
 export class Set {
     private mastered: boolean;
     public allChars: string[] = [];
