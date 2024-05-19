@@ -487,10 +487,9 @@ class Divide {
     }
 }
 
-// 25 more in this file alone; I'm going to cry ):
 /**
  * @description A class representing a group of sets (does not actually contain sets, just their names)
- * @class Set
+ * @class Group
  * @readonly @prop {string} name The name of the group
  * @prop {Set[]} sets The actual sets of the group, retrieved dynamically from the database
  * @prop {number} mastery The mastery of the group, a weighted average of the sets based on their lengths
@@ -607,14 +606,44 @@ export class Group {
  */
 export type Constructor<T extends Set | Group> = { new (name: string): T };
 
+/**
+ * @description A class representing a database of groups and sets
+ * @class Database
+ * @prop {Set[]} sets The sets stored in the database
+ * @prop {Group[]} groups The groups stored in the database
+ */
 export class Database {
+    /**
+     * @description The sets stored in the database
+     * @type {Set[]}
+     * @memberof Database
+     */
     public sets: Set[] = [];
+
+    /**
+     * @description The groups stored in the database
+     * @type {Group[]}
+     * @memberof Database
+     */
     public groups: Group[] = [];
+
+    /**
+     * @description The errors generated since the last time the user was shown them
+     * @type {DatabaseError[]}
+     * @memberof Database
+     */
     private errors: DatabaseError[] = [];
 
+    /**
+     * @description Creates an instance of Database
+     * @param {string} data The TSV data for the database
+     * @param {MainComponent} main The main component of the site, to show the popups for the errors on
+     * @memberof Database
+     * @constructor
+     */
     constructor(data: string, main: MainComponent) {
         data = data.replace(/(^[^\S\n]+)|([^\S\n]+$)/gm, "");
-        if (!data) return;
+        if (!data) return; // Not a real return; just to leave things empty if the data is empty
         const dataArr = data.split("\n\n");
         for (let setStr of dataArr.slice(1)) this.addOrUpdateSet(setStr);
         for (let groupStr of dataArr[0].split("\n"))
@@ -623,6 +652,12 @@ export class Database {
         this.showAndResetErrors(main);
     }
 
+    /**
+     * @description Adds a set if none of that name exist, updates an existing one (see `Set.merge()`)
+     * @param {string | Set} setData The Set or TSV string to add or update the set from
+     * @returns {void}
+     * @memberof Database
+     */
     addOrUpdateSet(setData: string | Set): void {
         const newSet =
             setData instanceof Set ? setData : Set.fromTSV(setData, this);
@@ -636,6 +671,12 @@ export class Database {
         this.sets.push(newSet);
     }
 
+    /**
+     * @description Adds a group if none of that name exist, updates an existing one (see `Group.overwrite()`)
+     * @param {string | Group} groupData The Group or TSV string to add or update the group from
+     * @returns {void}
+     * @memberof Database
+     */
     addOrUpdateGroup(groupData: string | Group): void {
         const newGroup =
             groupData instanceof Group ? groupData : (
@@ -651,26 +692,48 @@ export class Database {
         this.groups.push(newGroup);
     }
 
+    /**
+     * @description Adds an error to errors (literally just to keep it private)
+     * @param {DatabaseError} error The error to add
+     * @returns {void}
+     * @memberof Database
+     */
     addError(error: DatabaseError): void {
         this.errors.push(error);
     }
 
+    /**
+     * @description Shows the user a popup for each error that the database has encountered; clears the array afterwards
+     * @param {MainComponent} main The main component of the site, used to display the popups
+     * @returns {void}
+     * @memberof Database
+     */
     showAndResetErrors(main: MainComponent): void {
         for (let error of this.errors)
             EzDialog.popup(main, error.errs.join("<br>"), error.message);
         this.errors = [];
     }
 
+    /**
+     * @description Loads the database from localStorage
+     * @param {MainComponent} main The main component of the site; required by the constructor
+     * @returns {Database}
+     * @memberof Database
+     * @static
+     */
     static loadDatabase(main: MainComponent): Database {
-        console.log("aaaa");
-        console.log(window.localStorage.getItem("database"));
-        console.log("aaaaaaaaaaaaaaaaaaaaaa");
+        // console.log(window.localStorage.getItem("database"));
         return new Database(
             window.localStorage.getItem("database") ?? "",
             main,
         );
     }
 
+    /**
+     * @description Merges a database loaded from somewhere into this database (see `Group.overwrite()` and `Set.merge()`)
+     * @param {Database} database The database to merge into this one
+     * @param {MainComponent} main The main component to save the database in
+     */
     merge(database: Database, main: MainComponent): void {
         for (let set of database.sets) {
             this.addOrUpdateSet(set);
@@ -681,10 +744,22 @@ export class Database {
         main.saveDatabase();
     }
 
+    /**
+     * @description Gets a set with the given name from the database (`undefined` if not found)
+     * @param {string} setName The name of the set to find
+     * @returns {Set | undefined}
+     * @memberof Database
+     */
     getSet(setName: string): Set | undefined {
         return this.sets.find((set: Set) => set.name === setName);
     }
 
+    /**
+     * @description Deletes a set or group, whichever is passed in
+     * @param {Set | Group} item The set or group to delete
+     * @returns {void}
+     * @memberof Database
+     */
     delete(item: Set | Group): void {
         const del = <X extends Set | Group>(list: X[]): X[] =>
             list.filter((v: X) => v !== item);
@@ -692,10 +767,20 @@ export class Database {
         this.groups = del(this.groups);
     }
 
+    /**
+     * @description Saves the datatabase to localStorage
+     * @returns {void}
+     * @memberof Database
+     */
     save(): void {
         window.localStorage.setItem("database", this.toString());
     }
 
+    /**
+     * @description Creates the proper TSV representation of this database for exporting and saving
+     * @returns {string}
+     * @memberof Database
+     */
     toString(): string {
         return `${this.groups.map((group: Group) => group.toString()).join("\n")}
 
