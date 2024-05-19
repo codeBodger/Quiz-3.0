@@ -35,7 +35,7 @@ Items marked with only a number will be done only if I have time.
 
 -   [x] 18. **GROUP FLASHCARDS**: Practice a group using flashcards (does not affect mastery).
 -   [x] 19. **SET FLASHCARDS**: Practice a set using flashcards (does not affect mastery).
--   [ ] 20. **DOCUMENTATION**: Documentation for _everything_.
+-   [x] 20. **DOCUMENTATION**: Documentation for _everything_.
 
 -   [x] 21. **DELETE GROUP**
 -   [x] 22. **DELETE SET**
@@ -47,7 +47,7 @@ Items marked with only a number will be done only if I have time.
 
 -   [x] Item 1 completed
 -   [x] Item 3 started
--   [ ] Item 20 started
+-   [x] Item 20 started
 
 ## Milestone 1 (2024-04-28)
 
@@ -57,7 +57,7 @@ Items marked with only a number will be done only if I have time.
 -   [x] Item 14 started
     -   [x] Types 2, 3, and 6 completed
 -   [x] Item 15 started
--   [ ] Item 20 started
+-   [x] Item 20 started
 
 ## Milestone 2 (2024-05-05)
 
@@ -67,7 +67,7 @@ Items marked with only a number will be done only if I have time.
 -   [x] Item 14 completed
     -   [x] Types 1, 4, and 5 completed
 -   [x] Item 15 completed
--   [ ] Item 20 started
+-   [x] Item 20 started
 
 ## Milestone 3 (2024-05-12)
 
@@ -75,7 +75,7 @@ Items marked with only a number will be done only if I have time.
 -   [x] Item 8 completed
 -   [x] Item 12 completed
 -   [x] Item 18 completed
--   [ ] Item 20 completed
+-   [x] Item 20 completed
 
 ## Final Submission (2024-05-19)
 
@@ -89,7 +89,7 @@ As such, I will be able to work on some of the additional items.
 -   Items 4 - 7
 -   Item 17
 -   Items 23, 24
--   Item 20 continued for whatever I do here.
+-   [x] Item 20 continued for whatever I do here.
 
 ## Known Bugs
 
