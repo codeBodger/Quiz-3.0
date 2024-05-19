@@ -11,26 +11,49 @@ import {
 import { CharQComponent } from "./app/CharQ/CharQ.component";
 import { EzError } from "./app/EzError/EzError.component";
 
+/**
+ * @description The JS window, used to get access to localStorage
+ */
 declare const window: Window;
 
+/**
+ * @description A way of pairing a term with its set name for use in Flashcards
+ * @prop {Term} term The term
+ * @prop {string} set The name of the set that the term comes from
+ */
 export type TermSet = {
     term: Term;
     set: string;
 };
 
+/**
+ * @description A class representing a term
+ * @class Term
+ * @prop {number} mastery The mastery in the form of an actually useful number
+ * @prop {boolean} started Whether or not the user has actually started learning the term
+ */
 export class Term {
-    public index: number = -1;
-    private _mastery: number;
+    /**
+     * @description Creates an instance of Term
+     * @readonly @param {string} answer The answer to the term; defaults to ""
+     * @readonly @param {string} prompt The prompt for the tern; defaults to ""
+     * @private @param {number} _mastery The mastery of the term; `NaN` if not started; defaults to `NaN`
+     * @param {boolean} confident Whether the user is confident in this term (for flashcards); defaults to `false`
+     */
     constructor(
         readonly answer: string = "",
         readonly prompt: string = "",
-        mastery?: number,
-        public confident = false,
-    ) {
-        // mastery = isNaN(mastery ?? NaN) ? undefined : mastery;
-        this._mastery = mastery ?? NaN;
-    }
+        private _mastery: number = NaN,
+        public confident: boolean = false,
+    ) {}
 
+    /**
+     * @description Loads a term from a line of a TSV, returns undefined if something goes wrong
+     * @param {string} data The TSV line
+     * @returns {Term | undefined}
+     * @memberof Term
+     * @static
+     */
     static fromTSV(data: string): Term | undefined {
         const dataArr = data.split("\t");
         if (dataArr.length < 2) {
@@ -44,6 +67,12 @@ export class Term {
         );
     }
 
+    /**
+     * @description Checks if/in what way a term matches this term
+     * @param {Term} term The term we're checking against this term
+     * @returns {{ prompt: boolean; answer: boolean }}
+     * @memberof Term
+     */
     matches(term: Term): { prompt: boolean; answer: boolean } {
         return {
             prompt: this.prompt === term.prompt,
@@ -51,6 +80,11 @@ export class Term {
         };
     }
 
+    /**
+     * @description Randomly chooses a type of question to use with a distribution based on the current mastery
+     * @returns {QuestionType}
+     * @memberof Term
+     */
     chooseQuestionType(): QuestionType {
         if (isNaN(this._mastery)) return getQuestionType("New Term");
         let probs: number[] = [];
@@ -63,22 +97,21 @@ export class Term {
         for (let i = 0; i < questionTypes.length; i++)
             if (probs[i] > random) return questionTypes[i];
         return questionTypes[questionTypes.length - 1];
-        // switch (Math.floor(Math.random() * 3)) {
-        //     case 0:
-        //         return getQuestionType("Multiple Choice");
-        //     case 1:
-        //         return getQuestionType("True/False");
-        //     case 2:
-        //     default:
-        //         return getQuestionType("Text Entry");
-        // }
     }
 
+    /**
+     * @description Updates the mastery/confidence of the term based on if the user was right and the QuestionType
+     * @param {boolean} success Whether or not the user was successful (or confident)
+     * @param {QuestionType | "Flashcard"} type The type of question or "Flashcard"
+     * @param {MainComponent} main The main component of the site, to save the database after the update to this term
+     * @returns {void}
+     * @memberof Term
+     */
     update(
         success: boolean,
         type: QuestionType | "Flashcard",
         main: MainComponent,
-    ) {
+    ): void {
         if (type === "Flashcard") this.confident = success;
         else
             this._mastery = type.masteryUpdater(
@@ -89,16 +122,32 @@ export class Term {
         main.saveDatabase();
     }
 
+    /**
+     * @description The mastery in the form of an actually useful number (`BEGUN` for `NaN`); also sets `._mastery` if too low
+     * @type {number}
+     * @memberof Term
+     */
     get mastery(): number {
         if (isNaN(this._mastery)) return BEGUN;
         if (this._mastery < MASTERED) this._mastery = MASTERED;
         return this._mastery;
     }
 
+    /**
+     * @description Whether or not the user has started learning this term
+     * @type {boolean}
+     * @memberof Term
+     */
     get started(): boolean {
         return !isNaN(this._mastery);
     }
 
+    /**
+     * @description Gets all of the terms in the given sets that don't match this term and are started
+     * @param {Set[]} sets The sets the user is studying from which to draw "allOptions"
+     * @returns {Term[]}
+     * @memberof Term
+     */
     allOptions(sets: Set[]): Term[] {
         let allOptions: Term[] = [];
         sets.forEach((set: Set) => {
@@ -110,6 +159,11 @@ export class Term {
         return allOptions;
     }
 
+    /**
+     * @description Creates the proper TSV representation of this term for use in exporting and saving
+     * @returns {string}
+     * @memberof Term
+     */
     toString(): string {
         return `${this.answer}\t${this.prompt}\t${this._mastery}\t${this.confident || ""}`;
     }
@@ -141,7 +195,6 @@ export class Set {
 
         let set = new Set(name);
 
-        // let termArr: Term[] = [];
         let dataError: string[] = [];
         let extantError: string[] = [];
         for (let termData of dataArr.slice(1)) {
@@ -169,16 +222,6 @@ export class Set {
     merge(set: Set, caller: Database): void {
         let extantError: string[] = [];
         for (let term of set.terms) {
-            // let existantTerm = this.getTerm(term.prompt);
-            // switch (existantTerm?.matches(term)) {
-            //     // case "exactly":
-            //     //     continue;
-            //     case "prompt":
-            //         error.push(term.prompt);
-            //         continue;
-            //     case "none":
-            //         this.terms.push(term);
-            // }
             const err = this.addTerm(term);
             if (err !== undefined) extantError.push(err);
         }
@@ -206,8 +249,7 @@ export class Set {
     }
 
     getTerm(prompt: string): Term | undefined {
-        return this.terms.reduce((acc: Term | undefined, term, i) => {
-            term.index = i;
+        return this.terms.reduce((acc: Term | undefined, term) => {
             return term.prompt === prompt ? term : acc;
         }, undefined);
     }
@@ -222,7 +264,6 @@ export class Set {
         for (let i = 0; i < this.length; i++)
             if (probs[i] > random) return this.terms[i];
         return undefined;
-        // return this.terms[Math.floor(Math.random() * this.length)];
     }
 
     static categorise(sets: Set[], by: "mastered" | "confident"): Categorised {
