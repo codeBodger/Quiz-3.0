@@ -104,7 +104,9 @@ As such, I will be able to work on some of the additional items.
 -   Terms with the same answer cause issues
     -   [x] Change how I'm checking if the input was correct (at answer time)
 -   On mobile, scrolling screws stuff up
+    -   [x] Use `dv*` instead of `v*`
     -   [x] Use `sv*` instead of `dv*`
+    -   Use _`lv`_ instead of `sv*`???? (not going to do before Sunday; low priority)
 -   Import All looks very off
     -   [x] Stuck the button in a `<div class="td" />`?
 
