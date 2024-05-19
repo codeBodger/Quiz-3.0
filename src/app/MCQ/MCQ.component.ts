@@ -44,7 +44,7 @@ export class MCQComponent extends QuestionBody {
     constructor(term: Term, set: Set, sets: Set[], parent: QuestionComponent) {
         super("Multiple Choice", term, set, sets, parent, html, css);
         let choices = this.getOptions();
-        // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
+        /**Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html */
         let i: number = choices.length;
         while (i) {
             let ind = Math.floor(Math.random() * i--);

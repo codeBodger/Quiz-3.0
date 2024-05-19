@@ -50,7 +50,7 @@ export class StartFlashcardsComponent extends PageComponet {
             });
         });
 
-        // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
+        /**Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html */
         let i: number = termSets.length;
         while (i) {
             let ind = Math.floor(Math.random() * i--);

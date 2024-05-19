@@ -147,7 +147,7 @@ export class MatchQComponent extends QuestionBody {
         let choices = this.getOptions();
         for (let i = 0; i < choices.length; i++)
             this.answers[i].term = choices[i];
-        // Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html
+        /**Shuffle algorithm adapted from https://bost.ocks.org/mike/shuffle/compare.html */
         let i: number = choices.length;
         while (i) {
             let ind = Math.floor(Math.random() * i--);

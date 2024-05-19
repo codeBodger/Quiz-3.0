@@ -51,7 +51,7 @@ export class MainMenuComponent extends PageComponet {
                 this.main.importAll();
                 break;
             case "export-all":
-                // Is really done by `download()` in `index.html`
+                /**Is really done by `download()` in `index.html` */
                 console.log("exporting...");
                 break;
 

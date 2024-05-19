@@ -53,10 +53,8 @@ export class MainComponent extends EzComponent {
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");
-        // this.activate(this.mainMenu);
         this.database = Database.loadDatabase(this);
         this.exit();
-        // this.saveDatabase();
         checkImplementation();
     }
 
@@ -70,12 +68,15 @@ export class MainComponent extends EzComponent {
         this.activate(new MainMenuComponent(this));
     }
 
+    toGroupImporter(): void {
+        this.activate(new ImporterComponent(Group, this));
+    }
     toSetImporter(): void {
         this.activate(new ImporterComponent(Set, this));
     }
 
-    toGroupImporter(): void {
-        this.activate(new ImporterComponent(Group, this));
+    importAll(): void {
+        this.activate(new DatabaseImporterComponent(this));
     }
 
     toList<X extends Set | Group>(
@@ -85,16 +86,7 @@ export class MainComponent extends EzComponent {
         this.activate(new ListComponent(activity, x, this));
     }
 
-    importAll(): void {
-        this.activate(new DatabaseImporterComponent(this));
-    }
-
     askFrom(sets: Set[], onlyNew: boolean = false): void {
-        // const categorised = Set.categorise(sets);
-        // const set = onlyNew ? categorised.doing : Set.randomSet(categorised);
-        // const term = set?.chooseTerm(onlyNew);
-        // if (!set || !term)
-        //     throw new EzError("There are insufficient terms in your set(s).");
         try {
             this.activate(
                 new QuestionComponent(
@@ -122,6 +114,10 @@ export class MainComponent extends EzComponent {
         }
     }
 
+    masteredSet(set: Set, sets: Set[]): void {
+        this.activate(new SetMasteredComponent(set.name, sets, this));
+    }
+
     toFlashcards(sets: Set[]): void {
         this.activate(new StartFlashcardsComponent(sets, this));
     }
@@ -131,10 +127,6 @@ export class MainComponent extends EzComponent {
 
     delete(item: Set | Group): void {
         this.database.delete(item);
-    }
-
-    masteredSet(set: Set, sets: Set[]): void {
-        this.activate(new SetMasteredComponent(set.name, sets, this));
     }
 
     private activate(page: PageComponet) {
@@ -170,7 +162,7 @@ export class MainComponent extends EzComponent {
                 .toLowerCase()
                 .includes("samhain");
         } catch {
-            // I have no recolection of what could go wrong here, but let's warn the user
+            /**I have no recolection of what could go wrong here, but let's warn the user */
             throw new EzError("Failed to save the database!");
         }
     }
