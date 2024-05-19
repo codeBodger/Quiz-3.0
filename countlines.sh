@@ -4,7 +4,7 @@ IFS=' ';
 
 total=0
 
-top_level=(countlines.sh styles.css)
+top_level=(countlines.sh styles.css README.md)
 
 for file in "${top_level[@]}"; do
     read -ra wcarr <<< `wc "$file"`
