@@ -46,6 +46,7 @@
         "webpack-dev-server": "^5.0.2"
     },
     "dependencies": {
-        "@acbart/tsuml2": "^0.17.0"
+        "@acbart/tsuml2": "^0.17.0",
+        "firebase": "^10.12.1"
     }
 }
