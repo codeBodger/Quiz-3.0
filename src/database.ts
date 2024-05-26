@@ -722,7 +722,7 @@ export class Database {
      * @memberof Database
      * @static
      */
-    static loadDatabase(main: MainComponent): Database {
+    static loadLocalDatabase(main: MainComponent): Database {
         // console.log(window.localStorage.getItem("database"));
         return new Database(
             window.localStorage.getItem("database") ?? "",
@@ -731,9 +731,22 @@ export class Database {
     }
 
     /**
+     * @description Loads the database from firestore
+     * @param {MainComponent} main The main component of the site; required by the constructor
+     * @returns {Database}
+     * @memberof Database
+     * @static
+     */
+    static loadRemoteDatabase(main: MainComponent): Database {
+        throw new EzError("Unimplemented!");
+    }
+
+    /**
      * @description Merges a database loaded from somewhere into this database (see `Group.overwrite()` and `Set.merge()`)
      * @param {Database} database The database to merge into this one
      * @param {MainComponent} main The main component to save the database in
+     * @returns {void}
+     * @memberof Database
      */
     merge(database: Database, main: MainComponent): void {
         for (let set of database.sets) {
@@ -773,8 +786,17 @@ export class Database {
      * @returns {void}
      * @memberof Database
      */
-    save(): void {
+    saveLocalDatabase(): void {
         window.localStorage.setItem("database", this.toString());
+    }
+
+    /**
+     * @description Saves the database to firestore
+     * @returns {void}
+     * @memberof Database
+     */
+    saveRemoteDatabase(): void {
+        throw new EzError("Unimplemented!");
     }
 
     /**

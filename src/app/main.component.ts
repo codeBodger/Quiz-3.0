@@ -28,6 +28,9 @@ import { checkImplementation } from "../question_types";
 import { FlashcardsComponent } from "./flashcards/flashcards.component";
 import { StartFlashcardsComponent } from "./start-flashcards/start-flashcards.component";
 import { EzError } from "./EzError/EzError.component";
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { auth, provider } from "../config";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 /**
  * @description MainComponent is the main component of the site
@@ -37,12 +40,12 @@ import { EzError } from "./EzError/EzError.component";
  */
 export class MainComponent extends EzComponent {
     /**
-     * @description The database of the user
+     * @description The database of the user; defaults to an empty database
      * @type {Database}
      * @memberof MainComponent
      * @private
      */
-    private database: Database;
+    private database: Database = new Database("", this);
 
     /**
      * @description The component for the footer displayed at the bottom of every page
@@ -87,6 +90,21 @@ export class MainComponent extends EzComponent {
     }
 
     /**
+     * @description Whether or not the user is signed in (sort of just a pointer to `this.footer.signedIn`)
+     * @type {boolean}
+     * @memberof MainComponent
+     * @private
+     */
+    private set signedIn(s: boolean) {
+        this.footer.signedIn = s;
+    }
+    private get signedIn(): boolean {
+        return this.footer.signedIn;
+    }
+
+    private practicingLocally: boolean = false;
+
+    /**
      * @description Creates an instance of MainComponent
      * @memberof MainComponent
      * @public
@@ -95,8 +113,26 @@ export class MainComponent extends EzComponent {
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");
-        this.database = Database.loadDatabase(this);
-        this.exit();
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                this.signedIn = false;
+                EzDialog.popup(
+                    this,
+                    "Practice locally without an account?<br>Your progress <i>should</i> be saved, but only locally.",
+                    "Practice locally?",
+                    [
+                        "Practice Locally",
+                        "Stay Signed Out or Log In with Google)",
+                    ],
+                ).subscribe((v: string) => {
+                    this.practicingLocally = v === "Practice Locally";
+                    if (this.practicingLocally)
+                        this.database = Database.loadLocalDatabase(this);
+                    else this.freePage();
+                });
+            }
+        });
+        this.cancel();
         checkImplementation();
     }
 
@@ -294,19 +330,17 @@ export class MainComponent extends EzComponent {
     /**
      * @description Makes the database save itself and handles an error if one occurs
      * @returns {void}
-     * @throws {EzError} I have no recolection of what could go wrong here, but let's warn the user
+     * @throws {EzError} If the user is not signed in or practicing locally
      * @memberof MainComponent
      */
     saveDatabase(): void {
-        try {
-            this.database.save();
-            this.egg = this.database
-                .toString()
-                .toLowerCase()
-                .includes("samhain");
-        } catch {
-            throw new EzError("Failed to save the database!");
-        }
+        if (this.signedIn) this.database.saveRemoteDatabase();
+        else if (this.practicingLocally) this.database.saveLocalDatabase();
+        else
+            throw new EzError(
+                "Somehow you're doing stuff without being signed in or practicing locally!",
+            );
+        this.egg = this.database.toString().toLowerCase().includes("samhain");
     }
 
     /**
