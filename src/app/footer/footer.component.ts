@@ -54,7 +54,7 @@ export class FooterComponent extends SubComponent {
     /**
      * @description Called when the user presses "Login" or "... Logout"
      * @param {MouseEventSRA} e The event created when the button is pressed, includes the id of the decorator
-     * @returns {void}
+     * @returns {Promise<void>}
      * @memberof FooterComponent
      */
     @ClickSRA("login")

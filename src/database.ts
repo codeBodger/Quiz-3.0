@@ -11,7 +11,8 @@ import {
 import { CharQComponent } from "./app/CharQ/CharQ.component";
 import { EzError } from "./app/EzError/EzError.component";
 import { User } from "firebase/auth";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { auth } from "./config";
 
 /**
  * @description The JS window, used to get access to localStorage
@@ -609,6 +610,14 @@ export class Group {
  */
 export type Constructor<T extends Set | Group> = { new (name: string): T };
 
+class FirestoreDatabase {
+    constructor(public databaseTSV: string) {}
+    get asObject(): object {
+        return { ...this };
+    }
+}
+const DATABASE_NAME: "database" = "database" as const;
+
 /**
  * @description A class representing a database of groups and sets
  * @class Database
@@ -735,15 +744,20 @@ export class Database {
     /**
      * @description Loads the database from firestore
      * @param {MainComponent} main The main component of the site; required by the constructor
-     * @returns {Database}
+     * @returns {Promise<Database>}
      * @memberof Database
      * @static
      */
-    static loadRemoteDatabase(main: MainComponent, user: User): Database {
+    static async loadRemoteDatabase(
+        main: MainComponent,
+        user: User,
+    ): Promise<Database> {
         let out = "";
-        getDoc(doc(getFirestore(), "database", user.uid))
+        await getDoc(doc(getFirestore(), DATABASE_NAME, user.uid))
             .then((document) => {
-                out = document.data()!.databaseTSV as string;
+                const data = document.data() ?? new FirestoreDatabase("");
+                out = (data as FirestoreDatabase).databaseTSV;
+                console.log(out);
             })
             .catch((error: Error) => {
                 EzDialog.popup(
@@ -810,8 +824,17 @@ export class Database {
      * @returns {void}
      * @memberof Database
      */
-    saveRemoteDatabase(): void {
-        throw new EzError("Unimplemented!");
+    saveRemoteDatabase(main: MainComponent): void {
+        if (!auth.currentUser) throw new EzError("Unimplemented!");
+        setDoc(
+            doc(getFirestore(), DATABASE_NAME, auth.currentUser.uid),
+            new FirestoreDatabase(this.toString()).asObject,
+        ).catch((error: Error) => {
+            EzDialog.popup(
+                main,
+                `Unable to save to remote database!<br>${error.name}: ${error.message}`,
+            );
+        });
     }
 
     /**

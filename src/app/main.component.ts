@@ -28,14 +28,8 @@ import { checkImplementation } from "../question_types";
 import { FlashcardsComponent } from "./flashcards/flashcards.component";
 import { StartFlashcardsComponent } from "./start-flashcards/start-flashcards.component";
 import { EzError } from "./EzError/EzError.component";
-import {
-    signInWithPopup,
-    onAuthStateChanged,
-    NextOrObserver,
-    User,
-} from "firebase/auth";
-import { auth, provider } from "../config";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../config";
 
 /**
  * @description MainComponent is the main component of the site
@@ -127,7 +121,9 @@ export class MainComponent extends EzComponent {
                 return;
             }
 
-            this.database = Database.loadRemoteDatabase(this, user);
+            Database.loadRemoteDatabase(this, user).then(
+                (database: Database) => (this.database = database),
+            );
             this.signedIn = true;
         });
     }
@@ -330,7 +326,7 @@ export class MainComponent extends EzComponent {
      * @memberof MainComponent
      */
     saveDatabase(): void {
-        if (this.signedIn) this.database.saveRemoteDatabase();
+        if (this.signedIn) this.database.saveRemoteDatabase(this);
         else if (this.practicingLocally) this.database.saveLocalDatabase();
         else
             throw new EzError(
