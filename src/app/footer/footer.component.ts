@@ -62,12 +62,16 @@ export class FooterComponent extends SubComponent {
     async toggleLogin(e: MouseEventSRA): Promise<void> {
         switch (e.idSRA) {
             case "login":
-                await signInWithPopup(auth, provider).catch((error: Error) => {
-                    EzDialog.popup(
-                        this.main,
-                        `Login Failed!<br>${error.name}: ${error.message}`,
-                    );
-                });
+                await signInWithPopup(auth, provider)
+                    .then(() => {
+                        this.exit();
+                    })
+                    .catch((error: Error) => {
+                        EzDialog.popup(
+                            this.main,
+                            `Login Failed!<br>${error.name}: ${error.message}`,
+                        );
+                    });
                 break;
             case "logout":
                 await signOut(auth)
@@ -86,6 +90,5 @@ export class FooterComponent extends SubComponent {
                     "How did you run this with a different button click?",
                 );
         }
-        this.exit();
     }
 }
