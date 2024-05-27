@@ -1,4 +1,4 @@
-import { Click } from "@gsilber/webez";
+import { Click, EzDialog } from "@gsilber/webez";
 import html from "./footer.component.html";
 import css from "./footer.component.css";
 import { MainComponent } from "../main.component";
@@ -8,6 +8,9 @@ import {
     ClickSRA,
     MouseEventSRA,
 } from "../../decoratorsSRA";
+import { EzError } from "../EzError/EzError.component";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { auth, provider } from "../../config";
 
 /**
  * @description The component for the footer at the bottom of the site that persists on all pages
@@ -56,8 +59,33 @@ export class FooterComponent extends SubComponent {
      */
     @ClickSRA("login")
     @ClickSRA("logout")
-    toggleLogin(e: MouseEventSRA): void {
-        this.signedIn = !this.signedIn;
+    async toggleLogin(e: MouseEventSRA): Promise<void> {
+        switch (e.idSRA) {
+            case "login":
+                await signInWithPopup(auth, provider).catch((error: Error) => {
+                    EzDialog.popup(
+                        this.main,
+                        `Login Failed!<br>${error.name}: ${error.message}`,
+                    );
+                });
+                break;
+            case "logout":
+                await signOut(auth)
+                    .then(() => {
+                        this.signedIn = false;
+                    })
+                    .catch((error: Error) => {
+                        EzDialog.popup(
+                            this.main,
+                            `Logout Failed!<br>${error.name}: ${error.message}`,
+                        );
+                    });
+                break;
+            default:
+                throw new EzError(
+                    "How did you run this with a different button click?",
+                );
+        }
         this.exit();
     }
 }

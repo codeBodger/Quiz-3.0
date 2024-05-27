@@ -28,7 +28,12 @@ import { checkImplementation } from "../question_types";
 import { FlashcardsComponent } from "./flashcards/flashcards.component";
 import { StartFlashcardsComponent } from "./start-flashcards/start-flashcards.component";
 import { EzError } from "./EzError/EzError.component";
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import {
+    signInWithPopup,
+    onAuthStateChanged,
+    NextOrObserver,
+    User,
+} from "firebase/auth";
 import { auth, provider } from "../config";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
@@ -113,27 +118,18 @@ export class MainComponent extends EzComponent {
     constructor() {
         super(html, css);
         this.addComponent(this.footer, "footer");
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                this.signedIn = false;
-                EzDialog.popup(
-                    this,
-                    "Practice locally without an account?<br>Your progress <i>should</i> be saved, but only locally.",
-                    "Practice locally?",
-                    [
-                        "Practice Locally",
-                        "Stay Signed Out or Log In with Google)",
-                    ],
-                ).subscribe((v: string) => {
-                    this.practicingLocally = v === "Practice Locally";
-                    if (this.practicingLocally)
-                        this.database = Database.loadLocalDatabase(this);
-                    else this.freePage();
-                });
-            }
-        });
         this.cancel();
         checkImplementation();
+
+        onAuthStateChanged(auth, (user: User | null) => {
+            if (!user) {
+                this.notLoggedInDialog();
+                return;
+            }
+
+            this.database = Database.loadRemoteDatabase(this, user);
+            this.signedIn = true;
+        });
     }
 
     /**
@@ -341,6 +337,26 @@ export class MainComponent extends EzComponent {
                 "Somehow you're doing stuff without being signed in or practicing locally!",
             );
         this.egg = this.database.toString().toLowerCase().includes("samhain");
+    }
+
+    /**
+     * @description Called when the user isn't logged in or something goes wrong getting the remote database
+     * @returns {void}
+     * @memberof MainComponent
+     */
+    notLoggedInDialog(): void {
+        this.signedIn = false;
+        EzDialog.popup(
+            this,
+            "Practice locally without an account?<br>Your progress <i>should</i> be saved, but only locally.",
+            "Practice locally?",
+            ["Practice Locally", "Stay Signed Out or Log In with Google"],
+        ).subscribe((v: string) => {
+            this.practicingLocally = v === "Practice Locally";
+            if (this.practicingLocally)
+                this.database = Database.loadLocalDatabase(this);
+            else this.freePage();
+        });
     }
 
     /**

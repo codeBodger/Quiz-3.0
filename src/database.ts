@@ -10,6 +10,8 @@ import {
 } from "./question_types";
 import { CharQComponent } from "./app/CharQ/CharQ.component";
 import { EzError } from "./app/EzError/EzError.component";
+import { User } from "firebase/auth";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 /**
  * @description The JS window, used to get access to localStorage
@@ -737,8 +739,21 @@ export class Database {
      * @memberof Database
      * @static
      */
-    static loadRemoteDatabase(main: MainComponent): Database {
-        throw new EzError("Unimplemented!");
+    static loadRemoteDatabase(main: MainComponent, user: User): Database {
+        let out = "";
+        getDoc(doc(getFirestore(), "database", user.uid))
+            .then((document) => {
+                out = document.data()!.databaseTSV as string;
+            })
+            .catch((error: Error) => {
+                EzDialog.popup(
+                    main,
+                    `Unable to load remote database!<br>${error.name}: ${error.message}`,
+                ).subscribe(() => {
+                    main.notLoggedInDialog();
+                });
+            });
+        return new Database(out, main);
     }
 
     /**
